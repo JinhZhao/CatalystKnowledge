@@ -1,0 +1,78 @@
+{
+  "success": true,
+  "data": {
+    "proposed_pathway": {
+      "value": "Photothermal oxidative dehydrogenation of propane to propylene over Cu/BN catalysts via localized surface plasmon resonance (LSPR) effect of Cu nanoparticles under visible light irradiation",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The localized surface plasmon resonance (LSPR) effect of Cu nanoparticles further enhanced the photothermal catalytic performances of Cu/BN catalysts under visible light irradiation."
+    },
+    "rate_determining_step": {
+      "value": "NOT_REPORTED",
+      "status": "NOT_REPORTED",
+      "origin": "NOT_APPLICABLE",
+      "source_quote": ""
+    },
+    "intermediates": [
+      {
+        "name": "B-O-N species",
+        "evidence": "XPS analysis",
+        "status": "REPORTED",
+        "origin": "ORIGINAL_EXPERIMENT",
+        "source_quote": "The binding energies of B were located at 190.2 eV and 192.6 eV, which should be attributed to the B–N and B–O–N chemical bonds, respectively."
+      }
+    ],
+    "active_sites": {
+      "value": "Cu nanoparticles on BN supports with electron coupling between Cu-NPs and BN-NF",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "It indicated the electron coupling between Cu-NPs and BN-NF."
+    },
+    "role_of_light": {
+      "value": "LSPR effect of Cu nanoparticles enhances light absorption and induces photothermal effect, boosting catalytic activity",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The plasmonic Cu-NPs could enhance the light-harvesting capacities, especially in the visible light region, which was a requirement for inducing photothermal effect."
+    },
+    "computational_support": {
+      "value": "NOT_REPORTED",
+      "status": "NOT_REPORTED",
+      "origin": "NOT_APPLICABLE",
+      "source_quote": ""
+    },
+    "experimental_support": [
+      {
+        "evidence_type": "XRD",
+        "finding": "Successful loading of Cu onto BN supports confirmed by characteristic peaks at 43.3° and 50.2°",
+        "status": "REPORTED",
+        "origin": "ORIGINAL_EXPERIMENT",
+        "source_quote": "Over the XRD patterns of Cu/BN catalysts, in addition to the diffraction peaks assigned to the hexagonal phase of BN, another two diffraction peaks at 43.3° and 50.2° appeared over Cu/BN-NS and Cu/BN-NF, which could be attributed to the (111) and (200) facets of metallic Cu, respectively."
+      },
+      {
+        "evidence_type": "TEM",
+        "finding": "Cu nanoparticles with average sizes of 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP respectively",
+        "status": "REPORTED",
+        "origin": "ORIGINAL_EXPERIMENT",
+        "source_quote": "The average sizes of Cu nanoparticles on the three catalysts were analyzed, and they were 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP, respectively."
+      },
+      {
+        "evidence_type": "XPS",
+        "finding": "Electron coupling between Cu-NPs and BN-NF observed",
+        "status": "REPORTED",
+        "origin": "ORIGINAL_EXPERIMENT",
+        "source_quote": "It indicated the electron coupling between Cu-NPs and BN-NF."
+      },
+      {
+        "evidence_type": "UV-vis spectroscopy",
+        "finding": "Enhanced light absorption in visible region due to LSPR effect of Cu-NPs",
+        "status": "REPORTED",
+        "origin": "ORIGINAL_EXPERIMENT",
+        "source_quote": "After the loading of Cu, the light absorption capacities of Cu/BN catalysts were extended to visible light and even near-infrared light regions."
+      }
+    ]
+  },
+  "error": null,
+  "attempts": 1,
+  "raw_response": "{\n  \"proposed_pathway\": {\n    \"value\": \"Photothermal oxidative dehydrogenation of propane to propylene over Cu/BN catalysts via localized surface plasmon resonance (LSPR) effect of Cu nanoparticles under visible light irradiation\",\n    \"status\": \"REPORTED\",\n    \"origin\": \"ORIGINAL_EXPERIMENT\",\n    \"source_quote\": \"The localized surface plasmon resonance (LSPR) effect of Cu nanoparticles further enhanced the photothermal catalytic performances of Cu/BN catalysts under visible light irradiation.\"\n  },\n  \"rate_determining_step\": {\n    \"value\": \"NOT_REPORTED\",\n    \"status\": \"NOT_REPORTED\",\n    \"origin\": \"NOT_APPLICABLE\",\n    \"source_quote\": \"\"\n  },\n  \"intermediates\": [\n    {\n      \"name\": \"B-O-N species\",\n      \"evidence\": \"XPS analysis\",\n      \"status\": \"REPORTED\",\n      \"origin\": \"ORIGINAL_EXPERIMENT\",\n      \"source_quote\": \"The binding energies of B were located at 190.2 eV and 192.6 eV, which should be attributed to the B–N and B–O–N chemical bonds, respectively.\"\n    }\n  ],\n  \"active_sites\": {\n    \"value\": \"Cu nanoparticles on BN supports with electron coupling between Cu-NPs and BN-NF\",\n    \"status\": \"REPORTED\",\n    \"origin\": \"ORIGINAL_EXPERIMENT\",\n    \"source_quote\": \"It indicated the electron coupling between Cu-NPs and BN-NF.\"\n  },\n  \"role_of_light\": {\n    \"value\": \"LSPR effect of Cu nanoparticles enhances light absorption and induces photothermal effect, boosting catalytic activity\",\n    \"status\": \"REPORTED\",\n    \"origin\": \"ORIGINAL_EXPERIMENT\",\n    \"source_quote\": \"The plasmonic Cu-NPs could enhance the light-harvesting capacities, especially in the visible light region, which was a requirement for inducing photothermal effect.\"\n  },\n  \"computational_support\": {\n    \"value\": \"NOT_REPORTED\",\n    \"status\": \"NOT_REPORTED\",\n    \"origin\": \"NOT_APPLICABLE\",\n    \"source_quote\": \"\"\n  },\n  \"experimental_support\": [\n    {\n      \"evidence_type\": \"XRD\",\n      \"finding\": \"Successful loading of Cu onto BN supports confirmed by characteristic peaks at 43.3° and 50.2°\",\n      \"status\": \"REPORTED\",\n      \"origin\": \"ORIGINAL_EXPERIMENT\",\n      \"source_quote\": \"Over the XRD patterns of Cu/BN catalysts, in addition to the diffraction peaks assigned to the hexagonal phase of BN, another two diffraction peaks at 43.3° and 50.2° appeared over Cu/BN-NS and Cu/BN-NF, which could be attributed to the (111) and (200) facets of metallic Cu, respectively.\"\n    },\n    {\n      \"evidence_type\": \"TEM\",\n      \"finding\": \"Cu nanoparticles with average sizes of 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP respectively\",\n      \"status\": \"REPORTED\",\n      \"origin\": \"ORIGINAL_EXPERIMENT\",\n      \"source_quote\": \"The average sizes of Cu nanoparticles on the three catalysts were analyzed, and they were 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP, respectively.\"\n    },\n    {\n      \"evidence_type\": \"XPS\",\n      \"finding\": \"Electron coupling between Cu-NPs and BN-NF observed\",\n      \"status\": \"REPORTED\",\n      \"origin\": \"ORIGINAL_EXPERIMENT\",\n      \"source_quote\": \"It indicated the electron coupling between Cu-NPs and BN-NF.\"\n    },\n    {\n      \"evidence_type\": \"UV-vis spectroscopy\",\n      \"finding\": \"Enhanced light absorption in visible region due to LSPR effect of Cu-NPs\",\n      \"status\": \"REPORTED\",\n      \"origin\": \"ORIGINAL_EXPERIMENT\",\n      \"source_quote\": \"After the loading of Cu, the light absorption capacities of Cu/BN catalysts were extended to visible light and even near-infrared light regions.\"\n    }\n  ]\n}",
+  "finish_reason": "stop"
+}

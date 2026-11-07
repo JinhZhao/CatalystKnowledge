@@ -1,0 +1,92 @@
+{
+  "dimension": "catalyst_design",
+  "fields": {
+    "catalyst_system": {
+      "field_name": "catalyst_system",
+      "value": "Cu/BN catalysts with unique morphologies (Cu/BN-NS, Cu/BN-NF, Cu/BN-NP) with 1.0 wt% Cu loading on BN supports",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "we designed a series of Cu/BN catalysts with unique morphologies for establishing a photothermal ODHP system with high efficiency and selectivity"
+    },
+    "catalyst_type": {
+      "field_name": "catalyst_type",
+      "value": "supported metal nanoparticle catalyst",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "plasmonic Cu nanoparticles (Cu-NPs) have been loaded onto the BN substrate"
+    },
+    "active_component": {
+      "field_name": "active_component",
+      "value": "Cu nanoparticles, 1.0 wt%",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The theoretical loading amounts of Cu on the three Cu/BN catalysts were 1.0 wt%"
+    },
+    "support": {
+      "field_name": "support",
+      "value": "boron nitride (BN) with different morphologies: nanosheets (BN-NS), nanofibers (BN-NF), and nanoparticles (BN-NP)",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "BN nanosheet (BN-NS, 99.9%), BN nanofibers (BN-NF, 99.9%), and BN nanoparticles (BN-NP, 99.9%) were purchased and used as supports"
+    },
+    "synthesis_method": {
+      "field_name": "synthesis_method",
+      "value": "wetness impregnation",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP were prepared by wetness impregnation"
+    },
+    "synthesis_conditions": {
+      "field_name": "synthesis_conditions",
+      "value": "stirring at room temperature at 500 r/min for 10 h, dried at 100°C in air, reduced in 10% H2/N2 mixture at 500°C for 3 h",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "After stirring at room temperature at 500 r/min for 10 h, the samples were evaporated and dried at 100°C in air and reduced in a 10% H2/N2 mixture at 500°C for 3 h"
+    },
+    "reaction_type": {
+      "field_name": "reaction_type",
+      "value": "photothermal oxidative dehydrogenation of propane (ODHP) to propylene",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "Photothermal oxidative dehydrogenation of propane to propylene over Cu/BN catalysts"
+    },
+    "design_rationale": {
+      "field_name": "design_rationale",
+      "value": "To overcome the challenge of achieving high activity and high propylene selectivity simultaneously in ODHP by utilizing the localized surface plasmon resonance (LSPR) effect of Cu nanoparticles to enhance photothermal catalytic performance under visible light irradiation",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "As for the industrial application of ODHP, it is challenging to achieve high activity and high propylene selectivity simultaneously. In this study, to overcome this obstacle, we designed a series of Cu/BN catalysts with unique morphologies for establishing a photothermal ODHP system with high efficiency and selectivity"
+    }
+  },
+  "validation_warnings": [],
+  "chunk_id": "catalyst_design_full",
+  "chunk_sections": [
+    "s00_open_access",
+    "s01_photothermal_oxidative_dehydrogenation_o",
+    "s02_1_introduction",
+    "s03_2_experimental_section",
+    "s04_2_1_catalyst_preparation",
+    "s05_2_2_catalyst_characterization",
+    "s06_2_3_catalyst_evaluation",
+    "s07_3_results_and_discussion",
+    "s08_3_1_physicochemical_properties_of_bn_sup",
+    "s09_3_2_optical_properties_of_bn_supports_an",
+    "s10_3_3_photo_thermal_catalytic_odhp_perform",
+    "s11_4_conclusion",
+    "s12_data_availability_statement",
+    "s16_publisher_s_note"
+  ],
+  "chunk_char_range": [
+    0,
+    25846
+  ],
+  "chunk_page_range": [
+    0,
+    7
+  ],
+  "merge_notes": "Single chunk, no merge needed",
+  "chunk_count": 1,
+  "source_chunks": [
+    "catalyst_design_full"
+  ]
+}

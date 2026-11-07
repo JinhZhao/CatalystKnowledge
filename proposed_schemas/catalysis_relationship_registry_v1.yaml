@@ -1,0 +1,529 @@
+# ============================================================================
+# Catalysis Relationship Registry V1
+# ============================================================================
+# Status: ENGINEERING_CANDIDATE / NOT_IMPLEMENTED
+# Version: 1.0.0-candidate
+# Created: 2026-11-04
+# Purpose: Define candidate relationship types organized in 5 groups,
+#          with Domain, Range, direction, semantic definition, and examples.
+# Constraint: Does NOT modify V1 frozen relationship types.
+#             V1 relationships: SUPPORTED_BY, QUALIFIED_BY, VALIDATES,
+#             REQUIRES, MOTIVATES (61 relationships verified structurally).
+# ============================================================================
+
+registry_metadata:
+  registry_id: CATALYSIS-RELATIONSHIP-REGISTRY-V1
+  status: ENGINEERING_CANDIDATE
+  version: "1.0.0-candidate"
+  created: "2026-11-04"
+  v1_frozen_relationships: 5
+  v1_relationship_counts:
+    SUPPORTED_BY: 17
+    QUALIFIED_BY: 30
+    VALIDATES: 8
+    REQUIRES: 4
+    MOTIVATES: 2
+  candidate_relationships: 30
+  groups: 5
+  design_principles:
+    - "Correlation does not imply causation."
+    - "Author-proposed mechanism hypotheses must not automatically become verified mechanisms."
+    - "Claim-Evidence direction must be correct: Evidence SUPPORTED_BY Claim, not reverse."
+    - "Patent claims must not automatically form experimental verification relationships."
+    - "Every relationship must have source, evidence, direction, and status."
+    - "Unsupported relationships must remain UNRESOLVED, not forced."
+
+# ============================================================================
+# V1 Frozen Relationships (preserved, not modified)
+# ============================================================================
+v1_frozen_relationships:
+  - id: SUPPORTED_BY
+    status: FROZEN_V1
+    direction: "Evidence --[SUPPORTED_BY]--> Claim"
+    semantics: "Evidence provides support for a Claim."
+    v1_count: 17
+
+  - id: QUALIFIED_BY
+    status: FROZEN_V1
+    direction: "Claim --[QUALIFIED_BY]--> Limitation | Evidence"
+    semantics: "A Claim is qualified or limited by evidence or statements."
+    v1_count: 30
+
+  - id: VALIDATES
+    status: FROZEN_V1
+    direction: "Evidence --[VALIDATES]--> Hypothesis | Claim"
+    semantics: "Evidence validates a hypothesis or claim."
+    v1_count: 8
+
+  - id: REQUIRES
+    status: FROZEN_V1
+    direction: "Claim --[REQUIRES]--> Evidence | Prerequisite"
+    semantics: "A claim requires certain evidence or prerequisites."
+    v1_count: 4
+
+  - id: MOTIVATES
+    status: FROZEN_V1
+    direction: "Problem | Gap --[MOTIVATES]--> Research | Experiment"
+    semantics: "A problem or gap motivates research or an experiment."
+    v1_count: 2
+
+# ============================================================================
+# Group R1: Catalyst Composition Relationships
+# ============================================================================
+r1_catalyst_relationships:
+  group_id: R1
+  group_name: Catalyst Composition Relationships
+  description: >
+    Relationships describing catalyst composition, structure, and preparation.
+
+  relationships:
+    - id: HAS_COMPONENT
+      status: CANDIDATE
+      domain: Catalyst | CatalystSample
+      range: CatalystComponent
+      direction: "Catalyst --[HAS_COMPONENT]--> CatalystComponent"
+      semantics: "A catalyst has a specific component (active phase, support, promoter)."
+      v1_mapping: "catalyst_design.active_component + support (structured as relationship)"
+      example: "Cu/BN HAS_COMPONENT Cu (active component)"
+      theme_coverage: [T01]
+      verification_rule: >
+        Component must be explicitly stated or clearly implied in the document.
+        Do not infer components from general catalyst type.
+
+    - id: SUPPORTED_ON
+      status: CANDIDATE
+      domain: Catalyst | CatalystComponent (active)
+      range: Support | CatalystComponent (support)
+      direction: "ActiveComponent --[SUPPORTED_ON]--> Support"
+      semantics: "An active component is supported on a specific support material."
+      v1_mapping: "catalyst_design.support (string -> relationship)"
+      example: "Cu nanoparticles SUPPORTED_ON BN nanosheets"
+      theme_coverage: [T01]
+      verification_rule: >
+        Support must be explicitly stated. Do not assume support from context.
+
+    - id: PROMOTED_BY
+      status: CANDIDATE
+      domain: Catalyst | CatalystSample
+      range: Promoter
+      direction: "Catalyst --[PROMOTED_BY]--> Promoter"
+      semantics: "A catalyst is promoted by a specific promoter."
+      example: "Cu/BN PROMOTED_BY K (potassium promoter)"
+      theme_coverage: [T01]
+      verification_rule: >
+        Promoter must be explicitly identified. Do not infer from performance improvement.
+
+    - id: HAS_ACTIVE_SITE
+      status: CANDIDATE
+      domain: Catalyst | CatalystSample
+      range: ActiveSite
+      direction: "Catalyst --[HAS_ACTIVE_SITE]--> ActiveSite"
+      semantics: "A catalyst has a specific type of active site."
+      example: "Cu/BN HAS_ACTIVE_SITE Cu+ species"
+      theme_coverage: [T01, T06]
+      verification_rule: >
+        Active site must be characterized or proposed with evidence.
+        Author hypothesis must be marked as AUTHOR_STATED, not verified fact.
+
+    - id: DERIVED_FROM
+      status: CANDIDATE
+      domain: Catalyst | CatalystSample
+      range: Precursor
+      direction: "CatalystSample --[DERIVED_FROM]--> Precursor"
+      semantics: "A catalyst sample is derived from a specific precursor."
+      example: "Cu/BN-NS DERIVED_FROM Cu(NO3)2 + h-BN"
+      theme_coverage: [T01]
+      verification_rule: >
+        Precursor must be stated in synthesis section.
+
+    - id: PREPARED_BY
+      status: CANDIDATE
+      domain: CatalystSample
+      range: ExperimentalMethod
+      direction: "CatalystSample --[PREPARED_BY]--> ExperimentalMethod"
+      semantics: "A catalyst sample is prepared by a specific method."
+      v1_mapping: "catalyst_design.synthesis_method (string -> relationship)"
+      example: "Cu/BN-NS PREPARED_BY impregnation method"
+      theme_coverage: [T01]
+      verification_rule: >
+        Preparation method must be explicitly described.
+
+# ============================================================================
+# Group R2: Chemical Reaction Relationships
+# ============================================================================
+r2_reaction_relationships:
+  group_id: R2
+  group_name: Chemical Reaction Relationships
+  description: >
+    Relationships describing reaction participants, pathways, and steps.
+
+  relationships:
+    - id: CONSUMES
+      status: CANDIDATE
+      domain: Reaction
+      range: Reactant
+      direction: "Reaction --[CONSUMES]--> Reactant"
+      semantics: "A reaction consumes a specific reactant."
+      example: "ODHP CONSUMES propane (C3H8)"
+      theme_coverage: [T02]
+      verification_rule: >
+        Reactant must be explicitly stated.
+
+    - id: PRODUCES
+      status: CANDIDATE
+      domain: Reaction
+      range: Product
+      direction: "Reaction --[PRODUCES]--> Product"
+      semantics: "A reaction produces a specific product."
+      example: "ODHP PRODUCES propylene (C3H6)"
+      theme_coverage: [T02, T04]
+      verification_rule: >
+        Product must be explicitly stated or measured.
+
+    - id: HAS_INTERMEDIATE
+      status: CANDIDATE
+      domain: Reaction | ReactionPathway
+      range: Intermediate
+      direction: "Reaction --[HAS_INTERMEDIATE]--> Intermediate"
+      semantics: "A reaction proceeds through a specific intermediate."
+      v1_mapping: "mechanism.intermediates (string[] -> relationship)"
+      example: "Methanol oxidation HAS_INTERMEDIATE formaldehyde"
+      theme_coverage: [T02, T05]
+      verification_rule: >
+        Intermediate must be detected or proposed with evidence.
+        If only hypothesized, mark as AUTHOR_HYPOTHESIZED.
+
+    - id: HAS_BYPRODUCT
+      status: CANDIDATE
+      domain: Reaction
+      range: Byproduct
+      direction: "Reaction --[HAS_BYPRODUCT]--> Byproduct"
+      semantics: "A reaction produces a specific byproduct."
+      example: "ODHP HAS_BYPRODUCT CO2"
+      theme_coverage: [T02]
+      verification_rule: >
+        Byproduct must be measured or reported.
+
+    - id: PARTICIPATES_IN
+      status: CANDIDATE
+      domain: CatalystSample | Reactant | Product
+      range: Reaction
+      direction: "Entity --[PARTICIPATES_IN]--> Reaction"
+      semantics: "An entity participates in a reaction (generic participation)."
+      example: "Cu/BN-NS PARTICIPATES_IN ODHP"
+      theme_coverage: [T02]
+      verification_rule: >
+        Participation must be explicitly stated.
+
+    - id: PART_OF_PATHWAY
+      status: CANDIDATE
+      domain: ReactionStep
+      range: ReactionPathway
+      direction: "ReactionStep --[PART_OF_PATHWAY]--> ReactionPathway"
+      semantics: "A reaction step is part of a larger pathway."
+      example: "C-H activation PART_OF_PATHWAY ODHP mechanism"
+      theme_coverage: [T05]
+      verification_rule: >
+        Pathway must be described or proposed.
+
+# ============================================================================
+# Group R3: Experiment & Measurement Relationships
+# ============================================================================
+r3_experiment_relationships:
+  group_id: R3
+  group_name: Experiment & Measurement Relationships
+  description: >
+    Relationships describing experimental setup, conditions, measurements,
+    and observations.
+
+  relationships:
+    - id: TESTED_IN
+      status: CANDIDATE
+      domain: CatalystSample | Reaction
+      range: Experiment
+      direction: "Entity --[TESTED_IN]--> Experiment"
+      semantics: "A catalyst or reaction is tested in a specific experiment."
+      example: "Cu/BN-NS TESTED_IN photothermal ODHP experiment"
+      theme_coverage: [T04, T08]
+      verification_rule: >
+        Experiment must be explicitly described.
+
+    - id: HAS_CONDITION
+      status: CANDIDATE
+      domain: Experiment | Reaction
+      range: ReactionCondition | ExperimentalCondition
+      direction: "Experiment --[HAS_CONDITION]--> Condition"
+      semantics: "An experiment has specific conditions."
+      v1_mapping: "Experiment.reaction_conditions (string -> structured)"
+      example: "ODHP experiment HAS_CONDITION 500C, 1 atm, GHSV=60000"
+      theme_coverage: [T04, T08]
+      verification_rule: >
+        Conditions must be explicitly stated.
+
+    - id: MEASURED_BY
+      status: CANDIDATE
+      domain: Quantity | Observation
+      range: ExperimentalMethod | Measurement
+      direction: "Quantity --[MEASURED_BY]--> Method"
+      semantics: "A quantity is measured by a specific method or instrument."
+      example: "Surface area MEASURED_BY BET"
+      theme_coverage: [T03, T04]
+      verification_rule: >
+        Measurement method must be stated.
+
+    - id: OBSERVED_IN
+      status: CANDIDATE
+      domain: Observation | Phenomenon
+      range: Experiment | Figure | Spectrum
+      direction: "Observation --[OBSERVED_IN]--> Context"
+      semantics: "An observation is made in a specific experiment or figure."
+      example: "Cu+ species OBSERVED_IN XPS spectrum"
+      theme_coverage: [T03, T04]
+      verification_rule: >
+        Observation must be linked to specific evidence source.
+
+    - id: YIELDS
+      status: CANDIDATE
+      domain: Reaction | Experiment
+      range: Product | QuantityRecord
+      direction: "Reaction --[YIELDS]--> Product (with quantity)"
+      semantics: "A reaction yields a specific product with measured quantity."
+      example: "ODHP YIELDS propylene (selectivity 82.1%)"
+      theme_coverage: [T04]
+      verification_rule: >
+        Yield must be measured, not estimated.
+
+    - id: USES_SAMPLE
+      status: CANDIDATE
+      domain: Experiment
+      range: CatalystSample
+      direction: "Experiment --[USES_SAMPLE]--> CatalystSample"
+      semantics: "An experiment uses a specific catalyst sample."
+      example: "Performance test USES_SAMPLE Cu/BN-NS"
+      theme_coverage: [T04, T08]
+      verification_rule: >
+        Sample must be explicitly identified.
+
+    - id: PERFORMED_WITH
+      status: CANDIDATE
+      domain: Experiment
+      range: Reactor | ExperimentalMethod
+      direction: "Experiment --[PERFORMED_WITH]--> Equipment"
+      semantics: "An experiment is performed with specific equipment."
+      example: "Reaction PERFORMED_WITH fixed-bed reactor"
+      theme_coverage: [T08]
+      verification_rule: >
+        Equipment must be stated.
+
+# ============================================================================
+# Group R4: Scientific Evidence Relationships
+# ============================================================================
+r4_evidence_relationships:
+  group_id: R4
+  group_name: Scientific Evidence Relationships
+  description: >
+    Relationships describing evidence sources, support, contradiction,
+    and illustration.
+
+  relationships:
+    - id: SUPPORTED_BY
+      status: V1_FROZEN
+      note: "Already in V1. Included here for completeness."
+
+    - id: CONTRADICTED_BY
+      status: CANDIDATE
+      domain: Claim | Hypothesis
+      range: Evidence | Observation | NegativeResult
+      direction: "Claim --[CONTRADICTED_BY]--> Evidence"
+      semantics: "A claim is contradicted by specific evidence."
+      example: "High activity claim CONTRADICTED_BY low conversion data"
+      theme_coverage: [T04, T07]
+      verification_rule: >
+        Contradiction must be explicit. Do not infer from weak support.
+        Mark as UNRESOLVED if contradiction is ambiguous.
+
+    - id: QUALIFIED_BY
+      status: V1_FROZEN
+      note: "Already in V1. Included here for completeness."
+
+    - id: DERIVED_FROM
+      status: CANDIDATE
+      domain: Evidence | Claim
+      range: DocumentElement | Figure | Table | Experiment
+      direction: "Evidence --[DERIVED_FROM]--> Source"
+      semantics: "Evidence is derived from a specific source."
+      note: "Distinct from Catalyst DERIVED_FROM Precursor (R1)."
+      example: "Activity data DERIVED_FROM Figure 6"
+      theme_coverage: [T01, T02, T03, T04, T05, T06, T07, T08]
+      verification_rule: >
+        Source must be traceable via SourceAnchor.
+
+    - id: REPORTED_IN
+      status: CANDIDATE
+      domain: Evidence | Observation | Measurement
+      range: Document | Figure | Table
+      direction: "Evidence --[REPORTED_IN]--> Document"
+      semantics: "Evidence is reported in a specific document or figure."
+      example: "XRD pattern REPORTED_IN Figure 2"
+      theme_coverage: [T03]
+      verification_rule: >
+        Document location must be identifiable.
+
+    - id: OBSERVED_IN
+      status: CANDIDATE
+      domain: Observation | Phenomenon
+      range: Experiment | Figure | Spectrum
+      direction: "Observation --[OBSERVED_IN]--> Context"
+      semantics: "An observation is made in a specific context."
+      note: "Same ID as R3 OBSERVED_IN; context determines meaning."
+      example: "Nanoparticle formation OBSERVED_IN TEM images"
+      theme_coverage: [T03, T04]
+      verification_rule: >
+        Observation context must be specific.
+
+    - id: ILLUSTRATED_BY
+      status: CANDIDATE
+      domain: Concept | Mechanism | Claim
+      range: Figure | Table | Spectrum
+      direction: "Concept --[ILLUSTRATED_BY]--> Figure"
+      semantics: "A concept is illustrated by a specific figure."
+      example: "LSPR mechanism ILLUSTRATED_BY Figure 6"
+      theme_coverage: [T03, T05, T06]
+      verification_rule: >
+        Figure must explicitly illustrate the concept.
+
+# ============================================================================
+# Group R5: Scientific Reasoning & Decision Relationships
+# ============================================================================
+r5_reasoning_relationships:
+  group_id: R5
+  group_name: Scientific Reasoning & Decision Relationships
+  description: >
+    Relationships describing scientific reasoning, causation, correlation,
+    hypothesis, testing, validation, motivation, and limitation.
+
+  relationships:
+    - id: EXPLAINS
+      status: CANDIDATE
+      domain: Mechanism | Hypothesis | Observation
+      range: Phenomenon | Result | Claim
+      direction: "Explanation --[EXPLAINS]--> Phenomenon"
+      semantics: "A mechanism or hypothesis explains a phenomenon."
+      example: "LSPR effect EXPLAINS enhanced visible-light activity"
+      theme_coverage: [T05, T06]
+      verification_rule: >
+        Explanation must be proposed with evidence.
+        Author hypothesis must be marked AUTHOR_STATED.
+        Do not mark as verified mechanism without multiple evidence lines.
+
+    - id: CAUSES
+      status: CANDIDATE
+      domain: Factor | Condition | Phenomenon
+      range: Effect | Result | Deactivation
+      direction: "Cause --[CAUSES]--> Effect"
+      semantics: "A factor causes a specific effect."
+      example: "Carbon deposition CAUSES deactivation"
+      theme_coverage: [T07]
+      verification_rule: >
+        Causation must be supported by evidence, not just correlation.
+        Mark as CORRELATES_WITH if causation is not established.
+        CRITICAL: Correlation does not imply causation.
+
+    - id: CORRELATES_WITH
+      status: CANDIDATE
+      domain: Factor | Property
+      range: Property | Performance
+      direction: "Factor --[CORRELATES_WITH]--> Property"
+      semantics: "Two factors or properties are correlated."
+      example: "Surface area CORRELATES_WITH catalytic activity"
+      theme_coverage: [T06]
+      verification_rule: >
+        Correlation must be observed, not assumed.
+        Do not upgrade to CAUSES without experimental evidence.
+
+    - id: HYPOTHESIZES
+      status: CANDIDATE
+      domain: Author | Study
+      range: Hypothesis | Mechanism
+      direction: "Study --[HYPOTHESIZES]--> Hypothesis"
+      semantics: "A study proposes a hypothesis."
+      example: "This study HYPOTHESIZES LSPR mechanism"
+      theme_coverage: [T05]
+      verification_rule: >
+        Hypothesis must be explicitly stated by authors.
+        Mark as AUTHOR_HYPOTHESIZED, not SYSTEM_INFERRED.
+
+    - id: TESTED_BY
+      status: CANDIDATE
+      domain: Hypothesis | Claim
+      range: Experiment | Observation
+      direction: "Hypothesis --[TESTED_BY]--> Experiment"
+      semantics: "A hypothesis is tested by a specific experiment."
+      example: "LSPR hypothesis TESTED_BY UV-Vis experiment"
+      theme_coverage: [T04, T05]
+      verification_rule: >
+        Experiment must be designed to test the hypothesis.
+
+    - id: VALIDATES
+      status: V1_FROZEN
+      note: "Already in V1. Included here for completeness."
+
+    - id: MOTIVATES
+      status: V1_FROZEN
+      note: "Already in V1. Included here for completeness."
+
+    - id: LIMITED_BY
+      status: CANDIDATE
+      domain: Claim | Performance | Study
+      range: Limitation | NegativeResult | Uncertainty
+      direction: "Claim --[LIMITED_BY]--> Limitation"
+      semantics: "A claim or performance is limited by specific factors."
+      v1_mapping: "QUALIFIED_BY (V1) -> LIMITED_BY (more specific)"
+      example: "High activity LIMITED_BY stability issues"
+      theme_coverage: [T07]
+      verification_rule: >
+        Limitation must be explicitly stated or clearly implied.
+        Do not infer limitations from missing data.
+
+# ============================================================================
+# Relationship Direction Rules
+# ============================================================================
+direction_rules:
+  - rule: "Evidence SUPPORTED_BY Claim is WRONG. Correct: Claim SUPPORTED_BY Evidence."
+  - rule: "Evidence VALIDATES Hypothesis is CORRECT direction."
+  - rule: "Cause CAUSES Effect is CORRECT. Effect CAUSES Cause is WRONG."
+  - rule: "Correlation is bidirectional; Causation is directional."
+  - rule: "Patent CLAIMS invention, not VALIDATES experiment."
+  - rule: "Author STATED hypothesis, not SYSTEM_INFERRED mechanism."
+
+# ============================================================================
+# Relationship Status Values
+# ============================================================================
+relationship_status_values:
+  - VERIFIED: "Multiple evidence lines support the relationship."
+  - AUTHOR_STATED: "Author explicitly states the relationship."
+  - SYSTEM_INFERRED: "System infers the relationship from context."
+  - UNRESOLVED: "Relationship is suspected but not confirmed."
+  - INVALIDATED: "Evidence contradicts the relationship."
+  - NOT_ATTEMPTED: "Relationship has not been evaluated."
+
+# ============================================================================
+# Relationship Registry Summary
+# ============================================================================
+registry_summary:
+  total_v1_frozen: 5
+  total_candidate_new: 30
+  total_candidate_relationships: 35
+  groups:
+    R1_catalyst: 6
+    R2_reaction: 6
+    R3_experiment: 7
+    R4_evidence: 7
+    R5_reasoning: 9
+  critical_rules:
+    - "Correlation != Causation"
+    - "Author hypothesis != Verified mechanism"
+    - "Claim-Evidence direction must be correct"
+    - "Patent claims != Experimental verification"
+    - "Every relationship needs source, evidence, direction, status"
+    - "Unsupported -> UNRESOLVED, not forced"

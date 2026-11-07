@@ -1,0 +1,106 @@
+{
+  "dimension": "structure_activity",
+  "fields": {
+    "descriptors": {
+      "field_name": "descriptors",
+      "value": [
+        {
+          "descriptor_name": "Cu nanoparticle size",
+          "descriptor_values": "7.4-12.7 nm",
+          "correlated_property": "propane conversion",
+          "correlation_type": "positive",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The average sizes of Cu nanoparticles on the three catalysts were analyzed, and they were 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP, respectively"
+        },
+        {
+          "descriptor_name": "BET surface area",
+          "descriptor_values": "4.6-13.2 m2/g",
+          "correlated_property": "catalytic activity",
+          "correlation_type": "positive",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The specific surface areas of BN-NS, BN-NF, and BN-NP were 4.6–13.2 m2 g−1"
+        },
+        {
+          "descriptor_name": "Cu loading",
+          "descriptor_values": "1.0 wt%",
+          "correlated_property": "LSPR effect",
+          "correlation_type": "positive",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The theoretical loading amounts of Cu on the three Cu/BN catalysts were 1.0 wt%"
+        },
+        {
+          "descriptor_name": "Light absorption range",
+          "descriptor_values": "200-800 nm",
+          "correlated_property": "photothermal catalytic performance",
+          "correlation_type": "positive",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The light-harvesting capacities of BN supports and Cu/BN catalysts were characterized by UV-vis spectroscopy"
+        }
+      ],
+      "status": "NOT_EXTRACTED",
+      "origin": "UNKNOWN_ORIGIN",
+      "notes": "Array with 4 items, 0 REPORTED"
+    },
+    "relationship_summary": {
+      "field_name": "relationship_summary",
+      "value": "The catalytic activity of Cu/BN catalysts in ODHP is positively correlated with Cu nanoparticle size, BET surface area, and light absorption range. The LSPR effect of Cu nanoparticles enhances photothermal catalytic performance under visible light irradiation.",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The localized surface plasmon resonance (LSPR) effect of Cu nanoparticles further enhanced the photothermal catalytic performances of Cu/BN catalysts under visible light irradiation."
+    },
+    "evidence_strength": {
+      "field_name": "evidence_strength",
+      "value": "moderate",
+      "status": "REPORTED",
+      "origin": "SYSTEM_INFERRED"
+    },
+    "data_points_count": {
+      "field_name": "data_points_count",
+      "value": "6",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT"
+    },
+    "morphology_activity_link": {
+      "field_name": "morphology_activity_link",
+      "value": "Catalysts with nanosheet (NS) and nanofiber (NF) morphologies showed higher activity compared to nanoparticles (NP), likely due to their larger specific surface areas and better exposure of active sites.",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The higher activities of Cu/BN-NS and Cu/BN-NF might be due to their relatively larger specific surface area, which exposed more active sites for reactant adsorption and subsequent reaction procedure."
+    }
+  },
+  "validation_warnings": [],
+  "chunk_id": "structure_activity_full",
+  "chunk_sections": [
+    "s00_open_access",
+    "s01_photothermal_oxidative_dehydrogenation_o",
+    "s02_1_introduction",
+    "s03_2_experimental_section",
+    "s04_2_1_catalyst_preparation",
+    "s05_2_2_catalyst_characterization",
+    "s06_2_3_catalyst_evaluation",
+    "s07_3_results_and_discussion",
+    "s08_3_1_physicochemical_properties_of_bn_sup",
+    "s09_3_2_optical_properties_of_bn_supports_an",
+    "s10_3_3_photo_thermal_catalytic_odhp_perform",
+    "s11_4_conclusion",
+    "s12_data_availability_statement",
+    "s16_publisher_s_note"
+  ],
+  "chunk_char_range": [
+    0,
+    25846
+  ],
+  "chunk_page_range": [
+    0,
+    7
+  ],
+  "merge_notes": "Single chunk, no merge needed",
+  "chunk_count": 1,
+  "source_chunks": [
+    "structure_activity_full"
+  ]
+}

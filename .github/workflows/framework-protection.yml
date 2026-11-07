@@ -1,0 +1,273 @@
+name: Framework Protection CI
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  check-framework-modifications:
+    name: Check Framework File Modifications
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all history for diff
+    
+    - name: Check for forbidden modifications
+      id: check
+      run: |
+        echo "Checking for framework file modifications..."
+        
+        # Define forbidden patterns
+        FORBIDDEN_PATTERNS=(
+          "src/**"
+          "scripts/**"
+          "tests/**"
+          "config/pipeline*.yaml"
+        )
+        
+        # Get list of changed files
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+        else
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+        fi
+        
+        echo "Changed files:"
+        echo "$CHANGED_FILES"
+        
+        # Check each changed file against forbidden patterns
+        VIOLATIONS=""
+        for file in $CHANGED_FILES; do
+          for pattern in "${FORBIDDEN_PATTERNS[@]}"; do
+            # Convert glob pattern to regex
+            regex=$(echo "$pattern" | sed 's/\*/.*/g' | sed 's/\?/./g')
+            if echo "$file" | grep -qE "^$regex$"; then
+              VIOLATIONS="$VIOLATIONS\n- $file (matches $pattern)"
+            fi
+          done
+        done
+        
+        # Report violations
+        if [ -n "$VIOLATIONS" ]; then
+          echo "::error::Framework files were modified without PI approval:"
+          echo -e "$VIOLATIONS"
+          echo ""
+          echo "Framework code (src/, scripts/, tests/, config/pipeline*.yaml) must not be modified directly."
+          echo "Please submit a GitHub Issue with label 'framework-bug' or 'framework-enhancement' instead."
+          echo "See AGENTS.md for details."
+          exit 1
+        else
+          echo "✓ No framework violations detected"
+        fi
+    
+    - name: Validate YAML syntax
+      if: always()
+      run: |
+        echo "Validating YAML syntax..."
+        pip install pyyaml
+        
+        # Check all YAML files
+        for file in config/prompts/*.yaml config/*.yaml proposed_schemas/*.yaml; do
+          if [ -f "$file" ]; then
+            echo "Checking $file..."
+            python -c "import yaml; yaml.safe_load(open('$file'))" || {
+              echo "::error::YAML syntax error in $file"
+              exit 1
+            }
+          fi
+        done
+        
+        echo "✓ All YAML files have valid syntax"
+    
+    - name: Run test suite
+      if: always()
+      run: |
+        echo "Running test suite..."
+        pip install -r requirements.txt
+        pytest tests/ -v --tb=short || {
+          echo "::error::Test suite failed"
+          exit 1
+        }
+        echo "✓ All tests passed"
+    
+    - name: Check test coverage
+      if: always()
+      run: |
+        echo "Checking test coverage..."
+        pip install pytest-cov
+        pytest tests/ --cov=src/catalyst_knowledge --cov-report=term-missing --cov-fail-under=80 || {
+          echo "::warning::Test coverage dropped below 80%"
+          echo "Please add tests for new code."
+        }
+  
+  validate-examples:
+    name: Validate Example Outputs
+    runs-on: ubuntu-latest
+    needs: check-framework-modifications
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    
+    - name: Validate F02 example
+      run: |
+        echo "Validating F02 example..."
+        
+        # Check that HTML report exists
+        if [ ! -f "examples/F02/F02_knowledge_report_v3.html" ]; then
+          echo "::error::F02 HTML report not found"
+          exit 1
+        fi
+        
+        # Check file size (should be ~2.77 MB)
+        SIZE=$(stat -f%z "examples/F02/F02_knowledge_report_v3.html" 2>/dev/null || stat -c%s "examples/F02/F02_knowledge_report_v3.html")
+        if [ "$SIZE" -lt 2000000 ] || [ "$SIZE" -gt 4000000 ]; then
+          echo "::warning::F02 HTML report size ($SIZE bytes) is outside expected range (2-4 MB)"
+        fi
+        
+        # Check that report contains key sections
+        for section in "Literature Overview" "Six Dimensions" "Figure Gallery" "Table Explorer" "QA Verification"; do
+          if ! grep -q "$section" "examples/F02/F02_knowledge_report_v3.html"; then
+            echo "::error::F02 HTML report missing section: $section"
+            exit 1
+          fi
+        done
+        
+        echo "✓ F02 example validated"
+    
+    - name: Test HTML generator
+      run: |
+        echo "Testing HTML generator..."
+        python scripts/generate_html_knowledge_report_v3.py || {
+          echo "::error::HTML generator failed"
+          exit 1
+        }
+        echo "✓ HTML generator works"
+  
+  lint:
+    name: Code Linting
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install linters
+      run: |
+        pip install flake8 black mypy
+    
+    - name: Run flake8
+      run: |
+        echo "Running flake8..."
+        flake8 src/ scripts/ tests/ --max-line-length=100 --ignore=E501,W503 || {
+          echo "::warning::flake8 found style issues"
+        }
+    
+    - name: Check black formatting
+      run: |
+        echo "Checking black formatting..."
+        black --check src/ scripts/ tests/ || {
+          echo "::warning::Code is not formatted with black"
+          echo "Run: black src/ scripts/ tests/"
+        }
+    
+    - name: Run mypy
+      run: |
+        echo "Running mypy..."
+        mypy src/ --ignore-missing-imports || {
+          echo "::warning::mypy found type issues"
+        }
+  
+  documentation:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Check README exists
+      run: |
+        if [ ! -f "README.md" ]; then
+          echo "::error::README.md not found"
+          exit 1
+        fi
+        echo "✓ README.md exists"
+    
+    - name: Check docs directory
+      run: |
+        REQUIRED_DOCS=(
+          "docs/PROMPT_SCHEMA_CATALOG.md"
+          "docs/LOCAL_TESTING_GUIDE.md"
+          "docs/PIPELINE_OVERVIEW.md"
+        )
+        
+        for doc in "${REQUIRED_DOCS[@]}"; do
+          if [ ! -f "$doc" ]; then
+            echo "::error::Required documentation missing: $doc"
+            exit 1
+          fi
+        done
+        
+        echo "✓ All required documentation present"
+    
+    - name: Validate markdown links
+      run: |
+        echo "Checking for broken markdown links..."
+        # Simple check for common link patterns
+        grep -r "\[.*\](.*)" docs/ README.md AGENTS.md CONTRIBUTING.md | \
+          grep -v "http" | \
+          grep -v "^Binary" || true
+        echo "✓ Link check complete"
+  
+  report:
+    name: Generate CI Report
+    runs-on: ubuntu-latest
+    needs: [check-framework-modifications, validate-examples, lint, documentation]
+    if: always()
+    
+    steps:
+    - name: Generate report
+      run: |
+        echo "=========================================="
+        echo "  CI Pipeline Report"
+        echo "=========================================="
+        echo ""
+        echo "Framework Protection: ${{ needs.check-framework-modifications.result }}"
+        echo "Example Validation:   ${{ needs.validate-examples.result }}"
+        echo "Code Linting:         ${{ needs.lint.result }}"
+        echo "Documentation:        ${{ needs.documentation.result }}"
+        echo ""
+        echo "=========================================="
+        
+        # Fail if any critical job failed
+        if [ "${{ needs.check-framework-modifications.result }}" == "failure" ]; then
+          echo "::error::Framework protection check failed"
+          exit 1
+        fi
+        
+        if [ "${{ needs.validate-examples.result }}" == "failure" ]; then
+          echo "::error::Example validation failed"
+          exit 1
+        fi
+        
+        echo "✓ CI pipeline complete"

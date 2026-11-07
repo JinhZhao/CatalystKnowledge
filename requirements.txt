@@ -1,0 +1,33 @@
+# Catalyst Knowledge Expert Kit - Python Dependencies
+# Version: 0.1.0
+# Date: 2026-11-07
+
+# Core framework
+pydantic>=2.0.0
+pyyaml>=6.0
+openai>=1.0.0
+requests>=2.31.0
+
+# Data processing
+jsonschema>=4.19.0
+
+# Image processing (for figure/table parsing)
+Pillow>=10.0.0
+
+# PDF parsing (MinerU integration)
+# Note: MinerU is a separate installation, see docs/LOCAL_TESTING_GUIDE.md
+
+# HTML report generation
+jinja2>=3.1.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Development
+black>=23.0.0
+flake8>=6.1.0
+mypy>=1.5.0
+
+# Optional: for advanced PDF processing
+# mineru-py>=0.5.0  # Install separately if needed

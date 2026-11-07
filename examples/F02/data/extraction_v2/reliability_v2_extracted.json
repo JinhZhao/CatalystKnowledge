@@ -1,0 +1,74 @@
+{
+  "dimension": "reliability",
+  "fields": {
+    "time_on_stream": {
+      "field_name": "time_on_stream",
+      "value": "8",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The results in Figure 9 revealed that propane conversion and product selectivity were maintained for 8 h. It suggested that Cu/BN-NS had moderate stability in photothermal ODHP."
+    },
+    "cycle_count": {
+      "field_name": "cycle_count",
+      "value": "NOT_REPORTED",
+      "status": "NOT_REPORTED",
+      "origin": "UNKNOWN_ORIGIN"
+    },
+    "mass_transfer_verification": {
+      "field_name": "mass_transfer_verification",
+      "value": "NOT_REPORTED",
+      "status": "NOT_REPORTED",
+      "origin": "UNKNOWN_ORIGIN"
+    },
+    "reproducibility": {
+      "field_name": "reproducibility",
+      "value": "NOT_REPORTED",
+      "status": "NOT_REPORTED",
+      "origin": "UNKNOWN_ORIGIN"
+    },
+    "deactivation_mechanism": {
+      "field_name": "deactivation_mechanism",
+      "value": "NOT_REPORTED",
+      "status": "NOT_REPORTED",
+      "origin": "UNKNOWN_ORIGIN"
+    },
+    "stability_summary": {
+      "field_name": "stability_summary",
+      "value": "moderate stability in photothermal ODHP",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "It suggested that Cu/BN-NS had moderate stability in photothermal ODHP."
+    }
+  },
+  "validation_warnings": [],
+  "chunk_id": "reliability_full",
+  "chunk_sections": [
+    "s00_open_access",
+    "s01_photothermal_oxidative_dehydrogenation_o",
+    "s02_1_introduction",
+    "s03_2_experimental_section",
+    "s04_2_1_catalyst_preparation",
+    "s05_2_2_catalyst_characterization",
+    "s06_2_3_catalyst_evaluation",
+    "s07_3_results_and_discussion",
+    "s08_3_1_physicochemical_properties_of_bn_sup",
+    "s09_3_2_optical_properties_of_bn_supports_an",
+    "s10_3_3_photo_thermal_catalytic_odhp_perform",
+    "s11_4_conclusion",
+    "s12_data_availability_statement",
+    "s16_publisher_s_note"
+  ],
+  "chunk_char_range": [
+    0,
+    25846
+  ],
+  "chunk_page_range": [
+    0,
+    7
+  ],
+  "merge_notes": "Single chunk, no merge needed",
+  "chunk_count": 1,
+  "source_chunks": [
+    "reliability_full"
+  ]
+}

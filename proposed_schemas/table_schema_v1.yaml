@@ -1,0 +1,308 @@
+# TableSchemaV1 — CANDIDATE
+# Status: ENGINEERING_CANDIDATE / NOT_IMPLEMENTED
+# Date: 2026-11-04
+# Do NOT use in production. Do NOT modify formal V1 schema.
+
+schema_version: "0.1.0-candidate"
+schema_name: "TableSchemaV1"
+based_on:
+  - "Catalysis Schema V1 (src/catalyst_knowledge/schema/catalysis_schema_v1.py)"
+  - "SSPK Extensions (src/catalyst_knowledge/schema/catalysis_schema_v1_extensions.py)"
+  - "Document IR (scripts/document_ir_enhancer_v2.py)"
+  - "NUM-UNIT-001 (config/quantity_definitions.yaml)"
+
+# ============================================================
+# Top-level TableRecord
+# ============================================================
+
+TableRecord:
+  fields:
+    table_id:
+      type: string
+      required: true
+      description: "Unique identifier, e.g. F02_table1"
+    document_id:
+      type: string
+      required: true
+      description: "Reference to parent Document"
+    table_label:
+      type: string
+      required: true
+      description: "Original label from paper, e.g. 'Table 1'"
+    caption:
+      type: string
+      required: true
+      description: "Full caption text from original paper"
+    table_type:
+      type: enum
+      required: true
+      enum_ref: "#/TableType"
+    column_headers:
+      type: array
+      item_type: "#/ColumnHeader"
+      required: true
+    header_hierarchy:
+      type: object
+      required: false
+      description: "Multi-level header structure"
+    rows:
+      type: array
+      item_type: "#/TableRowRecord"
+      required: true
+    footnotes:
+      type: array
+      item_type: string
+      required: false
+    source_anchor:
+      type: "SourceAnchor"
+      required: true
+      description: "Anchor to Document IR element"
+    related_claims:
+      type: array
+      item_type: "ClaimRef"
+      required: false
+    extraction_status:
+      type: enum
+      required: true
+      enum_ref: "#/TableExtractionStatus"
+
+# ============================================================
+# ColumnHeader
+# ============================================================
+
+ColumnHeader:
+  fields:
+    header_id:
+      type: string
+      required: true
+    text:
+      type: string
+      required: true
+    unit:
+      type: string
+      required: false
+    level:
+      type: int
+      required: true
+      description: "Header nesting level (0 = top-level)"
+    parent_header_id:
+      type: string
+      required: false
+    quantity_type:
+      type: string
+      required: false
+      description: "Mapped quantity type from NUM-UNIT-001 registry"
+
+# ============================================================
+# TableRowRecord
+# ============================================================
+
+TableRowRecord:
+  fields:
+    row_id:
+      type: string
+      required: true
+      description: "Unique row identifier"
+    row_label:
+      type: string
+      required: false
+      description: "Row header/label text"
+    row_index:
+      type: int
+      required: true
+      description: "Original row index in table (0-based)"
+    sample_refs:
+      type: array
+      item_type: "CatalystSampleRef"
+      required: false
+      description: "References to CatalystSample objects"
+    experiment_refs:
+      type: array
+      item_type: "ExperimentRef"
+      required: false
+      description: "References to Experiment objects"
+    conditions:
+      type: object
+      required: false
+      description: "Experimental conditions for this row"
+      fields:
+        temperature: { type: "#/ValueWithUnit" }
+        pressure: { type: "#/ValueWithUnit" }
+        time: { type: "#/ValueWithUnit" }
+        solvent: { type: string }
+        atmosphere: { type: string }
+        other: { type: "map[string, #/ValueWithUnit]" }
+    quantities:
+      type: array
+      item_type: "QuantityRecordRef"
+      required: false
+    observations:
+      type: array
+      item_type: string
+      required: false
+    evidence_refs:
+      type: array
+      item_type: "EvidenceRef"
+      required: false
+    source_anchor_ids:
+      type: array
+      item_type: string
+      required: true
+    cells:
+      type: array
+      item_type: "#/CellRecord"
+      required: true
+
+# ============================================================
+# CellRecord
+# ============================================================
+
+CellRecord:
+  fields:
+    cell_id:
+      type: string
+      required: true
+      description: "Unique cell identifier, e.g. F02_table1_r2c3"
+    row_index:
+      type: int
+      required: true
+    column_index:
+      type: int
+      required: true
+    raw_text:
+      type: string
+      required: true
+      description: "Original cell text content"
+    header_ref:
+      type: string
+      required: false
+      description: "Reference to ColumnHeader"
+    raw_value:
+      type: string
+      required: false
+      description: "Extracted numeric value (original form)"
+    normalized_value:
+      type: float
+      required: false
+      description: "Normalized numeric value"
+    raw_unit:
+      type: string
+      required: false
+      description: "Original unit string"
+    normalized_unit:
+      type: string
+      required: false
+      description: "SI or domain-standard unit"
+    quantity_ref:
+      type: string
+      required: false
+      description: "Reference to QuantityRecord"
+    source_anchor_id:
+      type: string
+      required: true
+      description: "Cell-level SourceAnchor for traceability"
+    record_origin:
+      type: enum
+      required: true
+      enum_ref: "#/RecordOrigin"
+      description: "Data origin — MUST distinguish source"
+    is_footnote_referenced:
+      type: boolean
+      required: false
+    footnote_text:
+      type: string
+      required: false
+
+# ============================================================
+# ValueWithUnit (helper)
+# ============================================================
+
+ValueWithUnit:
+  fields:
+    value:
+      type: float
+      required: true
+    unit:
+      type: string
+      required: true
+    raw_text:
+      type: string
+      required: false
+
+# ============================================================
+# Enumerations
+# ============================================================
+
+TableType:
+  description: "Classification of table types"
+  values:
+    - CATALYST_CHARACTERIZATION
+    - REACTION_CONDITIONS
+    - PERFORMANCE_RESULTS
+    - COMPARISON_TABLE
+    - THERMODYNAMIC_DATA
+    - KINETIC_DATA
+    - COMPOSITION_TABLE
+    - PATENT_EXAMPLES
+    - LITERATURE_DATA
+    - OTHER
+
+TableExtractionStatus:
+  description: "Table extraction completeness"
+  values:
+    - FULLY_EXTRACTED
+    - PARTIALLY_EXTRACTED
+    - IMAGE_ONLY
+    - NOT_ATTEMPTED
+  constraint: "IMAGE_ONLY tables MUST NOT have fabricated cell data"
+
+RecordOrigin:
+  description: "Data provenance — critical for avoiding cross-contamination"
+  values:
+    - ORIGINAL_EXPERIMENT
+    - CONTROL_EXPERIMENT
+    - LITERATURE_REFERENCE
+    - THEORETICAL_CALCULATION
+    - PATENT_EXAMPLE
+  constraint: "MUST distinguish data sources. Different samples/conditions MUST NOT be mixed."
+
+# ============================================================
+# Compatibility Mapping
+# ============================================================
+
+compatibility_mapping:
+  TableRecord.document_id -> Document.document_id
+  TableRecord.source_anchor -> SourceAnchor (Document IR)
+  TableRowRecord.sample_refs[] -> CatalystSample (Schema V1)
+  TableRowRecord.experiment_refs[] -> Experiment (Schema V1)
+  TableRowRecord.quantities[] -> QuantityRecord (NUM-UNIT-001)
+  TableRowRecord.evidence_refs[] -> Evidence (Schema V1 / SSPK Extension)
+  CellRecord.quantity_ref -> QuantityRecord (NUM-UNIT-001)
+  CellRecord.source_anchor_id -> SourceAnchor (Document IR)
+  CellRecord.raw_value + raw_unit -> NUM-UNIT-001 normalization pipeline
+  TableRecord.related_claims[] -> Assertion/Claim (Schema V1 / SSPK Extension)
+
+# ============================================================
+# RapidTable Integration
+# ============================================================
+
+rapidtable_integration:
+  principle: "Prefer reusing RapidTable HTML output for structure; LLM handles semantic understanding only"
+  mapping:
+    - "RapidTable HTML -> TableRecord structure (headers, rows, cells)"
+    - "LLM -> cell semantic interpretation (quantity type, conditions, sample identity)"
+    - "NUM-UNIT-001 -> value normalization and unit conversion"
+  constraint: "LLM MUST NOT replace structural parsing or numeric normalization"
+
+# ============================================================
+# Deduplication Rules
+# ============================================================
+
+deduplication:
+  principle: "Same quantity in Table and Figure/Text uses single QuantityRecord with multiple SourceAnchors"
+  rules:
+    - "One QuantityRecord per unique scientific measurement"
+    - "Each source (Table cell, Figure panel, Text passage) creates its own SourceAnchor"
+    - "Record source location and context for each anchor"
+    - "Do NOT merge measurements under different conditions even if same name"
+    - "Preserve original row/column indices for traceability"

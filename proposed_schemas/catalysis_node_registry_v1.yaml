@@ -1,0 +1,777 @@
+# ============================================================================
+# Catalysis Node Registry V1
+# ============================================================================
+# Status: ENGINEERING_CANDIDATE / NOT_IMPLEMENTED
+# Version: 1.0.0-candidate
+# Created: 2026-11-04
+# Purpose: Define candidate scientific object types (Nodes) organized in
+#          6 groups, with guidance on which should be independent entities
+#          vs. properties/enums/subtypes.
+# Constraint: Does NOT modify V1 frozen object model.
+#             Existing objects (CatalystSample, Reaction, Experiment,
+#             Observation, Evidence, QuantityRecord, Fact, Claim, etc.)
+#             are preserved.
+# ============================================================================
+
+registry_metadata:
+  registry_id: CATALYSIS-NODE-REGISTRY-V1
+  status: ENGINEERING_CANDIDATE
+  version: "1.0.0-candidate"
+  created: "2026-11-04"
+  total_candidate_nodes: 42
+  groups: 6
+  design_principles:
+    - "Distinguish scientific entities, experimental events, measurements, knowledge claims, and document elements."
+    - "CatalystSample must be distinguished from Catalyst (abstract type)."
+    - "Experiment must be distinguished from Observation and Measurement."
+    - "Figure/FigurePanel and Table/TableRow/TableCell maintain hierarchical relationships."
+    - "Patent objects retain patent-specific semantics, not equivalent to experimental facts."
+    - "Evaluate which objects should be independent Nodes vs. properties/enums/subtypes."
+
+# ============================================================================
+# Group N1: Catalyst Objects
+# ============================================================================
+n1_catalyst_objects:
+  group_id: N1
+  group_name: Catalyst Objects
+  description: >
+    Physical and abstract catalyst entities, their components, active sites,
+    supports, promoters, precursors, samples, and structural descriptions.
+
+  nodes:
+    - id: Catalyst
+      status: CANDIDATE_INDEPENDENT_NODE
+      v1_equivalent: null
+      description: >
+        Abstract catalyst type definition. Represents the general catalyst
+        concept (e.g., "Cu/BN catalyst") independent of any specific sample.
+      should_be: INDEPENDENT_NODE
+      rationale: >
+        Catalyst (abstract) and CatalystSample (physical instance) are
+        fundamentally different. Multiple samples can instantiate the same
+        catalyst type with different preparations.
+      properties:
+        - name: string
+        - catalyst_type: enum
+        - active_component: string
+        - support: string
+        - promoter: string[]
+      theme_coverage: [T01]
+
+    - id: CatalystComponent
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        A component of a catalyst (active phase, support, promoter, binder).
+      should_be: PROPERTY_OF Catalyst
+      rationale: >
+        Components are attributes of a Catalyst, not independent entities.
+        Represent as structured property with role enum.
+      properties:
+        - name: string
+        - role: enum (ACTIVE_COMPONENT | SUPPORT | PROMOTER | BINDER | OTHER)
+        - chemical_formula: string
+        - loading: QuantityRecord ref
+      theme_coverage: [T01]
+
+    - id: ActiveSite
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        The specific site on a catalyst where the reaction occurs.
+      should_be: PROPERTY_OF Catalyst (with possible independent reference)
+      rationale: >
+        Active sites are usually described as properties of the catalyst.
+        May become independent if multiple catalysts share site descriptions.
+      properties:
+        - site_type: string
+        - characterization_evidence: Evidence ref[]
+        - proposed_role: string
+      theme_coverage: [T01, T03, T06]
+
+    - id: Support
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: "catalyst_design.support (string field)"
+      description: >
+        The support material of a catalyst.
+      should_be: PROPERTY_OF Catalyst (upgrade to NODE if multiple catalysts share same support)
+      rationale: >
+        Currently a string in V1 six-dimension. Should become a structured
+        node if support characterization data (BET, XRD, etc.) needs to be
+        independently referenced.
+      properties:
+        - material: string
+        - morphology: string
+        - surface_area: QuantityRecord ref
+        - characterization_refs: Evidence ref[]
+      theme_coverage: [T01, T03]
+
+    - id: Promoter
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        A substance added to enhance catalyst performance.
+      should_be: PROPERTY_OF Catalyst
+      properties:
+        - name: string
+        - role: enum (ELECTRONIC | STRUCTURAL | OTHER)
+        - loading: QuantityRecord ref
+      theme_coverage: [T01]
+
+    - id: Precursor
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        The precursor material used in catalyst synthesis.
+      should_be: PROPERTY_OF Catalyst (linked via DERIVED_FROM)
+      properties:
+        - name: string
+        - chemical_formula: string
+      theme_coverage: [T01]
+
+    - id: CatalystSample
+      status: V1_FROZEN
+      v1_equivalent: "scientific_objects.CatalystSample"
+      description: >
+        A physical instance of a catalyst, prepared by a specific method.
+        This is the primary sample-level entity in V1.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      properties:
+        - object_id: string
+        - document_id: string
+        - name: string
+        - catalyst_ref: Catalyst ref
+        - roles: object
+        - synthesis_method: string
+        - characterization_evidence: object
+        - source_anchor: SourceAnchor
+      theme_coverage: [T01, T03, T08]
+
+    - id: CatalystStructure
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        Structural description of a catalyst (crystal structure, morphology,
+        particle size, etc.).
+      should_be: PROPERTY_OF Catalyst / CatalystSample
+      rationale: >
+        Structure is an attribute, but characterization evidence linking to
+        it may warrant independent Figure/Spectrum references.
+      properties:
+        - crystal_structure: string
+        - morphology: string
+        - particle_size: QuantityRecord ref
+        - evidence_refs: Evidence ref[]
+      theme_coverage: [T01, T03, T06]
+
+# ============================================================================
+# Group N2: Chemical Reaction Objects
+# ============================================================================
+n2_reaction_objects:
+  group_id: N2
+  group_name: Chemical Reaction Objects
+  description: >
+    Reaction entities, participants (reactants, products, intermediates,
+    byproducts), pathways, steps, and conditions.
+
+  nodes:
+    - id: Reaction
+      status: V1_FROZEN
+      v1_equivalent: "scientific_objects.Reaction"
+      description: >
+        A chemical reaction catalyzed by a catalyst.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      properties:
+        - object_id: string
+        - document_id: string
+        - reaction_type: string
+        - proposed_pathway: string
+        - intermediates: string[]
+        - computational_support: string | null
+        - experimental_support: string
+        - source_anchor: SourceAnchor
+      theme_coverage: [T02, T05]
+
+    - id: Reactant
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        A substance consumed in a reaction.
+      should_be: PROPERTY_OF Reaction (via CONSUMES relationship)
+      properties:
+        - name: string
+        - chemical_formula: string
+        - amount: QuantityRecord ref
+      theme_coverage: [T02, T08]
+
+    - id: Product
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        A substance produced by a reaction.
+      should_be: PROPERTY_OF Reaction (via PRODUCES relationship)
+      properties:
+        - name: string
+        - chemical_formula: string
+        - yield: QuantityRecord ref
+        - selectivity: QuantityRecord ref
+      theme_coverage: [T02, T04]
+
+    - id: Intermediate
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: "mechanism.intermediates (string[])"
+      description: >
+        A transient species in a reaction pathway.
+      should_be: PROPERTY_OF Reaction / ReactionStep
+      rationale: >
+        Currently stored as string array in V1 mechanism dimension.
+        Should become structured if intermediate evidence needs tracking.
+      properties:
+        - name: string
+        - detection_evidence: Evidence ref[]
+        - lifetime: string
+      theme_coverage: [T02, T05]
+
+    - id: Byproduct
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        An undesired product of a reaction.
+      should_be: PROPERTY_OF Reaction (via HAS_BYPRODUCT relationship)
+      properties:
+        - name: string
+        - amount: QuantityRecord ref
+      theme_coverage: [T02]
+
+    - id: ReactionPathway
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: "mechanism.proposed_pathway (string)"
+      description: >
+        The overall sequence of steps in a reaction.
+      should_be: PROPERTY_OF Reaction (upgrade to NODE if multiple pathways compete)
+      properties:
+        - description: string
+        - steps: ReactionStep ref[]
+        - evidence_strength: enum
+      theme_coverage: [T02, T05]
+
+    - id: ReactionStep
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        An elementary step in a reaction pathway.
+      should_be: PROPERTY_OF ReactionPathway
+      properties:
+        - step_number: int
+        - description: string
+        - is_rate_determining: boolean
+        - activation_energy: QuantityRecord ref
+      theme_coverage: [T05]
+
+    - id: ReactionCondition
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: "performance.reaction_conditions (string)"
+      description: >
+        Conditions under which a reaction is performed.
+      should_be: PROPERTY_OF Experiment (structured)
+      rationale: >
+        Currently a free-text string in V1. Should be structured to enable
+        quantitative comparison across experiments.
+      properties:
+        - temperature: QuantityRecord ref
+        - pressure: QuantityRecord ref
+        - space_velocity: QuantityRecord ref
+        - solvent: string
+        - ph: float
+        - other_conditions: object
+      theme_coverage: [T04, T08]
+
+# ============================================================================
+# Group N3: Experiment Objects
+# ============================================================================
+n3_experiment_objects:
+  group_id: N3
+  group_name: Experiment Objects
+  description: >
+    Experimental events, methods, observations, measurements, reactors,
+    conditions, control groups, and comparative experiments.
+
+  nodes:
+    - id: Experiment
+      status: V1_FROZEN
+      v1_equivalent: "scientific_objects.Experiment"
+      description: >
+        A complete experimental procedure with conditions, observations,
+        and measurements.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      properties:
+        - object_id: string
+        - document_id: string
+        - reaction_conditions: string
+        - metrics: Metric[]
+        - time_on_stream: string | null
+        - cycle_count: string | null
+        - integration_status: enum
+        - source_anchor: SourceAnchor
+      theme_coverage: [T04, T07, T08]
+
+    - id: ExperimentalMethod
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        The method or protocol used in an experiment.
+      should_be: PROPERTY_OF Experiment
+      properties:
+        - method_name: string
+        - method_type: enum (SYNTHESIS | CHARACTERIZATION | REACTION | OTHER)
+        - protocol_details: string
+      theme_coverage: [T01, T03, T08]
+
+    - id: Observation
+      status: V1_FROZEN
+      v1_equivalent: "scientific_objects.Observation"
+      description: >
+        A specific observation made during or after an experiment.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      properties:
+        - object_id: string
+        - document_id: string
+        - metric_name: string
+        - value: string
+        - conditions: string
+        - unit: string | null
+        - source_anchor: SourceAnchor
+      theme_coverage: [T04, T06, T07]
+
+    - id: Measurement
+      status: CANDIDATE_INDEPENDENT_NODE
+      v1_equivalent: null
+      description: >
+        A quantitative measurement result, distinct from qualitative Observation.
+      should_be: INDEPENDENT_NODE (or structured QuantityRecord variant)
+      rationale: >
+        Observation is qualitative/semi-quantitative; Measurement is fully
+        quantitative with uncertainty. May merge with QuantityRecord if
+        the distinction is not operationally useful.
+      properties:
+        - measured_quantity: string
+        - value: float
+        - uncertainty: float
+        - unit: string
+        - method_ref: ExperimentalMethod ref
+        - instrument: string
+      theme_coverage: [T03, T04]
+
+    - id: Reactor
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        The reactor type and configuration used in an experiment.
+      should_be: PROPERTY_OF Experiment
+      properties:
+        - reactor_type: enum (FIXED_BED | BATCH | CONTINUOUS_FLOW | OTHER)
+        - volume: QuantityRecord ref
+        - material: string
+      theme_coverage: [T08]
+
+    - id: ExperimentalCondition
+      status: CANDIDATE_STRUCTURED_SET
+      v1_equivalent: "Experiment.reaction_conditions (string)"
+      description: >
+        Structured set of experimental conditions (temperature, pressure,
+        flow rate, concentration, etc.).
+      should_be: PROPERTY_OF Experiment (structured)
+      rationale: >
+        Currently free text. Structuring enables quantitative comparison
+        and is critical for T08 Process & Operational Conditions theme.
+      properties:
+        - temperature: QuantityRecord ref
+        - pressure: QuantityRecord ref
+        - flow_rate: QuantityRecord ref
+        - concentration: QuantityRecord ref
+        - time: QuantityRecord ref
+        - atmosphere: string
+      theme_coverage: [T04, T08]
+
+    - id: ControlGroup
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        A control experiment used for comparison.
+      should_be: PROPERTY_OF Experiment (via reference)
+      properties:
+        - control_type: enum (BLANK | REFERENCE_CATALYST | NO_CATALYST | OTHER)
+        - description: string
+        - experiment_ref: Experiment ref
+      theme_coverage: [T04, T07]
+
+    - id: ComparativeExperiment
+      status: CANDIDATE_RELATIONSHIP
+      v1_equivalent: null
+      description: >
+        A relationship between experiments that compare conditions or catalysts.
+      should_be: RELATIONSHIP between Experiment nodes
+      rationale: >
+        Not a separate node type but a relationship pattern.
+      theme_coverage: [T04, T06, T07]
+
+# ============================================================================
+# Group N4: Scientific Data & Multimodal Objects
+# ============================================================================
+n4_data_multimodal_objects:
+  group_id: N4
+  group_name: Scientific Data & Multimodal Objects
+  description: >
+    Quantitative records, spectra, figures, figure panels, tables, table
+    rows/cells, equations, calculation results, and document elements.
+
+  nodes:
+    - id: QuantityRecord
+      status: V1_FROZEN
+      v1_equivalent: "quantity_records (top-level)"
+      description: >
+        A quantitative measurement with value, unit, and conditions.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      theme_coverage: [T04, T08]
+
+    - id: Spectrum
+      status: CANDIDATE_INDEPENDENT_NODE
+      v1_equivalent: null
+      description: >
+        A spectral measurement (XRD, XPS, Raman, FTIR, UV-Vis, etc.).
+      should_be: INDEPENDENT_NODE (linked to Figure/FigurePanel)
+      rationale: >
+        Spectra are distinct from generic figures; they have axis types,
+        peak positions, and interpretation.
+      properties:
+        - spectrum_type: enum (XRD | XPS | RAMAN | FTIR | UV_VIS | TPR | TPD | BET | OTHER)
+        - figure_ref: Figure ref
+        - peak_positions: QuantityRecord ref[]
+        - interpretation: string
+      theme_coverage: [T03]
+
+    - id: Figure
+      status: V1_FROZEN_WITH_EXTENSION
+      v1_equivalent: "figures[] + figure_associations[]"
+      description: >
+        A scientific figure in a document, with caption and panels.
+      should_be: INDEPENDENT_NODE (V1 exists, extend with science content)
+      theme_coverage: [T03, T04, T06]
+
+    - id: FigurePanel
+      status: CANDIDATE_INDEPENDENT_NODE
+      v1_equivalent: null
+      description: >
+        A sub-panel within a figure (e.g., Figure 1a, 1b).
+      should_be: INDEPENDENT_NODE (child of Figure)
+      properties:
+        - panel_label: string
+        - figure_ref: Figure ref
+        - content_description: string
+        - source_anchor: SourceAnchor
+      theme_coverage: [T03, T04]
+
+    - id: Table
+      status: V1_FROZEN_WITH_EXTENSION
+      v1_equivalent: "tables[]"
+      description: >
+        A scientific table in a document.
+      should_be: INDEPENDENT_NODE (V1 exists, extend with science content)
+      theme_coverage: [T04, T08]
+
+    - id: TableRow
+      status: CANDIDATE_INDEPENDENT_NODE
+      v1_equivalent: null
+      description: >
+        A row in a scientific table, with semantic meaning.
+      should_be: INDEPENDENT_NODE (child of Table)
+      properties:
+        - row_index: int
+        - row_label: string
+        - table_ref: Table ref
+        - sample_refs: CatalystSample ref[]
+        - experiment_refs: Experiment ref[]
+      theme_coverage: [T04, T08]
+
+    - id: TableCell
+      status: CANDIDATE_INDEPENDENT_NODE
+      v1_equivalent: null
+      description: >
+        A cell in a scientific table, containing data.
+      should_be: INDEPENDENT_NODE (child of TableRow)
+      properties:
+        - row_index: int
+        - column_index: int
+        - raw_text: string
+        - raw_value: string
+        - normalized_value: float
+        - normalized_unit: string
+        - quantity_ref: QuantityRecord ref
+        - row_ref: TableRow ref
+      theme_coverage: [T04, T08]
+
+    - id: Equation
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: "document_structure.equation_elements"
+      description: >
+        A mathematical equation or chemical reaction equation.
+      should_be: PROPERTY_OF Document (with possible independent reference)
+      properties:
+        - equation_text: string
+        - equation_type: enum (CHEMICAL_REACTION | MATHEMATICAL | OTHER)
+        - page: int
+        - element_id: string
+      theme_coverage: [T05]
+
+    - id: CalculationResult
+      status: CANDIDATE_PROPERTY
+      v1_equivalent: null
+      description: >
+        A result from computational calculation (DFT, kinetic modeling, etc.).
+      should_be: PROPERTY_OF Experiment / Reaction (linked via Evidence)
+      properties:
+        - calculation_type: enum (DFT | KINETIC_MODEL | THERMODYNAMIC | OTHER)
+        - result_description: string
+        - computational_details: string
+      theme_coverage: [T05]
+
+    - id: DocumentElement
+      status: V1_FROZEN
+      v1_equivalent: "document_structure.total_elements"
+      description: >
+        A generic element in a document (text, figure, table, equation).
+      should_be: BASE_TYPE (V1 frozen)
+      theme_coverage: [T01, T02, T03, T04, T05, T06, T07, T08]
+
+# ============================================================================
+# Group N5: Scientific Knowledge Objects
+# ============================================================================
+n5_knowledge_objects:
+  group_id: N5
+  group_name: Scientific Knowledge Objects
+  description: >
+    Facts, claims, evidence, limitations, negative results, uncertainties,
+    alternative explanations, hypotheses, and open questions.
+
+  nodes:
+    - id: Fact
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.facts"
+      description: >
+        A verified scientific fact extracted from the document.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      theme_coverage: [T01, T02, T03, T04, T05, T06, T07, T08]
+
+    - id: Claim
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.claims"
+      description: >
+        A scientific claim made by the authors.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      theme_coverage: [T01, T02, T03, T04, T05, T06, T07, T08]
+
+    - id: Evidence
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.evidence"
+      description: >
+        Scientific evidence supporting or contradicting a claim.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      theme_coverage: [T01, T02, T03, T04, T05, T06, T07, T08]
+
+    - id: Limitation
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.limitations"
+      description: >
+        A stated limitation of the study or findings.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      theme_coverage: [T07]
+
+    - id: NegativeResult
+      status: ENGINEERING_CANDIDATE
+      v1_equivalent: null
+      description: >
+        A negative or null result (no activity, deactivation, performance
+        decrease, control not supporting hypothesis).
+      should_be: INDEPENDENT_NODE (candidate)
+      rationale: >
+        Negative results are scientifically important but currently not
+        explicitly modeled. Must be distinguished from Limitation.
+      properties:
+        - result_description: string
+        - expected_outcome: string
+        - actual_outcome: string
+        - evidence_ref: Evidence ref
+        - source_anchor: SourceAnchor
+        - knowledge_origin: enum (AUTHOR_STATED | DIRECT_OBSERVATION | SYSTEM_INFERRED)
+      theme_coverage: [T04, T07]
+
+    - id: Uncertainty
+      status: ENGINEERING_CANDIDATE
+      v1_equivalent: null
+      description: >
+        An uncertainty annotation on a scientific claim or measurement.
+      should_be: PROPERTY_OF Claim / QuantityRecord (candidate)
+      rationale: >
+        Uncertainty is typically an attribute of a claim or measurement,
+        not an independent entity.
+      properties:
+        - uncertainty_type: enum (MEASUREMENT_ERROR | MODEL_UNCERTAINTY | SAMPLE_VARIABILITY | OTHER)
+        - value_range: string
+        - confidence_level: float
+        - description: string
+      theme_coverage: [T04, T05]
+
+    - id: AlternativeExplanation
+      status: ENGINEERING_CANDIDATE
+      v1_equivalent: null
+      description: >
+        An alternative explanation or competing hypothesis for an observation.
+      should_be: INDEPENDENT_NODE (candidate, linked to Claim/Evidence)
+      properties:
+        - explanation_text: string
+        - target_claim_ref: Claim ref
+        - supporting_evidence: Evidence ref[]
+        - knowledge_origin: enum (AUTHOR_STATED | SYSTEM_INFERRED)
+      theme_coverage: [T05, T06]
+
+    - id: Hypothesis
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.hypotheses"
+      description: >
+        A scientific hypothesis proposed in the document.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      theme_coverage: [T05, T06]
+
+    - id: OpenQuestion
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.open_questions"
+      description: >
+        An open scientific question identified in the document.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      theme_coverage: [T05, T06, T07]
+
+# ============================================================================
+# Group N6: Research Decision Objects
+# ============================================================================
+n6_decision_objects:
+  group_id: N6
+  group_name: Research Decision Objects
+  description: >
+    Research questions, experiment proposals, feasibility assessments,
+    and validation plans.
+
+  nodes:
+    - id: ResearchQuestion
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.open_questions (subset)"
+      description: >
+        A research question that the study aims to answer.
+      should_be: INDEPENDENT_NODE (V1 frozen, currently in open_questions)
+      theme_coverage: [T01, T02, T03, T04, T05, T06, T07, T08]
+
+    - id: ExperimentProposal
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.experiment_proposals"
+      description: >
+        A proposed experiment to test a hypothesis or answer a question.
+      should_be: INDEPENDENT_NODE (V1 frozen, currently 0/4 reports)
+      theme_coverage: [T04, T05]
+
+    - id: FeasibilityAssessment
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.feasibility_assessments"
+      description: >
+        An assessment of the feasibility of a proposed approach.
+      should_be: INDEPENDENT_NODE (V1 frozen)
+      theme_coverage: [T04, T08]
+
+    - id: ValidationPlan
+      status: V1_FROZEN
+      v1_equivalent: "knowledge_objects.validation_plans"
+      description: >
+        A plan for validating a claim or hypothesis.
+      should_be: INDEPENDENT_NODE (V1 frozen, currently 1/4 reports)
+      theme_coverage: [T04, T05]
+
+# ============================================================================
+# Patent-Specific Objects (preserved, not merged with experimental objects)
+# ============================================================================
+patent_specific_objects:
+  note: >
+    Patent objects retain patent-specific semantics and must NOT be
+    conflated with experimental facts.
+
+  nodes:
+    - id: PatentClaim
+      status: V1_FROZEN
+      v1_equivalent: "scientific_objects.PatentClaim"
+      description: >
+        A claim in a patent document.
+      should_be: INDEPENDENT_NODE (V1 frozen, patent-specific)
+      theme_coverage: [T01, T02, T04]
+
+    - id: PatentExample
+      status: V1_FROZEN
+      v1_equivalent: "scientific_objects.PatentExample"
+      description: >
+        An example or embodiment in a patent document.
+      should_be: INDEPENDENT_NODE (V1 frozen, patent-specific)
+      theme_coverage: [T01, T02, T04]
+
+# ============================================================================
+# Node Classification Summary
+# ============================================================================
+node_classification_summary:
+  v1_frozen_independent_nodes:
+    - CatalystSample
+    - Reaction
+    - Experiment
+    - Observation
+    - QuantityRecord
+    - Figure (with extension needed)
+    - Table (with extension needed)
+    - DocumentElement
+    - Fact
+    - Claim
+    - Evidence
+    - Limitation
+    - Hypothesis
+    - OpenQuestion
+    - ResearchQuestion
+    - ExperimentProposal
+    - FeasibilityAssessment
+    - ValidationPlan
+    - PatentClaim
+    - PatentExample
+  candidate_independent_nodes:
+    - Catalyst (abstract type, distinct from CatalystSample)
+    - Spectrum
+    - FigurePanel
+    - TableRow
+    - TableCell
+    - NegativeResult (ENGINEERING_CANDIDATE)
+    - AlternativeExplanation (ENGINEERING_CANDIDATE)
+    - Measurement
+  candidate_properties_or_structured_sets:
+    - CatalystComponent (property of Catalyst)
+    - ActiveSite (property of Catalyst)
+    - Support (property of Catalyst, upgrade candidate)
+    - Promoter (property of Catalyst)
+    - Precursor (property of Catalyst)
+    - CatalystStructure (property of Catalyst/CatalystSample)
+    - Reactant (property of Reaction)
+    - Product (property of Reaction)
+    - Intermediate (property of Reaction, upgrade candidate)
+    - Byproduct (property of Reaction)
+    - ReactionPathway (property of Reaction, upgrade candidate)
+    - ReactionStep (property of ReactionPathway)
+    - ReactionCondition (property of Experiment, structured)
+    - ExperimentalMethod (property of Experiment)
+    - Reactor (property of Experiment)
+    - ExperimentalCondition (structured set, property of Experiment)
+    - ControlGroup (property of Experiment)
+    - Equation (property of Document)
+    - CalculationResult (property of Experiment/Reaction)
+    - Uncertainty (property of Claim/QuantityRecord)
+  candidate_relationships_not_nodes:
+    - ComparativeExperiment (relationship pattern, not a node)

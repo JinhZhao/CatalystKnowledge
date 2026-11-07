@@ -1,0 +1,70 @@
+{
+  "success": true,
+  "data": {
+    "descriptors": [
+      {
+        "descriptor_name": "Cu nanoparticle size",
+        "descriptor_values": "7.4-12.7 nm",
+        "correlated_property": "propane conversion",
+        "correlation_type": "positive",
+        "status": "REPORTED",
+        "origin": "ORIGINAL_EXPERIMENT",
+        "source_quote": "The average sizes of Cu nanoparticles on the three catalysts were analyzed, and they were 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP, respectively"
+      },
+      {
+        "descriptor_name": "BET surface area",
+        "descriptor_values": "4.6-13.2 m2/g",
+        "correlated_property": "catalytic activity",
+        "correlation_type": "positive",
+        "status": "REPORTED",
+        "origin": "ORIGINAL_EXPERIMENT",
+        "source_quote": "The specific surface areas of BN-NS, BN-NF, and BN-NP were 4.6–13.2 m2 g−1"
+      },
+      {
+        "descriptor_name": "Cu loading",
+        "descriptor_values": "1.0 wt%",
+        "correlated_property": "LSPR effect",
+        "correlation_type": "positive",
+        "status": "REPORTED",
+        "origin": "ORIGINAL_EXPERIMENT",
+        "source_quote": "The theoretical loading amounts of Cu on the three Cu/BN catalysts were 1.0 wt%"
+      },
+      {
+        "descriptor_name": "Light absorption range",
+        "descriptor_values": "200-800 nm",
+        "correlated_property": "photothermal catalytic performance",
+        "correlation_type": "positive",
+        "status": "REPORTED",
+        "origin": "ORIGINAL_EXPERIMENT",
+        "source_quote": "The light-harvesting capacities of BN supports and Cu/BN catalysts were characterized by UV-vis spectroscopy"
+      }
+    ],
+    "relationship_summary": {
+      "value": "The catalytic activity of Cu/BN catalysts in ODHP is positively correlated with Cu nanoparticle size, BET surface area, and light absorption range. The LSPR effect of Cu nanoparticles enhances photothermal catalytic performance under visible light irradiation.",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The localized surface plasmon resonance (LSPR) effect of Cu nanoparticles further enhanced the photothermal catalytic performances of Cu/BN catalysts under visible light irradiation."
+    },
+    "evidence_strength": {
+      "value": "moderate",
+      "justification": "Multiple descriptors are correlated with catalytic performance, but the study lacks detailed mechanistic insights and a broader range of experimental conditions.",
+      "status": "REPORTED",
+      "origin": "SYSTEM_INFERRED"
+    },
+    "data_points_count": {
+      "value": "6",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT"
+    },
+    "morphology_activity_link": {
+      "value": "Catalysts with nanosheet (NS) and nanofiber (NF) morphologies showed higher activity compared to nanoparticles (NP), likely due to their larger specific surface areas and better exposure of active sites.",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The higher activities of Cu/BN-NS and Cu/BN-NF might be due to their relatively larger specific surface area, which exposed more active sites for reactant adsorption and subsequent reaction procedure."
+    }
+  },
+  "error": null,
+  "attempts": 1,
+  "raw_response": "{\n  \"descriptors\": [\n    {\n      \"descriptor_name\": \"Cu nanoparticle size\",\n      \"descriptor_values\": \"7.4-12.7 nm\",\n      \"correlated_property\": \"propane conversion\",\n      \"correlation_type\": \"positive\",\n      \"status\": \"REPORTED\",\n      \"origin\": \"ORIGINAL_EXPERIMENT\",\n      \"source_quote\": \"The average sizes of Cu nanoparticles on the three catalysts were analyzed, and they were 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP, respectively\"\n    },\n    {\n      \"descriptor_name\": \"BET surface area\",\n      \"descriptor_values\": \"4.6-13.2 m2/g\",\n      \"correlated_property\": \"catalytic activity\",\n      \"correlation_type\": \"positive\",\n      \"status\": \"REPORTED\",\n      \"origin\": \"ORIGINAL_EXPERIMENT\",\n      \"source_quote\": \"The specific surface areas of BN-NS, BN-NF, and BN-NP were 4.6–13.2 m2 g−1\"\n    },\n    {\n      \"descriptor_name\": \"Cu loading\",\n      \"descriptor_values\": \"1.0 wt%\",\n      \"correlated_property\": \"LSPR effect\",\n      \"correlation_type\": \"positive\",\n      \"status\": \"REPORTED\",\n      \"origin\": \"ORIGINAL_EXPERIMENT\",\n      \"source_quote\": \"The theoretical loading amounts of Cu on the three Cu/BN catalysts were 1.0 wt%\"\n    },\n    {\n      \"descriptor_name\": \"Light absorption range\",\n      \"descriptor_values\": \"200-800 nm\",\n      \"correlated_property\": \"photothermal catalytic performance\",\n      \"correlation_type\": \"positive\",\n      \"status\": \"REPORTED\",\n      \"origin\": \"ORIGINAL_EXPERIMENT\",\n      \"source_quote\": \"The light-harvesting capacities of BN supports and Cu/BN catalysts were characterized by UV-vis spectroscopy\"\n    }\n  ],\n  \"relationship_summary\": {\n    \"value\": \"The catalytic activity of Cu/BN catalysts in ODHP is positively correlated with Cu nanoparticle size, BET surface area, and light absorption range. The LSPR effect of Cu nanoparticles enhances photothermal catalytic performance under visible light irradiation.\",\n    \"status\": \"REPORTED\",\n    \"origin\": \"ORIGINAL_EXPERIMENT\",\n    \"source_quote\": \"The localized surface plasmon resonance (LSPR) effect of Cu nanoparticles further enhanced the photothermal catalytic performances of Cu/BN catalysts under visible light irradiation.\"\n  },\n  \"evidence_strength\": {\n    \"value\": \"moderate\",\n    \"justification\": \"Multiple descriptors are correlated with catalytic performance, but the study lacks detailed mechanistic insights and a broader range of experimental conditions.\",\n    \"status\": \"REPORTED\",\n    \"origin\": \"SYSTEM_INFERRED\"\n  },\n  \"data_points_count\": {\n    \"value\": \"6\",\n    \"status\": \"REPORTED\",\n    \"origin\": \"ORIGINAL_EXPERIMENT\"\n  },\n  \"morphology_activity_link\": {\n    \"value\": \"Catalysts with nanosheet (NS) and nanofiber (NF) morphologies showed higher activity compared to nanoparticles (NP), likely due to their larger specific surface areas and better exposure of active sites.\",\n    \"status\": \"REPORTED\",\n    \"origin\": \"ORIGINAL_EXPERIMENT\",\n    \"source_quote\": \"The higher activities of Cu/BN-NS and Cu/BN-NF might be due to their relatively larger specific surface area, which exposed more active sites for reactant adsorption and subsequent reaction procedure.\"\n  }\n}",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,265 @@
+# FigureSchemaV1 — CANDIDATE
+# Status: ENGINEERING_CANDIDATE / NOT_IMPLEMENTED
+# Date: 2026-11-04
+# Do NOT use in production. Do NOT modify formal V1 schema.
+
+schema_version: "0.1.0-candidate"
+schema_name: "FigureSchemaV1"
+based_on:
+  - "Catalysis Schema V1 (src/catalyst_knowledge/schema/catalysis_schema_v1.py)"
+  - "SSPK Extensions (src/catalyst_knowledge/schema/catalysis_schema_v1_extensions.py)"
+  - "Document IR (scripts/document_ir_enhancer_v2.py)"
+
+# ============================================================
+# Top-level FigureRecord
+# ============================================================
+
+FigureRecord:
+  fields:
+    figure_id:
+      type: string
+      required: true
+      description: "Unique identifier, e.g. F02_fig1"
+    document_id:
+      type: string
+      required: true
+      description: "Reference to parent Document"
+    figure_label:
+      type: string
+      required: true
+      description: "Original label from paper, e.g. 'Figure 1'"
+    caption:
+      type: string
+      required: true
+      description: "Full caption text from original paper"
+    figure_type:
+      type: enum
+      required: true
+      enum_ref: "#/FigureType"
+      description: "Classification of figure type"
+    panels:
+      type: array
+      item_type: "#/Panel"
+      required: false
+      description: "Sub-panels (a, b, c, etc.)"
+    samples:
+      type: array
+      item_type: "CatalystSampleRef"
+      required: false
+      description: "References to CatalystSample objects"
+    characterization_method:
+      type: string
+      required: false
+      description: "Characterization technique described"
+    axes:
+      type: "#/Axes"
+      required: false
+      description: "Plot axes information"
+    legends:
+      type: array
+      item_type: string
+      required: false
+      description: "Legend entries"
+    visual_observations:
+      type: array
+      item_type: "#/VisualObservation"
+      required: false
+      description: "Direct visual observations from the figure"
+    extracted_data:
+      type: object
+      required: false
+      description: "Structured data extracted from figure"
+    author_interpretation:
+      type: string
+      required: false
+      description: "Author's interpretation (MUST be separated from visual observations)"
+    related_claims:
+      type: array
+      item_type: "ClaimRef"
+      required: false
+      description: "References to Claim objects"
+    source_anchors:
+      type: array
+      item_type: "SourceAnchor"
+      required: true
+      description: "Provenance anchors to Document IR elements"
+    extraction_status:
+      type: enum
+      required: true
+      enum_ref: "#/ExtractionStatus"
+      description: "How this figure record was produced"
+
+# ============================================================
+# Panel (sub-figure)
+# ============================================================
+
+Panel:
+  fields:
+    panel_id:
+      type: string
+      required: true
+      description: "Unique panel identifier, e.g. F02_fig1a"
+    panel_label:
+      type: string
+      required: true
+      description: "Original label, e.g. 'a', '(b)', 'Left'"
+    sample_refs:
+      type: array
+      item_type: "CatalystSampleRef"
+      required: false
+    technique:
+      type: string
+      required: false
+      description: "Technique specific to this panel"
+    axes:
+      type: "#/Axes"
+      required: false
+    legend:
+      type: string
+      required: false
+    observations:
+      type: array
+      item_type: "#/VisualObservation"
+      required: false
+    quantity_refs:
+      type: array
+      item_type: "QuantityRecordRef"
+      required: false
+    source_anchor_ids:
+      type: array
+      item_type: string
+      required: true
+      description: "Panel-level SourceAnchor references"
+
+# ============================================================
+# VisualObservation
+# ============================================================
+
+VisualObservation:
+  fields:
+    observation_id:
+      type: string
+      required: true
+    description:
+      type: string
+      required: true
+      description: "What is directly observed in the figure"
+    observation_type:
+      type: enum
+      required: true
+      enum_values:
+        - PEAK_POSITION
+        - PEAK_INTENSITY
+        - PEAK_SHAPE
+        - MORPHOLOGY
+        - COLOR_CHANGE
+        - PHASE_PRESENCE
+        - TREND
+        - COMPARISON
+        - OTHER
+    confidence:
+      type: float
+      required: true
+      min: 0.0
+      max: 1.0
+    is_author_stated:
+      type: boolean
+      required: true
+      description: "True if author explicitly describes this in caption/text"
+    source_anchor_id:
+      type: string
+      required: true
+
+# ============================================================
+# Axes (for plot-type figures)
+# ============================================================
+
+Axes:
+  fields:
+    x_label:
+      type: string
+      required: false
+    x_unit:
+      type: string
+      required: false
+    x_range:
+      type: object
+      required: false
+      fields:
+        min: { type: float }
+        max: { type: float }
+    y_label:
+      type: string
+      required: false
+    y_unit:
+      type: string
+      required: false
+    y_range:
+      type: object
+      required: false
+      fields:
+        min: { type: float }
+        max: { type: float }
+
+# ============================================================
+# Enumerations
+# ============================================================
+
+FigureType:
+  description: "Classification of scientific figure types"
+  values:
+    - XRD
+    - XPS
+    - TEM
+    - SEM
+    - STEM
+    - EDS
+    - BET
+    - Raman
+    - FTIR
+    - UV_Vis
+    - TPR
+    - TPD
+    - CATALYTIC_PERFORMANCE_PLOT
+    - REACTION_SCHEME
+    - MOLECULAR_STRUCTURE
+    - MECHANISM_DIAGRAM
+    - PHOTOGRAPH
+    - OTHER
+    - UNCLASSIFIED
+  constraint: "Must NOT force-classify unrecognizable figures. Use UNCLASSIFIED."
+
+ExtractionStatus:
+  description: "Provenance of the extraction"
+  values:
+    - DIRECT_VISUAL_OBSERVATION
+    - AUTHOR_INTERPRETATION
+    - SYSTEM_INFERRED
+  constraint: "Each record MUST have exactly one extraction_status. SYSTEM_INFERRED requires confidence score."
+
+# ============================================================
+# Compatibility Mapping
+# ============================================================
+
+compatibility_mapping:
+  FigureRecord.document_id -> Document.document_id
+  FigureRecord.source_anchors[] -> SourceAnchor (Document IR)
+  FigureRecord.samples[] -> CatalystSample (Schema V1)
+  FigureRecord.related_claims[] -> Assertion/Claim (Schema V1 / SSPK Extension)
+  FigureRecord.visual_observations[] -> Observation (Schema V1)
+  FigureRecord.extracted_data -> QuantityRecord (NUM-UNIT-001)
+  Panel.sample_refs[] -> CatalystSample (Schema V1)
+  Panel.quantity_refs[] -> QuantityRecord (NUM-UNIT-001)
+  VisualObservation.source_anchor_id -> SourceAnchor (Document IR)
+
+# ============================================================
+# Deduplication Rules
+# ============================================================
+
+deduplication:
+  principle: "Same quantity appearing in Figure and Table/Text MUST use single QuantityRecord with multiple SourceAnchors"
+  rules:
+    - "One QuantityRecord per unique scientific measurement"
+    - "Each source (Figure, Table, Text) creates its own SourceAnchor"
+    - "Record source location and context for each anchor"
+    - "Do NOT merge measurements under different conditions"

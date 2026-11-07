@@ -1,0 +1,345 @@
+# ============================================================================
+# Catalysis Knowledge Theme Registry V1
+# ============================================================================
+# Status: ENGINEERING_CANDIDATE / NOT_IMPLEMENTED
+# Version: 1.0.0-candidate
+# Created: 2026-11-04
+# Purpose: Define 8 candidate knowledge themes for catalysis science,
+#          and map them to the existing V1 six-dimension architecture.
+# Constraint: Does NOT modify V1 frozen six dimensions.
+#             The original six dimensions are preserved and remain the
+#             authoritative extraction framework.
+# ============================================================================
+
+registry_metadata:
+  registry_id: CATALYSIS-THEME-REGISTRY-V1
+  status: ENGINEERING_CANDIDATE
+  version: "1.0.0-candidate"
+  created: "2026-11-04"
+  frozen_v1_dimensions: 6
+  candidate_themes: 8
+  note: >
+    Eight themes are candidate knowledge organization categories, NOT eight
+    mutually exclusive knowledge types. A single scientific object may be
+    associated with multiple themes. Themes do not replace V1 six dimensions;
+    they extend the organizational view for coverage auditing.
+
+# ============================================================================
+# V1 Frozen Six Dimensions (preserved, not modified)
+# ============================================================================
+v1_frozen_dimensions:
+  - id: catalyst_design
+    name: Catalyst Design
+    status: FROZEN_V1
+    description: >
+      Catalyst system, type, active component, support, synthesis method,
+      reaction type, design rationale.
+    source: EXT-001
+
+  - id: characterization
+    name: Characterization
+    status: FROZEN_V1
+    description: >
+      Techniques used, key findings, in-situ evidence, morphological and
+      electronic evidence.
+    source: EXT-001
+
+  - id: performance
+    name: Performance
+    status: FROZEN_V1
+    description: >
+      Key metrics, key claim, benchmark comparison, reaction conditions,
+      experiment matrix.
+    source: EXT-001
+
+  - id: mechanism
+    name: Mechanism
+    status: FROZEN_V1
+    description: >
+      Proposed pathway, rate determining step, intermediates, computational
+      and experimental support.
+    source: EXT-001
+
+  - id: structure_activity
+    name: Structure-Activity Relationship
+    status: FROZEN_V1
+    description: >
+      Descriptor, relationship type, evidence strength, data points.
+    source: EXT-001
+
+  - id: reliability
+    name: Reliability
+    status: FROZEN_V1
+    description: >
+      Time on stream, cycle count, mass transfer verification,
+      reproducibility, deactivation.
+    source: EXT-001
+
+# ============================================================================
+# Eight Candidate Knowledge Themes
+# ============================================================================
+candidate_themes:
+  - id: T01
+    name: Catalyst Design & Preparation
+    name_zh: 催化剂设计与制备
+    status: ENGINEERING_CANDIDATE
+    description: >
+      Catalyst composition, active component, support, promoter, precursor,
+      structure design, preparation method, synthesis route, pretreatment.
+    v1_dimension_mapping:
+      primary: catalyst_design
+      secondary: [characterization]
+    covers_nodes:
+      - Catalyst
+      - CatalystComponent
+      - ActiveSite
+      - Support
+      - Promoter
+      - Precursor
+      - CatalystSample
+      - CatalystStructure
+    covers_relationships:
+      - HAS_COMPONENT
+      - SUPPORTED_ON
+      - PROMOTED_BY
+      - HAS_ACTIVE_SITE
+      - DERIVED_FROM
+      - PREPARED_BY
+    example_sentences:
+      - "Cu nanoparticles were supported on boron nitride nanosheets."
+      - "The catalyst was prepared by impregnation method."
+      - "Pt/CeO2 was calcined at 500C for 4 hours."
+
+  - id: T02
+    name: Catalytic Reaction & System
+    name_zh: 催化反应与体系
+    status: ENGINEERING_CANDIDATE
+    description: >
+      Reaction type, reactants, products, intermediates, byproducts,
+      reaction network, reactor, reaction system.
+    v1_dimension_mapping:
+      primary: mechanism
+      secondary: [catalyst_design, performance]
+    covers_nodes:
+      - Reaction
+      - Reactant
+      - Product
+      - Intermediate
+      - Byproduct
+      - ReactionPathway
+      - ReactionStep
+      - ReactionCondition
+    covers_relationships:
+      - CONSUMES
+      - PRODUCES
+      - HAS_INTERMEDIATE
+      - HAS_BYPRODUCT
+      - PARTICIPATES_IN
+      - PART_OF_PATHWAY
+    example_sentences:
+      - "Oxidative dehydrogenation of propane to propylene."
+      - "Methanol was converted to dimethyl carbonate."
+      - "The reaction produced CO2 as a byproduct."
+
+  - id: T03
+    name: Characterization & Structure
+    name_zh: 表征与结构
+    status: ENGINEERING_CANDIDATE
+    description: >
+      XRD, XPS, TEM, SEM, STEM, EDS, BET, Raman, in-situ characterization,
+      active sites, crystal structure, electronic structure.
+    v1_dimension_mapping:
+      primary: characterization
+      secondary: [catalyst_design, structure_activity]
+    covers_nodes:
+      - Spectrum
+      - Figure
+      - FigurePanel
+      - DocumentElement
+      - ActiveSite
+      - CatalystStructure
+    covers_relationships:
+      - MEASURED_BY
+      - OBSERVED_IN
+      - ILLUSTRATED_BY
+      - REPORTED_IN
+    example_sentences:
+      - "XRD patterns confirmed the crystal structure of Cu/BN."
+      - "TEM images showed nanoparticles of 5-10 nm."
+      - "XPS revealed Cu2+ as the dominant oxidation state."
+
+  - id: T04
+    name: Catalytic Performance
+    name_zh: 催化性能
+    status: ENGINEERING_CANDIDATE
+    description: >
+      Conversion, selectivity, yield, activity, TOF, TON, space-time yield,
+      energy consumption, and other performance metrics.
+    v1_dimension_mapping:
+      primary: performance
+      secondary: [structure_activity, reliability]
+    covers_nodes:
+      - QuantityRecord
+      - Measurement
+      - Observation
+      - Experiment
+    covers_relationships:
+      - YIELDS
+      - MEASURED_BY
+      - HAS_CONDITION
+      - TESTED_IN
+    example_sentences:
+      - "Propane conversion reached 16.8% at 500C."
+      - "Propylene selectivity was 82.1%."
+      - "The TOF was 0.05 s-1."
+
+  - id: T05
+    name: Mechanism & Kinetics
+    name_zh: 机理与动力学
+    status: ENGINEERING_CANDIDATE
+    description: >
+      Reaction pathway, elementary steps, intermediates, reaction mechanism,
+      kinetic model, rate determining step, activation energy.
+    v1_dimension_mapping:
+      primary: mechanism
+      secondary: [structure_activity, performance]
+    covers_nodes:
+      - ReactionPathway
+      - ReactionStep
+      - Intermediate
+      - CalculationResult
+      - Equation
+    covers_relationships:
+      - EXPLAINS
+      - CAUSES
+      - PART_OF_PATHWAY
+      - HAS_INTERMEDIATE
+    example_sentences:
+      - "The LSPR effect of Cu enhances visible-light catalysis."
+      - "The rate determining step is C-H bond activation."
+      - "DFT calculations suggest an Eley-Rideal mechanism."
+
+  - id: T06
+    name: Structure-Activity Relationship
+    name_zh: 构效关系
+    status: ENGINEERING_CANDIDATE
+    description: >
+      Structure-performance relationships, active site-activity correlation,
+      composition effects, size effects, electronic effects, SA models.
+    v1_dimension_mapping:
+      primary: structure_activity
+      secondary: [catalyst_design, characterization, performance]
+    covers_nodes:
+      - CatalystStructure
+      - ActiveSite
+      - Observation
+      - Measurement
+    covers_relationships:
+      - CORRELATES_WITH
+      - EXPLAINS
+      - HAS_ACTIVE_SITE
+    example_sentences:
+      - "Higher surface area correlates with higher activity."
+      - "Cu nanoparticle size affects LSPR intensity."
+      - "The electronic interaction between Cu and BN enhances selectivity."
+
+  - id: T07
+    name: Stability & Deactivation
+    name_zh: 稳定性与失活
+    status: ENGINEERING_CANDIDATE
+    description: >
+      Stability, lifetime, deactivation mechanisms, coking, sintering,
+      poisoning, leaching, regeneration, recycling.
+    v1_dimension_mapping:
+      primary: reliability
+      secondary: [characterization, performance]
+    covers_nodes:
+      - Observation
+      - Measurement
+      - Experiment
+      - NegativeResult
+      - Limitation
+    covers_relationships:
+      - LIMITED_BY
+      - CAUSES
+      - OBSERVED_IN
+      - TESTED_IN
+    example_sentences:
+      - "The catalyst showed stable performance for 50 hours."
+      - "Deactivation was caused by carbon deposition."
+      - "After 5 cycles, activity decreased by 10%."
+
+  - id: T08
+    name: Process & Operational Conditions
+    name_zh: 工艺与操作条件
+    status: ENGINEERING_CANDIDATE
+    description: >
+      Temperature, pressure, space velocity, flow rate, concentration,
+      solvent, pH, mass/heat transfer, reactor operation and scale-up.
+    v1_dimension_mapping:
+      primary: performance
+      secondary: [catalyst_design, reliability]
+    covers_nodes:
+      - ReactionCondition
+      - ExperimentalCondition
+      - Reactor
+      - QuantityRecord
+    covers_relationships:
+      - HAS_CONDITION
+      - TESTED_IN
+      - PERFORMED_WITH
+      - USES_SAMPLE
+    example_sentences:
+      - "The reaction was conducted at 500C and 1 atm."
+      - "GHSV was 60,000 mL/g/h."
+      - "Methanol concentration was 0.5 M in aqueous solution."
+
+# ============================================================================
+# Theme-to-Dimension Compatibility Matrix
+# ============================================================================
+# Rows: 8 candidate themes (T01-T08)
+# Columns: 6 V1 frozen dimensions
+# Cell: primary (P) / secondary (S) / not-mapped (-)
+theme_dimension_matrix:
+  headers: [catalyst_design, characterization, performance, mechanism, structure_activity, reliability]
+  rows:
+    T01: [P, S, -, -, -, -]
+    T02: [S, -, S, P, -, -]
+    T03: [S, P, -, -, S, -]
+    T04: [-, -, P, S, S, S]
+    T05: [-, -, S, P, S, -]
+    T06: [S, S, S, -, P, -]
+    T07: [-, S, S, -, -, P]
+    T08: [S, -, P, -, -, S]
+
+# ============================================================================
+# Coverage Notes
+# ============================================================================
+coverage_notes:
+  - "All 6 V1 dimensions are covered by at least one theme."
+  - "catalyst_design is primary for T01, secondary for no other theme."
+  - "characterization is primary for T03, secondary for T01/T07."
+  - "performance is primary for T04/T08, secondary for T02/T06/T07."
+  - "mechanism is primary for T02/T05, secondary for no other theme."
+  - "structure_activity is primary for T06, secondary for T03/T04/T05."
+  - "reliability is primary for T07, secondary for T04/T08."
+  - "Themes are NOT mutually exclusive; a single object may map to multiple themes."
+  - "Economy, green chemistry, LCA, computational chemistry are extensible topics, not forced into first-level themes."
+  - "If a paper does not cover a theme, no information should be fabricated."
+
+# ============================================================================
+# Extensible Topics (NOT first-level themes)
+# ============================================================================
+extensible_topics:
+  - id: EXT01
+    name: Green Chemistry & Sustainability
+    status: NOT_IN_SCOPE
+  - id: EXT02
+    name: Life Cycle Assessment
+    status: NOT_IN_SCOPE
+  - id: EXT03
+    name: Computational Catalysis
+    status: NOT_IN_SCOPE
+  - id: EXT04
+    name: Economic Analysis
+    status: NOT_IN_SCOPE

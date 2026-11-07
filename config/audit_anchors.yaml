@@ -1,0 +1,97 @@
+# Audit Anchors for Catalysis Domain
+# Physical plausibility ranges for common quantities in catalysis research
+# Used by ClaimValidator to flag suspicious values before human review
+#
+# Format:
+#   quantity_name:
+#     unit: <canonical unit>
+#     range: [<min>, <max>]  # Reasonable bounds; values outside flagged as "数值可疑"
+#     note: <human-readable explanation>
+
+activation_energy:
+  unit: kJ/mol
+  range: [10, 500]
+  note: "活化能超出此范围需人工审核（典型催化反应10-200 kJ/mol）"
+
+adsorption_energy:
+  unit: eV
+  range: [-5.0, 0.0]
+  note: "吸附能通常为负值（放热），绝对值>5 eV可能为计算错误或单位混淆"
+
+reaction_temperature:
+  unit: °C
+  range: [-100, 1200]
+  note: "催化反应温度合理区间；低于-100°C或高于1200°C需核实"
+
+turnover_frequency:
+  unit: s^-1
+  range: [1.0e-6, 1.0e6]
+  note: "TOF数量级跨度大，但<1e-6或>1e6需警惕单位错误（如h^-1误写为s^-1）"
+
+faradaic_efficiency:
+  unit: "%"
+  range: [0, 100]
+  note: "法拉第效率不能超过100%，接近100%需多源验证"
+
+selectivity:
+  unit: "%"
+  range: [0, 100]
+  note: "选择性不能超过100%"
+
+conversion:
+  unit: "%"
+  range: [0, 100]
+  note: "转化率不能超过100%"
+
+current_density:
+  unit: mA/cm^2
+  range: [0.01, 1000]
+  note: "电流密度>1 A/cm^2在电催化中罕见，需核实单位"
+
+overpotential:
+  unit: mV
+  range: [0, 1000]
+  note: "过电位>1 V通常意味着催化剂性能极差或测量条件异常"
+
+binding_energy:
+  unit: eV
+  range: [-10.0, 10.0]
+  note: "结合能绝对值>10 eV可能为计算错误或单位混淆（如kJ/mol误标为eV）"
+
+particle_size:
+  unit: nm
+  range: [0.5, 1000]
+  note: "纳米颗粒尺寸<0.5 nm为单原子范畴，>1 μm不属于纳米材料"
+
+surface_area:
+  unit: m^2/g
+  range: [1, 3000]
+  note: "比表面积>3000 m^2/g仅见于极端多孔材料（如MOFs），需核实"
+
+pore_size:
+  unit: nm
+  range: [0.3, 100]
+  note: "孔径<0.3 nm分子无法进入，>100 nm为大孔范畴"
+
+stability_hours:
+  unit: h
+  range: [0.1, 10000]
+  note: "稳定性测试>10000 h（~1年）在实验室条件下罕见"
+
+yield:
+  unit: "%"
+  range: [0, 100]
+  note: "产率不能超过100%"
+
+space_time_yield:
+  unit: g/(kg_cat·h)
+  range: [0.01, 10000]
+  note: "时空产率超出此范围需核实单位或催化剂负载量"
+
+# Unit conversion factors (for normalization before range check)
+unit_conversions:
+  kcal_to_kj: 4.184
+  ev_to_kj_per_mol: 96.485
+  j_to_kj: 0.001
+  ma_to_a: 0.001
+  cm2_to_m2: 0.0001

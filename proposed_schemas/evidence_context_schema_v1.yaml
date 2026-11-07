@@ -1,0 +1,249 @@
+# EvidenceContext Schema Extension — CANDIDATE
+# Status: ENGINEERING_CANDIDATE / NOT_IMPLEMENTED
+# Date: 2026-11-04
+# Do NOT use in production. Do NOT modify formal V1 schema.
+
+schema_version: "0.1.0-candidate"
+schema_name: "EvidenceContextExtension"
+based_on:
+  - "Catalysis Schema V1: Evidence model (src/catalyst_knowledge/schema/catalysis_schema_v1.py)"
+  - "SSPK Extensions: EvidenceExtended (src/catalyst_knowledge/schema/catalysis_schema_v1_extensions.py)"
+  - "Document IR (scripts/document_ir_enhancer_v2.py)"
+
+# ============================================================
+# EvidenceContext (extended)
+# ============================================================
+
+EvidenceContext:
+  description: >
+    Extended evidence model that binds evidence to claims with full provenance.
+    Integrates text, figure, and table evidence sources.
+    Distinguishes model confidence from scientific evidence strength.
+  fields:
+    evidence_id:
+      type: string
+      required: true
+      description: "Unique evidence identifier"
+    evidence_type:
+      type: enum
+      required: true
+      enum_ref: "#/EvidenceType"
+    polarity:
+      type: enum
+      required: true
+      enum_ref: "#/Polarity"
+      description: "Relationship direction toward target claim"
+    evidence_origin:
+      type: enum
+      required: true
+      enum_ref: "#/EvidenceOrigin"
+      description: "How this evidence was produced — MUST NOT conflate with polarity"
+
+    # Source references
+    quoted_text:
+      type: string
+      required: false
+      description: "Verbatim quote from original paper"
+    source_element_ids:
+      type: array
+      item_type: string
+      required: true
+      description: "Document IR element IDs where evidence originates"
+    figure_refs:
+      type: array
+      item_type: "FigureRecordRef"
+      required: false
+      description: "References to FigureRecord objects"
+    table_refs:
+      type: array
+      item_type: "TableRecordRef"
+      required: false
+      description: "References to TableRecord objects"
+    experiment_refs:
+      type: array
+      item_type: "ExperimentRef"
+      required: false
+    quantity_refs:
+      type: array
+      item_type: "QuantityRecordRef"
+      required: false
+
+    # Target
+    target_claim_ids:
+      type: array
+      item_type: "ClaimRef"
+      required: true
+      description: "Claims this evidence supports/contradicts/qualifies"
+
+    # Interpretation
+    interpretation:
+      type: string
+      required: false
+      description: "Semantic interpretation of how evidence relates to claim"
+
+    # Dual assessment — CRITICAL: these are independent
+    confidence:
+      type: float
+      required: true
+      min: 0.0
+      max: 1.0
+      description: >
+        Model confidence in the extraction accuracy.
+        This is NOT scientific evidence strength.
+        High confidence means the LLM is sure it extracted correctly.
+    evidence_strength:
+      type: enum
+      required: true
+      enum_ref: "#/EvidenceStrength"
+      description: >
+        Scientific evidence strength — independent from model confidence.
+        A low-confidence extraction can be strong evidence if verified.
+        A high-confidence extraction can be weak evidence if circumstantial.
+
+    # Verification
+    verification_status:
+      type: enum
+      required: true
+      enum_ref: "#/VerificationStatus"
+    verified_by:
+      type: string
+      required: false
+      description: "Who/what verified this evidence"
+    verification_notes:
+      type: string
+      required: false
+
+    # Provenance
+    source_anchors:
+      type: array
+      item_type: "SourceAnchor"
+      required: true
+    extraction_prompt_version:
+      type: string
+      required: true
+      description: "Version of the prompt that produced this evidence"
+    extracted_at:
+      type: datetime
+      required: true
+
+# ============================================================
+# Enumerations
+# ============================================================
+
+EvidenceType:
+  description: "Type of evidence"
+  values:
+    - DIRECT_EXPERIMENTAL
+    - CHARACTERIZATION_RESULT
+    - PERFORMANCE_DATA
+    - MECHANISTIC_INSIGHT
+    - COMPARISON_DATA
+    - CONTROL_EXPERIMENT
+    - THEORETICAL_SUPPORT
+    - FIGURE_OBSERVATION
+    - TABLE_DATA
+    - AUTHOR_STATEMENT
+    - NEGATIVE_RESULT
+    - UNCERTAINTY_MARKER
+
+Polarity:
+  description: "Direction of evidence relationship to target claim"
+  values:
+    - SUPPORTS
+    - CONTRADICTS
+    - QUALIFIES
+    - NEUTRAL
+  constraint: >
+    Polarity MUST be determined by semantic analysis, not keyword matching
+    or numerical similarity alone. When uncertain, use NEUTRAL and flag
+    for expert review.
+
+EvidenceOrigin:
+  description: "How this evidence was produced"
+  values:
+    - AUTHOR_STATED
+    - DIRECT_OBSERVATION
+    - DERIVED_WITH_EVIDENCE
+    - SYSTEM_INFERRED
+  constraint: >
+    AUTHOR_STATED: Author explicitly states this in text/caption.
+    DIRECT_OBSERVATION: Directly observable from figure/table data.
+    DERIVED_WITH_EVIDENCE: Logically derived from multiple observations.
+    SYSTEM_INFERRED: Inferred by LLM — requires confidence score and MUST NOT
+    be treated as author-stated fact.
+
+EvidenceStrength:
+  description: "Scientific strength of evidence (independent of model confidence)"
+  values:
+    - STRONG_DIRECT
+    - STRONG_CIRCUMSTANTIAL
+    - MODERATE
+    - WEAK
+    - INSUFFICIENT
+    - CONTRADICTED
+  constraint: >
+    This is a scientific judgment, not a model output.
+    Initial assignment may be LLM-suggested but MUST be reviewed by
+    domain expert before use in any scientific conclusion.
+
+VerificationStatus:
+  description: "Current verification state"
+  values:
+    - UNVERIFIED
+    - STRUCTURE_CHECKED
+    - SEMANTIC_CHECKED
+    - EXPERT_REVIEWED
+    - CONTESTED
+    - INVALIDATED
+
+# ============================================================
+# Compatibility Mapping
+# ============================================================
+
+compatibility_mapping:
+  # Existing Schema V1
+  EvidenceContext.evidence_id -> Evidence.evidence_id (Schema V1)
+  EvidenceContext.source_anchors[] -> SourceAnchor (Schema V1)
+  EvidenceContext.target_claim_ids[] -> Assertion/Claim (Schema V1)
+  EvidenceContext.experiment_refs[] -> Experiment (Schema V1)
+  EvidenceContext.quantity_refs[] -> QuantityRecord (NUM-UNIT-001)
+
+  # SSPK Extensions
+  EvidenceContext.polarity -> EvidenceExtended.evidence_polarity (SSPK)
+  EvidenceContext.evidence_strength -> EvidenceExtended.semantic_support_level (SSPK)
+
+  # New cross-references
+  EvidenceContext.figure_refs[] -> FigureRecord (proposed FigureSchemaV1)
+  EvidenceContext.table_refs[] -> TableRecord (proposed TableSchemaV1)
+  EvidenceContext.source_element_ids[] -> DocumentElement (Document IR)
+
+  # Document IR
+  EvidenceContext.quoted_text -> DocumentElement.content (with page/block/line location)
+
+# ============================================================
+# Relationship Rules
+# ============================================================
+
+relationship_rules:
+  principle: "Evidence-Claim relationships MUST pass both source location and semantic verification"
+  rules:
+    - "Every EvidenceContext MUST have at least one SourceAnchor pointing to a real Document IR element"
+    - "Polarity (SUPPORTS/CONTRADICTS/QUALIFIES/NEUTRAL) MUST be justified by semantic analysis"
+    - "Keyword overlap or numerical similarity alone is NOT sufficient for SUPPORTS polarity"
+    - "SYSTEM_INFERRED evidence MUST NOT be promoted to AUTHOR_STATED without verification"
+    - "Evidence from figures and tables MUST reference the specific FigureRecord/TableRecord"
+    - "When evidence contradicts a claim, polarity MUST be CONTRADICTS, not forced to SUPPORTS"
+    - "Uncertain relationships MUST remain UNVERIFIED, not be force-assigned"
+
+# ============================================================
+# Anti-patterns (MUST NOT)
+# ============================================================
+
+anti_patterns:
+  - "Using keyword overlap as sole basis for SUPPORTS polarity"
+  - "Equating model confidence with scientific evidence strength"
+  - "Merging evidence from different experiments into single EvidenceContext"
+  - "Promoting SYSTEM_INFERRED to AUTHOR_STATED without expert review"
+  - "Creating evidence relationships without SourceAnchor traceability"
+  - "Using numerical similarity alone to claim evidence supports a quantitative assertion"
+  - "Dropping evidence that contradicts the preferred interpretation"

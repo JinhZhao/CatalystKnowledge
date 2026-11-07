@@ -1,0 +1,137 @@
+# Pipeline test configuration for 012-D E2E engineering test.
+#
+# Extends the production pipeline.yaml with these overrides:
+#   - science_extraction_v2.enabled: true (V2 replaces deprecated V1)
+#   - six_dimension_extraction.enabled: false (V1 stays off)
+#   - table_science.enabled: true (consumes table_parser output)
+#   - vlm_figure_science.enabled: false (no paid LLM in engineering test)
+#   - evidence_verification.enabled: false (no paid LLM)
+#
+# Usage:
+#   python scripts/run_pipeline.py --doc F02 \
+#       --config config/pipeline_012_e2e_test.yaml
+#
+# NOTE: This config is for MOCK/ENGINEERING testing only. Real LLM calls
+# require explicit PI authorization and must use the production config.
+
+pipeline:
+  name: "catalyst-knowledge-pipeline"
+  version: "012-e2e-test"
+  schema_version: "1.0.0"
+  prompt_version: "1.0.0"
+
+# Inherit all paths from production config
+paths:
+  project_root: "D:\\Knowledge_World"
+  data_root: "D:\\Knowledge_World\\data\\test_corpus"
+  runs_root: "D:\\Knowledge_World\\runs"
+  manifest: "D:\\Knowledge_World\\data\\test_corpus\\unified_test_manifest.json"
+  papers_dir: "D:\\Knowledge_World\\data\\test_corpus\\papers"
+  mineru_output: "D:\\Knowledge_World\\data\\test_corpus\\mineru_output"
+  canonical_store: "D:\\Knowledge_World\\runs\\pdf_to_html_e2e_012\\canonical_store"
+  reports_dir: "D:\\Knowledge_World\\runs\\pdf_to_html_e2e_012\\reports"
+  pipeline_runs: "D:\\Knowledge_World\\runs\\pdf_to_html_e2e_012"
+  quantity_definitions: "D:\\Knowledge_World\\config\\quantity_definitions.yaml"
+  audit_anchors: "D:\\Knowledge_World\\config\\audit_anchors.yaml"
+  prompts_dir: "D:\\Knowledge_World\\prompts"
+
+# Inherit LLM config from production
+llm:
+  api_key_env: "LLM_API_KEY"
+  api_base_env: "LLM_API_BASE"
+  model_env: "LLM_MODEL"
+  default_model: "deepseek-chat"
+  default_api_base: "https://api.deepseek.com/v1"
+  temperature: 0.1
+  max_tokens: 4096
+  timeout_seconds: 300
+  max_retries: 2
+  model_context_limit: 64000
+  system_prompt_reserve_tokens: 1000
+  output_reserve_tokens: 4096
+
+stages:
+  pdf_parse:
+    enabled: true
+    skip_if_output_exists: false  # Force re-run for 012-D test
+    timeout_seconds: 600
+
+  document_ir:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 120
+
+  figure_parser:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 300
+
+  vlm_figure_science:
+    enabled: false  # No paid LLM in engineering test
+    skip_if_output_exists: false
+    timeout_seconds: 600
+    model_id: "GLM-Pro"
+
+  table_parser:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 300
+
+  table_science:
+    enabled: true  # Enable for 012-D E2E test
+    skip_if_output_exists: false
+    timeout_seconds: 300
+
+  figure_text_association:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 60
+
+  six_dimension_extraction:
+    enabled: false  # V1 deprecated; use science_extraction_v2
+    skip_if_output_exists: false
+    timeout_seconds: 300
+    adapter_version: "v1_deprecated"
+
+  science_extraction_v2:
+    enabled: true  # V2 enabled for 012-D E2E test
+    skip_if_output_exists: false
+    timeout_seconds: 600
+    adapter_version: "v2"
+    extraction_mode: "adaptive"
+    doc_type: "paper"
+    max_chunk_chars: 8000
+    overlap_paragraphs: 1
+
+  num_unit_normalization:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 60
+
+  quality_gate:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 30
+
+  evidence_verification:
+    enabled: false  # No paid LLM in engineering test
+    skip_if_output_exists: false
+    timeout_seconds: 300
+
+  canonical_store:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 30
+
+  report_generation:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 120
+
+execution:
+  stop_on_failure: true
+  dry_run: false
+  resume: false
+  log_level: "INFO"
+  idempotent: false  # Force re-run for 012-D test
+  manifest: "D:\\Knowledge_World\\runs\\pdf_to_html_e2e_012"

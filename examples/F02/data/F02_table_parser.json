@@ -1,0 +1,178 @@
+{
+  "document_id": "F02",
+  "namespace": "F02",
+  "tables": [
+    {
+      "table_id": "F02_table_01",
+      "document_id": "F02",
+      "namespace": "F02",
+      "table_number": 1,
+      "table_label": "TABLE 1",
+      "caption": "TABLE 1 Specific surface area (SBET), average pore size, and pore volume of BN supports and Cu/BN catalysts extracted from N2 adsorption-desorption characterizations, as well as the sizes of Cu on Cu/BN catalysts analyzed from TEM images.",
+      "caption_raw": [
+        "TABLE 1 Specific surface area (SBET), average pore size, and pore volume of BN supports and Cu/BN catalysts extracted from N2 adsorption-desorption characterizations, as well as the sizes of Cu on Cu/BN catalysts analyzed from TEM images. "
+      ],
+      "page_idx": 3,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\e646731ca4718146f1a2024454266cd19869cab175d9cc6579a0c3b628b78613.jpg",
+      "image_sha256": "7dcb8ee7602d862018510ec028fe0525e7df9020810968e4dfe2fd840832947a",
+      "image_size_bytes": 66390,
+      "bbox": [
+        49,
+        376,
+        546,
+        498
+      ],
+      "page_size": [
+        546,
+        772
+      ],
+      "headers": [],
+      "rows": [],
+      "footnotes": [],
+      "units": {},
+      "body_references": [
+        {
+          "element_id": "F02_p2_e33",
+          "page_idx": 2,
+          "raw_text_snippet": "The specific surface areas and pore structures of BN and Cu/ BN catalysts were characterized by N2 adsorption-desorption characterizations. The adsorption-desorption isotherms and the pore size distri",
+          "match_span": [
+            913,
+            920
+          ],
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e39",
+          "page_idx": 2,
+          "raw_text_snippet": "The morphologies of Cu/BN catalysts were further characterized via TEM, with their images and elemental distributions of Cu, B, and N shown in Figure 4. Obviously, the morphologies of BN on Cu/BN cata",
+          "match_span": [
+            780,
+            787
+          ],
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "source_type": "document",
+        "document_id": "F02",
+        "namespace": "F02",
+        "page_idx": 3,
+        "bbox": [
+          49,
+          376,
+          546,
+          498
+        ],
+        "page_size": [
+          546,
+          772
+        ],
+        "coordinate_system": "pixel",
+        "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\e646731ca4718146f1a2024454266cd19869cab175d9cc6579a0c3b628b78613.jpg",
+        "image_sha256": "7dcb8ee7602d862018510ec028fe0525e7df9020810968e4dfe2fd840832947a",
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p3_e42",
+      "extraction_status": "OCR_PENDING",
+      "extraction_source": "MINERU_IMAGE",
+      "html_content_hash": null,
+      "cell_verification_summary": {
+        "total_cells": 0,
+        "verified": 0,
+        "unverified": 0,
+        "ambiguous": 0
+      }
+    },
+    {
+      "table_id": "F02_table_02",
+      "document_id": "F02",
+      "namespace": "F02",
+      "table_number": 2,
+      "table_label": "TABLE 2",
+      "caption": "TABLE 2 Comparison table of thermal and photothermal catalysts for ODHP reactions.",
+      "caption_raw": [
+        "TABLE 2 Comparison table of thermal and photothermal catalysts for ODHP reactions. "
+      ],
+      "page_idx": 7,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\cda81de83d337795ba63c40ea6358ee98e45a07968c1b2a33df696ec0958bfc5.jpg",
+      "image_sha256": "bdde621e8725320d3ba278afec794ea353c0d438fc1fc754fcd29eb24cb09cf8",
+      "image_size_bytes": 115660,
+      "bbox": [
+        48,
+        91,
+        547,
+        263
+      ],
+      "page_size": [
+        547,
+        767
+      ],
+      "headers": [],
+      "rows": [],
+      "footnotes": [],
+      "units": {},
+      "body_references": [
+        {
+          "element_id": "F02_p6_e60",
+          "page_idx": 6,
+          "raw_text_snippet": "Regarding the best catalytic performance of Cu/BN-NS in photothermal ODHP at 500°C, its stability test was conducted under the same conditions. The results in Figure 9 revealed that propane conversion",
+          "match_span": [
+            467,
+            474
+          ],
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "source_type": "document",
+        "document_id": "F02",
+        "namespace": "F02",
+        "page_idx": 7,
+        "bbox": [
+          48,
+          91,
+          547,
+          263
+        ],
+        "page_size": [
+          547,
+          767
+        ],
+        "coordinate_system": "pixel",
+        "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\cda81de83d337795ba63c40ea6358ee98e45a07968c1b2a33df696ec0958bfc5.jpg",
+        "image_sha256": "bdde621e8725320d3ba278afec794ea353c0d438fc1fc754fcd29eb24cb09cf8",
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p7_e61",
+      "extraction_status": "OCR_PENDING",
+      "extraction_source": "MINERU_IMAGE",
+      "html_content_hash": null,
+      "cell_verification_summary": {
+        "total_cells": 0,
+        "verified": 0,
+        "unverified": 0,
+        "ambiguous": 0
+      }
+    }
+  ],
+  "table_count": 2,
+  "extraction_summary": {
+    "MINERU_IMAGE": 2,
+    "HTML": 0,
+    "MARKDOWN": 0,
+    "XLSX": 0,
+    "CSV": 0
+  },
+  "status_summary": {
+    "OCR_PENDING": 2,
+    "STRUCTURED_PARTIAL": 0,
+    "STRUCTURED_VERIFIED": 0,
+    "PASS": 0,
+    "PARTIAL": 0,
+    "FAILED": 0
+  },
+  "body_references_total": 3
+}

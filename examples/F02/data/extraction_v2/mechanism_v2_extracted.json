@@ -1,0 +1,120 @@
+{
+  "dimension": "mechanism",
+  "fields": {
+    "proposed_pathway": {
+      "field_name": "proposed_pathway",
+      "value": "Photothermal oxidative dehydrogenation of propane to propylene over Cu/BN catalysts via localized surface plasmon resonance (LSPR) effect of Cu nanoparticles under visible light irradiation",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The localized surface plasmon resonance (LSPR) effect of Cu nanoparticles further enhanced the photothermal catalytic performances of Cu/BN catalysts under visible light irradiation."
+    },
+    "rate_determining_step": {
+      "field_name": "rate_determining_step",
+      "value": "NOT_REPORTED",
+      "status": "NOT_REPORTED",
+      "origin": "UNKNOWN_ORIGIN"
+    },
+    "intermediates": {
+      "field_name": "intermediates",
+      "value": [
+        {
+          "name": "B-O-N species",
+          "evidence": "XPS analysis",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The binding energies of B were located at 190.2 eV and 192.6 eV, which should be attributed to the B–N and B–O–N chemical bonds, respectively."
+        }
+      ],
+      "status": "NOT_EXTRACTED",
+      "origin": "UNKNOWN_ORIGIN",
+      "notes": "Array with 1 items, 0 REPORTED"
+    },
+    "active_sites": {
+      "field_name": "active_sites",
+      "value": "Cu nanoparticles on BN supports with electron coupling between Cu-NPs and BN-NF",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "It indicated the electron coupling between Cu-NPs and BN-NF."
+    },
+    "role_of_light": {
+      "field_name": "role_of_light",
+      "value": "LSPR effect of Cu nanoparticles enhances light absorption and induces photothermal effect, boosting catalytic activity",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The plasmonic Cu-NPs could enhance the light-harvesting capacities, especially in the visible light region, which was a requirement for inducing photothermal effect."
+    },
+    "computational_support": {
+      "field_name": "computational_support",
+      "value": "NOT_REPORTED",
+      "status": "NOT_REPORTED",
+      "origin": "UNKNOWN_ORIGIN"
+    },
+    "experimental_support": {
+      "field_name": "experimental_support",
+      "value": [
+        {
+          "evidence_type": "XRD",
+          "finding": "Successful loading of Cu onto BN supports confirmed by characteristic peaks at 43.3° and 50.2°",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "Over the XRD patterns of Cu/BN catalysts, in addition to the diffraction peaks assigned to the hexagonal phase of BN, another two diffraction peaks at 43.3° and 50.2° appeared over Cu/BN-NS and Cu/BN-NF, which could be attributed to the (111) and (200) facets of metallic Cu, respectively."
+        },
+        {
+          "evidence_type": "TEM",
+          "finding": "Cu nanoparticles with average sizes of 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP respectively",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The average sizes of Cu nanoparticles on the three catalysts were analyzed, and they were 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP, respectively."
+        },
+        {
+          "evidence_type": "XPS",
+          "finding": "Electron coupling between Cu-NPs and BN-NF observed",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "It indicated the electron coupling between Cu-NPs and BN-NF."
+        },
+        {
+          "evidence_type": "UV-vis spectroscopy",
+          "finding": "Enhanced light absorption in visible region due to LSPR effect of Cu-NPs",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "After the loading of Cu, the light absorption capacities of Cu/BN catalysts were extended to visible light and even near-infrared light regions."
+        }
+      ],
+      "status": "NOT_EXTRACTED",
+      "origin": "UNKNOWN_ORIGIN",
+      "notes": "Array with 4 items, 0 REPORTED"
+    }
+  },
+  "validation_warnings": [],
+  "chunk_id": "mechanism_full",
+  "chunk_sections": [
+    "s00_open_access",
+    "s01_photothermal_oxidative_dehydrogenation_o",
+    "s02_1_introduction",
+    "s03_2_experimental_section",
+    "s04_2_1_catalyst_preparation",
+    "s05_2_2_catalyst_characterization",
+    "s06_2_3_catalyst_evaluation",
+    "s07_3_results_and_discussion",
+    "s08_3_1_physicochemical_properties_of_bn_sup",
+    "s09_3_2_optical_properties_of_bn_supports_an",
+    "s10_3_3_photo_thermal_catalytic_odhp_perform",
+    "s11_4_conclusion",
+    "s12_data_availability_statement",
+    "s16_publisher_s_note"
+  ],
+  "chunk_char_range": [
+    0,
+    25846
+  ],
+  "chunk_page_range": [
+    0,
+    7
+  ],
+  "merge_notes": "Single chunk, no merge needed",
+  "chunk_count": 1,
+  "source_chunks": [
+    "mechanism_full"
+  ]
+}

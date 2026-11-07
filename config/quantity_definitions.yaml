@@ -1,0 +1,836 @@
+# NUM-UNIT-001 Quantity Registry
+# Version: 1.0
+# Status: engineering_candidate
+# Created: 2026-11-04
+# Reference: BIPM SI Brochure (9th edition), IUPAC Green Book
+
+version: "1.0"
+status: engineering_candidate
+created: "2026-11-04"
+last_updated: "2026-11-04"
+schema_version: "1.0"
+
+quantities:
+  # ============================================================================
+  # 1. TEMPERATURE
+  # ============================================================================
+  - quantity_type: temperature
+    synonyms:
+      - "温度"
+      - "temperature"
+      - "temp"
+      - "reaction temperature"
+      - "calcination temperature"
+      - "reduction temperature"
+    abbreviations:
+      - symbol: "T"
+        context_required: true
+        disambiguation: "Must distinguish from time (t), kinetic parameter T in rate equations, or transmission"
+        context_examples:
+          - "T = 500 °C"  # temperature
+          - "T = 0.95"    # transmission/selectivity
+          - "reaction at T"  # temperature context
+    dimension: "[temperature]"
+    si_unit: "K"
+    si_unit_note: "Kelvin is SI base unit for thermodynamic temperature"
+    domain_units:
+      - unit: "degC"
+        display_name: "°C"
+        usage: "Most common in catalysis papers for reaction conditions"
+      - unit: "K"
+        display_name: "K"
+        usage: "Thermodynamic calculations, Arrhenius plots"
+      - unit: "degF"
+        display_name: "°F"
+        usage: "Rare in scientific literature, mainly US industrial"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "affine"
+      formulas:
+        - from: "degC"
+          to: "K"
+          formula: "value_K = value_degC + 273.15"
+        - from: "K"
+          to: "degC"
+          formula: "value_degC = value_K - 273.15"
+        - from: "degF"
+          to: "degC"
+          formula: "value_degC = (value_degF - 32) * 5/9"
+      notes:
+        - "Temperature conversion is affine (offset + scale), not simple scaling"
+        - "Temperature difference (ΔT) uses scaling only: 1 K = 1 °C"
+        - "Measurement location (bed, surface, bulk) is experimental context, not a conversion restriction"
+    experimental_context_required:
+      - "measurement_location"
+      - "heating_rate"
+      - "hold_time"
+    validation_rules:
+      min_value_si: 0
+      max_value_si: 10000
+      typical_range_si: [273.15, 1273.15]
+    qa_checks:
+      - "Verify unit is temperature, not time or transmission"
+      - "Check for ambiguous 'T' symbol with context"
+      - "Validate physical reasonableness for catalysis (typically 200-1000 °C)"
+
+  # ============================================================================
+  # 2. PRESSURE
+  # ============================================================================
+  - quantity_type: pressure
+    synonyms:
+      - "压力"
+      - "pressure"
+      - "P"
+      - "total pressure"
+      - "partial pressure"
+      - "reaction pressure"
+    abbreviations:
+      - symbol: "P"
+        context_required: true
+        disambiguation: "Must distinguish from power, probability, or phosphorus"
+    dimension: "[pressure]"
+    si_unit: "Pa"
+    si_unit_note: "Pascal is SI derived unit for pressure"
+    domain_units:
+      - unit: "Pa"
+        display_name: "Pa"
+        usage: "SI unit, small pressures"
+      - unit: "kPa"
+        display_name: "kPa"
+        usage: "Common in catalysis"
+      - unit: "MPa"
+        display_name: "MPa"
+        usage: "High pressure reactions"
+      - unit: "bar"
+        display_name: "bar"
+        usage: "Very common in catalysis, 1 bar = 100 kPa"
+      - unit: "atm"
+        display_name: "atm"
+        usage: "Legacy unit, 1 atm = 101.325 kPa"
+      - unit: "Torr"
+        display_name: "Torr"
+        usage: "Vacuum systems, 1 Torr ≈ 133.3 Pa"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      formulas:
+        - from: "bar"
+          to: "Pa"
+          formula: "value_Pa = value_bar * 100000"
+        - from: "atm"
+          to: "Pa"
+          formula: "value_Pa = value_atm * 101325"
+        - from: "kPa"
+          to: "Pa"
+          formula: "value_Pa = value_kPa * 1000"
+        - from: "MPa"
+          to: "Pa"
+          formula: "value_Pa = value_MPa * 1000000"
+        - from: "Torr"
+          to: "Pa"
+          formula: "value_Pa = value_Torr * 133.322"
+    experimental_context_required:
+      - "total_or_partial"
+      - "gauge_or_absolute"
+    validation_rules:
+      min_value_si: 0
+      max_value_si: 1e9
+      typical_range_si: [100000, 10000000]
+    qa_checks:
+      - "Distinguish total pressure vs partial pressure"
+      - "Check gauge vs absolute pressure if specified"
+
+  # ============================================================================
+  # 3. TIME / TOS
+  # ============================================================================
+  - quantity_type: time
+    synonyms:
+      - "时间"
+      - "time"
+      - "duration"
+      - "reaction time"
+      - "hold time"
+    abbreviations:
+      - symbol: "t"
+        context_required: true
+        disambiguation: "Must distinguish from temperature T, or time constant τ"
+      - symbol: "T"
+        context_required: true
+        disambiguation: "Uppercase T can mean time in some contexts, must check units (h, min, s) to confirm"
+        context_examples:
+          - "T = 2 h"     # time (hours)
+          - "T = 30 min"  # time (minutes)
+          - "reaction T"  # ambiguous, needs unit context
+    dimension: "[time]"
+    si_unit: "s"
+    si_unit_note: "Second is SI base unit for time"
+    domain_units:
+      - unit: "s"
+        display_name: "s"
+        usage: "Short durations, transient experiments"
+      - unit: "min"
+        display_name: "min"
+        usage: "Common for reaction times"
+      - unit: "h"
+        display_name: "h"
+        usage: "Long reactions, TOS"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      formulas:
+        - from: "min"
+          to: "s"
+          formula: "value_s = value_min * 60"
+        - from: "h"
+          to: "s"
+          formula: "value_s = value_h * 3600"
+        - from: "h"
+          to: "min"
+          formula: "value_min = value_h * 60"
+
+  - quantity_type: time_on_stream
+    synonyms:
+      - "TOS"
+      - "time on stream"
+      - "time-on-stream"
+      - "stability test duration"
+      - "catalyst lifetime"
+    abbreviations:
+      - symbol: "TOS"
+        context_required: false
+        disambiguation: "TOS is unambiguous in catalysis context"
+    dimension: "[time]"
+    si_unit: "s"
+    domain_units:
+      - unit: "h"
+        display_name: "h"
+        usage: "Most common for TOS reporting"
+      - unit: "min"
+        display_name: "min"
+        usage: "Short stability tests"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      inherits_from: "time"
+    experimental_context_required:
+      - "test_conditions"
+      - "deactivation_observed"
+    validation_rules:
+      min_value_si: 0
+      typical_range_si: [0, 360000]
+    qa_checks:
+      - "TOS=0 with note 'not reported' should be NULL, not zero"
+      - "Distinguish TOS from reaction time"
+
+  # ============================================================================
+  # 4. SPECIFIC SURFACE AREA
+  # ============================================================================
+  - quantity_type: specific_surface_area
+    synonyms:
+      - "比表面积"
+      - "specific surface area"
+      - "SSA"
+      - "BET"
+      - "BET surface area"
+      - "surface area"
+    abbreviations:
+      - symbol: "SSA"
+        context_required: false
+        disambiguation: "SSA is unambiguous"
+      - symbol: "BET"
+        context_required: true
+        disambiguation: "BET refers to measurement method (Brunauer-Emmett-Teller), must be combined with 'surface area' or 'area'"
+        context_examples:
+          - "BET surface area = 380 m2/g"  # specific surface area
+          - "BET method"                     # measurement technique
+          - "BET equation"                   # theoretical model
+    dimension: "[area] / [mass]"
+    si_unit: "m2/kg"
+    si_unit_note: "SI unit is m²/kg, but m²/g is standard in catalysis literature"
+    domain_units:
+      - unit: "m2/g"
+        display_name: "m²/g"
+        usage: "Standard unit in catalysis, most papers report in m²/g"
+        conversion_to_si: "value_m2_kg = value_m2_g * 1000"
+      - unit: "m2/kg"
+        display_name: "m²/kg"
+        usage: "SI unit, rarely used in papers"
+      - unit: "cm2/g"
+        display_name: "cm²/g"
+        usage: "Legacy unit"
+        conversion_to_si: "value_m2_kg = value_cm2_g * 0.1"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      formulas:
+        - from: "m2/g"
+          to: "m2/kg"
+          formula: "value_m2_kg = value_m2_g * 1000"
+        - from: "m2/kg"
+          to: "m2/g"
+          formula: "value_m2_g = value_m2_kg / 1000"
+        - from: "cm2/g"
+          to: "m2/kg"
+          formula: "value_m2_kg = value_cm2_g * 0.1"
+      notes:
+        - "SI unit is m²/kg, but domain display unit is m²/g"
+        - "Conversion is simple scaling (mass-based)"
+        - "BET method assumption should be noted in experimental context"
+    experimental_context_required:
+      - "measurement_method"
+      - "adsorbate_gas"
+    validation_rules:
+      min_value_si: 0
+      max_value_si: 1e7
+      typical_range_si: [1000, 2000000]
+    qa_checks:
+      - "Verify unit is area/mass, not volume/mass"
+      - "Check BET method is specified"
+      - "Validate physical reasonableness (typically 1-2000 m²/g)"
+
+  # ============================================================================
+  # 5. CONVERSION
+  # ============================================================================
+  - quantity_type: conversion
+    synonyms:
+      - "转化率"
+      - "conversion"
+      - "reactant conversion"
+      - "X"
+    abbreviations:
+      - symbol: "X"
+        context_required: true
+        disambiguation: "Must specify which reactant (e.g., X_C3H8 for propane conversion)"
+    dimension: "dimensionless"
+    si_unit: "1"
+    si_unit_note: "Conversion is a dimensionless ratio"
+    domain_units:
+      - unit: "1"
+        display_name: "fraction"
+        usage: "SI standard, e.g., 0.168"
+      - unit: "%"
+        display_name: "%"
+        usage: "Most common in papers, e.g., 16.8%"
+        conversion_to_si: "value_fraction = value_percent / 100"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      formulas:
+        - from: "%"
+          to: "1"
+          formula: "value_fraction = value_percent / 100"
+        - from: "1"
+          to: "%"
+          formula: "value_percent = value_fraction * 100"
+      notes:
+        - "Conversion is always between 0 and 1 (or 0% and 100%)"
+        - "Must specify which reactant"
+    experimental_context_required:
+      - "reactant_name"
+      - "basis"
+    validation_rules:
+      min_value_si: 0
+      max_value_si: 1
+      typical_range_si: [0, 1]
+    qa_checks:
+      - "Verify value is between 0 and 1"
+      - "Check reactant is specified"
+
+  # ============================================================================
+  # 6. SELECTIVITY
+  # ============================================================================
+  - quantity_type: selectivity
+    synonyms:
+      - "选择性"
+      - "selectivity"
+      - "product selectivity"
+      - "S"
+    abbreviations:
+      - symbol: "S"
+        context_required: true
+        disambiguation: "Must specify which product"
+    dimension: "dimensionless"
+    si_unit: "1"
+    domain_units:
+      - unit: "1"
+        display_name: "fraction"
+        usage: "SI standard"
+      - unit: "%"
+        display_name: "%"
+        usage: "Most common in papers"
+        conversion_to_si: "value_fraction = value_percent / 100"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      inherits_from: "conversion"
+      notes:
+        - "Selectivity sums to 100% across all products at given conversion"
+        - "Must specify which product"
+
+  # ============================================================================
+  # 7. YIELD
+  # ============================================================================
+  - quantity_type: yield
+    synonyms:
+      - "收率"
+      - "yield"
+      - "product yield"
+      - "Y"
+    abbreviations:
+      - symbol: "Y"
+        context_required: true
+        disambiguation: "Must specify which product"
+    dimension: "dimensionless"
+    si_unit: "1"
+    domain_units:
+      - unit: "1"
+        display_name: "fraction"
+      - unit: "%"
+        display_name: "%"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      inherits_from: "conversion"
+      notes:
+        - "Yield = Conversion × Selectivity"
+        - "Must specify which product"
+
+  # ============================================================================
+  # 8. CURRENT DENSITY
+  # ============================================================================
+  - quantity_type: current_density
+    synonyms:
+      - "电流密度"
+      - "current density"
+      - "j"
+    abbreviations:
+      - symbol: "j"
+        context_required: false
+    dimension: "[current] / [area]"
+    si_unit: "A/m2"
+    domain_units:
+      - unit: "A/m2"
+        display_name: "A/m²"
+        usage: "SI unit"
+      - unit: "mA/cm2"
+        display_name: "mA/cm²"
+        usage: "Most common in electrocatalysis"
+        conversion_to_si: "value_A_m2 = value_mA_cm2 * 10"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      formulas:
+        - from: "mA/cm2"
+          to: "A/m2"
+          formula: "value_A_m2 = value_mA_cm2 * 10"
+        - from: "A/m2"
+          to: "mA/cm2"
+          formula: "value_mA_cm2 = value_A_m2 / 10"
+
+  # ============================================================================
+  # 9. OVERPOTENTIAL
+  # ============================================================================
+  - quantity_type: overpotential
+    synonyms:
+      - "过电位"
+      - "overpotential"
+      - "eta"
+      - "η"
+    abbreviations:
+      - symbol: "η"
+        context_required: false
+      - symbol: "eta"
+        context_required: false
+    dimension: "[voltage]"
+    si_unit: "V"
+    domain_units:
+      - unit: "V"
+        display_name: "V"
+      - unit: "mV"
+        display_name: "mV"
+        usage: "Most common for reporting"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      formulas:
+        - from: "mV"
+          to: "V"
+          formula: "value_V = value_mV / 1000"
+      notes:
+        - "Overpotential is relative to reference electrode"
+        - "Reference electrode type must be specified for cross-paper comparison"
+    experimental_context_required:
+      - "reference_electrode"
+      - "current_density_at_overpotential"
+    qa_checks:
+      - "Check reference electrode is specified"
+      - "Verify sign convention (anodic vs cathodic)"
+
+  # ============================================================================
+  # 10. ACTIVATION ENERGY
+  # ============================================================================
+  - quantity_type: activation_energy
+    synonyms:
+      - "活化能"
+      - "activation energy"
+      - "Ea"
+      - "E_act"
+    abbreviations:
+      - symbol: "Ea"
+        context_required: false
+      - symbol: "E_act"
+        context_required: false
+    dimension: "[energy] / [amount]"
+    si_unit: "J/mol"
+    domain_units:
+      - unit: "J/mol"
+        display_name: "J/mol"
+        usage: "SI unit"
+      - unit: "kJ/mol"
+        display_name: "kJ/mol"
+        usage: "Most common in papers"
+        conversion_to_si: "value_J_mol = value_kJ_mol * 1000"
+      - unit: "eV"
+        display_name: "eV"
+        usage: "Computational studies, per active site"
+        conversion_to_si: "value_J_mol = value_eV * 96485.3"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      formulas:
+        - from: "kJ/mol"
+          to: "J/mol"
+          formula: "value_J_mol = value_kJ_mol * 1000"
+        - from: "eV"
+          to: "J/mol"
+          formula: "value_J_mol = value_eV * 96485.3"
+      notes:
+        - "eV is per particle, must multiply by Avogadro's number for molar basis"
+        - "Cross-paper comparison requires same reaction and mechanism"
+    qa_checks:
+      - "Verify units are energy per amount, not just energy"
+      - "Check if eV needs conversion to kJ/mol"
+
+  # ============================================================================
+  # 11. TURNOVER FREQUENCY (TOF)
+  # ============================================================================
+  - quantity_type: tof
+    synonyms:
+      - "转换频率"
+      - "turnover frequency"
+      - "TOF"
+    abbreviations:
+      - symbol: "TOF"
+        context_required: false
+    dimension: "1 / [time]"
+    si_unit: "1/s"
+    domain_units:
+      - unit: "1/s"
+        display_name: "s⁻¹"
+        usage: "SI unit"
+      - unit: "1/h"
+        display_name: "h⁻¹"
+        usage: "Common for slow reactions"
+      - unit: "mol_product/mol_site/s"
+        display_name: "mol·mol⁻¹·s⁻¹"
+        usage: "Explicit per active site"
+    conversion_rules:
+      allow_auto_convert: "time_only"
+      conversion_type: "scaling"
+      formulas:
+        - from: "1/h"
+          to: "1/s"
+          formula: "value_1_s = value_1_h / 3600"
+      restrictions:
+        - "Cross-paper TOF comparison requires identical active site definition"
+        - "Normalization basis (metal dispersion, surface atoms, bulk atoms) must be specified"
+        - "Different definitions make TOF values incomparable even if units match"
+      notes:
+        - "Time unit conversion is deterministic (1/h → 1/s)"
+        - "Scientific comparison requires checking active site definition"
+        - "Mark as SEMANTIC_REVIEW_REQUIRED if normalization basis is missing"
+    experimental_context_required:
+      - "active_site_definition"
+      - "normalization_basis"
+      - "measurement_method"
+    qa_checks:
+      - "Check if active site definition is provided"
+      - "Flag missing normalization basis"
+      - "Verify time unit conversion is correct"
+
+  # ============================================================================
+  # 12. TURNOVER NUMBER (TON)
+  # ============================================================================
+  - quantity_type: ton
+    synonyms:
+      - "转换数"
+      - "turnover number"
+      - "TON"
+    abbreviations:
+      - symbol: "TON"
+        context_required: false
+    dimension: "dimensionless"
+    si_unit: "1"
+    domain_units:
+      - unit: "1"
+        display_name: "mol/mol"
+        usage: "Total turnovers per active site"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "none"
+      notes:
+        - "TON is dimensionless (moles product per mole active site)"
+        - "Same restrictions as TOF for cross-paper comparison"
+    experimental_context_required:
+      - "active_site_definition"
+      - "time_period"
+
+  # ============================================================================
+  # 13. REACTION RATE
+  # ============================================================================
+  - quantity_type: reaction_rate
+    synonyms:
+      - "反应速率"
+      - "reaction rate"
+      - "r"
+      - "rate"
+    abbreviations:
+      - symbol: "r"
+        context_required: true
+    dimension: "[amount] / ([mass] * [time])"
+    si_unit: "mol/(kg*s)"
+    domain_units:
+      - unit: "mol/(g*h)"
+        display_name: "mol·g⁻¹·h⁻¹"
+        usage: "Common in catalysis"
+      - unit: "mol/(kg*s)"
+        display_name: "mol·kg⁻¹·s⁻¹"
+        usage: "SI unit"
+      - unit: "mmol/(g*h)"
+        display_name: "mmol·g⁻¹·h⁻¹"
+        usage: "For slow reactions"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      formulas:
+        - from: "mol/(g*h)"
+          to: "mol/(kg*s)"
+          formula: "value_SI = value * 1000 / 3600"
+      notes:
+        - "Must specify normalization basis (mass, volume, surface area, active sites)"
+        - "Different bases make rates incomparable"
+    experimental_context_required:
+      - "normalization_basis"
+      - "reactant_or_product"
+
+  # ============================================================================
+  # 14. CATALYTIC ACTIVITY
+  # ============================================================================
+  - quantity_type: catalytic_activity
+    synonyms:
+      - "催化活性"
+      - "catalytic activity"
+      - "activity"
+    abbreviations:
+      - symbol: "a"
+        context_required: true
+    dimension: "variable"
+    si_unit: "variable"
+    domain_units:
+      - unit: "variable"
+        display_name: "various"
+    conversion_rules:
+      allow_auto_convert: false
+      notes:
+        - "Catalytic activity is a generic term, not a specific quantity"
+        - "Must be mapped to specific quantity (rate, TOF, conversion, etc.)"
+        - "Cannot auto-convert without knowing the specific metric"
+    qa_checks:
+      - "Reject generic 'activity' without specific metric"
+      - "Require mapping to rate, TOF, or other defined quantity"
+
+  # ============================================================================
+  # 15. CONCENTRATION
+  # ============================================================================
+  - quantity_type: concentration
+    synonyms:
+      - "浓度"
+      - "concentration"
+      - "c"
+    abbreviations:
+      - symbol: "c"
+        context_required: true
+    dimension: "[amount] / [volume]"
+    si_unit: "mol/m3"
+    domain_units:
+      - unit: "mol/L"
+        display_name: "mol/L"
+        usage: "Most common (also written as M)"
+      - unit: "mol/m3"
+        display_name: "mol/m³"
+        usage: "SI unit"
+      - unit: "mM"
+        display_name: "mM"
+        usage: "Millimolar, 1 mM = 1 mmol/L"
+      - unit: "ppm"
+        display_name: "ppm"
+        usage: "Parts per million, context-dependent (mass or volume)"
+    conversion_rules:
+      allow_auto_convert: "within_molar"
+      conversion_type: "scaling"
+      formulas:
+        - from: "mol/L"
+          to: "mol/m3"
+          formula: "value_mol_m3 = value_mol_L * 1000"
+        - from: "mM"
+          to: "mol/L"
+          formula: "value_mol_L = value_mM / 1000"
+      restrictions:
+        - "ppm requires context: ppm by mass, volume, or moles"
+        - "Cannot auto-convert ppm without density or molecular weight"
+    experimental_context_required:
+      - "concentration_type"
+      - "solvent"
+    qa_checks:
+      - "Verify concentration type (molarity, molality, mass fraction)"
+      - "Check ppm context is specified"
+
+  # ============================================================================
+  # 16. MASS (for catalyst loading)
+  # ============================================================================
+  - quantity_type: mass
+    synonyms:
+      - "质量"
+      - "mass"
+      - "m"
+      - "weight"
+      - "catalyst loading"
+    abbreviations:
+      - symbol: "m"
+        context_required: true
+    dimension: "[mass]"
+    si_unit: "kg"
+    domain_units:
+      - unit: "g"
+        display_name: "g"
+        usage: "Most common for catalyst amounts"
+      - unit: "mg"
+        display_name: "mg"
+        usage: "Small quantities"
+      - unit: "kg"
+        display_name: "kg"
+        usage: "SI unit, industrial scale"
+    conversion_rules:
+      allow_auto_convert: true
+      conversion_type: "scaling"
+      formulas:
+        - from: "g"
+          to: "kg"
+          formula: "value_kg = value_g / 1000"
+        - from: "mg"
+          to: "g"
+          formula: "value_g = value_mg / 1000"
+
+  # ============================================================================
+  # 17. VOLUMETRIC FLOW RATE (for gas reactions)
+  # ============================================================================
+  - quantity_type: volumetric_flow_rate
+    synonyms:
+      - "体积流量"
+      - "volumetric flow rate"
+      - "flow rate"
+      - "F"
+      - "gas flow"
+    abbreviations:
+      - symbol: "F"
+        context_required: true
+      - symbol: "Q"
+        context_required: true
+    dimension: "[volume] / [time]"
+    si_unit: "m3/s"
+    domain_units:
+      - unit: "mL/min"
+        display_name: "mL/min"
+        usage: "Common for lab-scale gas flow"
+      - unit: "L/h"
+        display_name: "L/h"
+        usage: "Medium scale"
+      - unit: "m3/s"
+        display_name: "m³/s"
+        usage: "SI unit"
+      - unit: "sccm"
+        display_name: "sccm"
+        usage: "Standard cubic centimeters per minute (at STP)"
+    conversion_rules:
+      allow_auto_convert: "same_conditions"
+      conversion_type: "scaling"
+      formulas:
+        - from: "mL/min"
+          to: "m3/s"
+          formula: "value_m3_s = value_mL_min * 1e-6 / 60"
+      restrictions:
+        - "Volumetric flow depends on temperature and pressure"
+        - "Standard vs actual conditions must be specified"
+        - "Cannot compare flows at different T, P without correction"
+    experimental_context_required:
+      - "temperature"
+      - "pressure"
+      - "standard_or_actual"
+    qa_checks:
+      - "Verify T, P conditions are specified"
+      - "Check standard vs actual conditions"
+
+# ============================================================================
+# GLOBAL VALIDATION RULES
+# ============================================================================
+global_validation:
+  # Rules that apply to all quantities
+  require_experimental_context: true
+  allow_missing_values: true
+  missing_value_representation: null
+  false_zero_prohibition: true
+  
+  # Unit parsing rules
+  unit_parsing:
+    support_unicode_superscripts: true
+    unicode_mappings:
+      "²": "2"
+      "³": "3"
+      "⁻": "-"
+      "⁺": "+"
+      "μ": "u"
+      "°": "deg"
+    support_compound_units: true
+    compound_unit_separators: ["/", "·", " "]
+  
+  # Conversion status codes
+  conversion_statuses:
+    - code: "EXACT_MATCH"
+      description: "Raw and target units are identical"
+    - code: "CONVERTED"
+      description: "Successful unit conversion"
+    - code: "SEMANTIC_REVIEW_REQUIRED"
+      description: "Unit conversion possible, but scientific comparison requires expert review"
+    - code: "CONTEXT_MISSING"
+      description: "Cannot convert without additional experimental context"
+    - code: "AMBIGUOUS_UNIT"
+      description: "Unit symbol has multiple possible meanings"
+    - code: "NOT_REPORTED"
+      description: "Value was not reported in original source"
+    - code: "TRUE_ZERO"
+      description: "Value is genuinely zero (not missing data)"
+
+  # Quality assurance checks
+  qa_checks:
+    - name: "dimensional_consistency"
+      description: "Verify converted value has correct physical dimension"
+      required: true
+    - name: "magnitude_reasonableness"
+      description: "Check value is within typical range for quantity type"
+      required: true
+    - name: "source_anchor_validation"
+      description: "Verify SourceAnchor supports the extracted value"
+      required: true
+    - name: "false_zero_detection"
+      description: "Check if zero value has 'not reported' note"
+      required: true

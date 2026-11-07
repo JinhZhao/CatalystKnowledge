@@ -1,0 +1,262 @@
+{
+  "dimension": "performance",
+  "fields": {
+    "key_metrics": {
+      "field_name": "key_metrics",
+      "value": [
+        {
+          "metric_name": "propane conversion",
+          "value": "1.1",
+          "unit": "%",
+          "conditions": "400°C, thermal, C3H8:O2=2:1, 20 mL/min",
+          "catalyst": "Cu/BN-NS",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "At 400°C temperature, Cu/BN-NS and Cu/BN-NF recorded a propane conversion of ~1.1%"
+        },
+        {
+          "metric_name": "propane conversion",
+          "value": "1.1",
+          "unit": "%",
+          "conditions": "400°C, thermal, C3H8:O2=2:1, 20 mL/min",
+          "catalyst": "Cu/BN-NF",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "At 400°C temperature, Cu/BN-NS and Cu/BN-NF recorded a propane conversion of ~1.1%"
+        },
+        {
+          "metric_name": "propane conversion",
+          "value": "0.8",
+          "unit": "%",
+          "conditions": "400°C, thermal, C3H8:O2=2:1, 20 mL/min",
+          "catalyst": "Cu/BN-NP",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "while Cu/BN-NP gave a propane conversion of only ~0.8%"
+        },
+        {
+          "metric_name": "propane conversion",
+          "value": "3.0",
+          "unit": "%",
+          "conditions": "500°C, thermal, C3H8:O2=2:1, 20 mL/min",
+          "catalyst": "Cu/BN-NS",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "Cu/BN-NS and Cu/BN-NF recorded a propane conversion of ~3% and ~2.8% respectively"
+        },
+        {
+          "metric_name": "propane conversion",
+          "value": "2.8",
+          "unit": "%",
+          "conditions": "500°C, thermal, C3H8:O2=2:1, 20 mL/min",
+          "catalyst": "Cu/BN-NF",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "Cu/BN-NS and Cu/BN-NF recorded a propane conversion of ~3% and ~2.8% respectively"
+        },
+        {
+          "metric_name": "propane conversion",
+          "value": "2.4",
+          "unit": "%",
+          "conditions": "500°C, thermal, C3H8:O2=2:1, 20 mL/min",
+          "catalyst": "Cu/BN-NP",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "while Cu/BN-NP gave a propane conversion of ~2.4%"
+        },
+        {
+          "metric_name": "propane conversion",
+          "value": "4.1",
+          "unit": "%",
+          "conditions": "500°C, photothermal, C3H8:O2=2:1, 20 mL/min, 300 W Xe lamp",
+          "catalyst": "Cu/BN-NS",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "Cu/BN-NS afforded the highest photothermal catalytic activity in ODHP, reaching 4.1% at 500°C"
+        },
+        {
+          "metric_name": "propane conversion",
+          "value": "3.9",
+          "unit": "%",
+          "conditions": "500°C, photothermal, C3H8:O2=2:1, 20 mL/min, 300 W Xe lamp",
+          "catalyst": "Cu/BN-NF",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "while Cu/BN-NF and Cu/BN-NP recorded a propane conversion of ~3.9% and ~3.1% respectively"
+        },
+        {
+          "metric_name": "propane conversion",
+          "value": "3.1",
+          "unit": "%",
+          "conditions": "500°C, photothermal, C3H8:O2=2:1, 20 mL/min, 300 W Xe lamp",
+          "catalyst": "Cu/BN-NP",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "while Cu/BN-NF and Cu/BN-NP recorded a propane conversion of ~3.9% and ~3.1% respectively"
+        }
+      ],
+      "status": "REPORTED",
+      "origin": "UNKNOWN_ORIGIN",
+      "notes": "Array with 9 items, 9 REPORTED"
+    },
+    "key_claim": {
+      "field_name": "key_claim",
+      "value": "First BN-based photothermal ODHP system with LSPR effect achieving enhanced activity and propylene selectivity",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "To the best of our knowledge, it is the first time to establish a BN-based photothermal ODHP catalytic system"
+    },
+    "benchmark_comparison": {
+      "field_name": "benchmark_comparison",
+      "value": [
+        {
+          "this_work_value": "4.1%",
+          "literature_value": "16.8% propane conversion and 82.1% propylene selectivity",
+          "literature_reference": "Wang et al., 2020",
+          "status": "REPORTED",
+          "origin": "LITERATURE_REFERENCE",
+          "source_quote": "The h BN/cordierite catalyst can achieve 16.8% propane conversion and 82.1% propylene selectivity at 535°C and 576,000 mL/(gBN·h) ultra-high air velocity (GHSV)"
+        }
+      ],
+      "status": "NOT_EXTRACTED",
+      "origin": "UNKNOWN_ORIGIN",
+      "notes": "Array with 1 items, 0 REPORTED"
+    },
+    "reaction_conditions": {
+      "field_name": "reaction_conditions",
+      "value": null,
+      "status": "UNRESOLVED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "ODHP reaction was conducted in a fixed-bed reactor under atmospheric pressure... propane and oxygen with a molar ratio of 2/1 were introduced into the reactor at a total flowrate of 20.0 mL min−1 (STP), in which the reaction temperature was kept in the range of 400°C–500°C and a 300 W Xe lamp (λ > 420 nm) was employed to provide visible light"
+    },
+    "experiment_matrix": {
+      "field_name": "experiment_matrix",
+      "value": [
+        {
+          "sample_name": "Cu/BN-NS",
+          "reaction_type": "thermal",
+          "temperature": "400°C",
+          "conversion": "1.1%",
+          "selectivity": "NOT_EXTRACTED",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "At 400°C temperature, Cu/BN-NS and Cu/BN-NF recorded a propane conversion of ~1.1%"
+        },
+        {
+          "sample_name": "Cu/BN-NS",
+          "reaction_type": "thermal",
+          "temperature": "500°C",
+          "conversion": "3.0%",
+          "selectivity": "NOT_EXTRACTED",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "Cu/BN-NS and Cu/BN-NF recorded a propane conversion of ~3% and ~2.8% respectively"
+        },
+        {
+          "sample_name": "Cu/BN-NS",
+          "reaction_type": "photothermal",
+          "temperature": "500°C",
+          "conversion": "4.1%",
+          "selectivity": "NOT_EXTRACTED",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "Cu/BN-NS afforded the highest photothermal catalytic activity in ODHP, reaching 4.1% at 500°C"
+        },
+        {
+          "sample_name": "Cu/BN-NF",
+          "reaction_type": "thermal",
+          "temperature": "400°C",
+          "conversion": "1.1%",
+          "selectivity": "NOT_EXTRACTED",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "At 400°C temperature, Cu/BN-NS and Cu/BN-NF recorded a propane conversion of ~1.1%"
+        },
+        {
+          "sample_name": "Cu/BN-NF",
+          "reaction_type": "thermal",
+          "temperature": "500°C",
+          "conversion": "2.8%",
+          "selectivity": "NOT_EXTRACTED",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "Cu/BN-NS and Cu/BN-NF recorded a propane conversion of ~3% and ~2.8% respectively"
+        },
+        {
+          "sample_name": "Cu/BN-NF",
+          "reaction_type": "photothermal",
+          "temperature": "500°C",
+          "conversion": "3.9%",
+          "selectivity": "NOT_EXTRACTED",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "while Cu/BN-NF and Cu/BN-NP recorded a propane conversion of ~3.9% and ~3.1% respectively"
+        },
+        {
+          "sample_name": "Cu/BN-NP",
+          "reaction_type": "thermal",
+          "temperature": "400°C",
+          "conversion": "0.8%",
+          "selectivity": "NOT_EXTRACTED",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "while Cu/BN-NP gave a propane conversion of only ~0.8%"
+        },
+        {
+          "sample_name": "Cu/BN-NP",
+          "reaction_type": "thermal",
+          "temperature": "500°C",
+          "conversion": "2.4%",
+          "selectivity": "NOT_EXTRACTED",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "while Cu/BN-NP gave a propane conversion of ~2.4%"
+        },
+        {
+          "sample_name": "Cu/BN-NP",
+          "reaction_type": "photothermal",
+          "temperature": "500°C",
+          "conversion": "3.1%",
+          "selectivity": "NOT_EXTRACTED",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "while Cu/BN-NF and Cu/BN-NP recorded a propane conversion of ~3.9% and ~3.1% respectively"
+        }
+      ],
+      "status": "NOT_EXTRACTED",
+      "origin": "UNKNOWN_ORIGIN",
+      "notes": "Array with 9 items, 0 REPORTED"
+    }
+  },
+  "validation_warnings": [],
+  "chunk_id": "performance_full",
+  "chunk_sections": [
+    "s00_open_access",
+    "s01_photothermal_oxidative_dehydrogenation_o",
+    "s02_1_introduction",
+    "s03_2_experimental_section",
+    "s04_2_1_catalyst_preparation",
+    "s05_2_2_catalyst_characterization",
+    "s06_2_3_catalyst_evaluation",
+    "s07_3_results_and_discussion",
+    "s08_3_1_physicochemical_properties_of_bn_sup",
+    "s09_3_2_optical_properties_of_bn_supports_an",
+    "s10_3_3_photo_thermal_catalytic_odhp_perform",
+    "s11_4_conclusion",
+    "s12_data_availability_statement",
+    "s16_publisher_s_note"
+  ],
+  "chunk_char_range": [
+    0,
+    25846
+  ],
+  "chunk_page_range": [
+    0,
+    7
+  ],
+  "merge_notes": "Single chunk, no merge needed",
+  "chunk_count": 1,
+  "source_chunks": [
+    "performance_full"
+  ]
+}

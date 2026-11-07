@@ -1,0 +1,539 @@
+# Science Extraction V2 — Config-Driven Prompt Templates
+# Version: 2.0.0
+# Replaces hardcoded prompts in extraction_adapter.py
+#
+# Key improvements over V1:
+# 1. No default value anchors (0, [], null) that cause false absence
+# 2. Explicit record_origin classification for every data field
+# 3. Unified missing status: REPORTED / NOT_REPORTED / NOT_EXTRACTED / UNRESOLVED / NOT_APPLICABLE
+# 4. Instructions to extract SPECIFIC values, not generic descriptions
+# 5. Cross-section awareness: "data not in this chunk" ≠ "data not in paper"
+# 6. Explicit prohibition: do NOT confuse literature citations with original work
+
+schema_version: "2.0.0"
+prompt_version: "2.0.0"
+based_on: "six-dimension-extraction V1 + Phase 3.3 root cause fixes"
+
+# ============================================================
+# Common instructions injected into ALL dimension prompts
+# ============================================================
+
+common_instructions: |
+  ## CRITICAL RULES
+
+  ### Data Origin Classification
+  For EVERY piece of scientific data you extract, classify its origin as one of:
+  - ORIGINAL_EXPERIMENT: Data from this paper's own experiments
+  - CONTROL_EXPERIMENT: Data from control/comparison experiments in this paper
+  - LITERATURE_REFERENCE: Data cited from other papers (MUST include citation)
+  - THEORETICAL_CALCULATION: Computed/DFT/theoretical results
+  - PATENT_EXAMPLE: Data from cited patents
+  - SYSTEM_INFERRED: Inferred by the extraction system (not directly stated)
+  - UNKNOWN_ORIGIN: Cannot determine the origin
+
+  ### Missing Data Status
+  Use these exact status values — NEVER use 0, null, empty string, or "not specified" for missing data:
+  - REPORTED: Data is present in the text and has been extracted
+  - NOT_REPORTED: The paper does not mention this information at all
+  - NOT_EXTRACTED: The paper likely contains this info but it was not found in the current text chunk
+  - UNRESOLVED: Conflicting or ambiguous information that needs human review
+  - NOT_APPLICABLE: This field does not apply to the current study
+
+  ### Specificity Requirements
+  - Extract SPECIFIC values (e.g., "wetness impregnation"), NOT generic descriptions (e.g., "synthesis method")
+  - Extract SPECIFIC technique names (e.g., "XRD", "BET", "TEM"), NOT categories (e.g., "characterization")
+  - Extract SPECIFIC numbers with units (e.g., "4.1%", "8 h", "500°C"), NOT placeholders
+  - For numeric fields: NEVER use 0 to represent missing data. Use status NOT_REPORTED instead.
+  - For array fields: NEVER return empty array [] unless truly no items exist. Use status NOT_EXTRACTED.
+
+  ### Literature vs Original Work
+  - STRICTLY distinguish between this paper's original data and cited literature data
+  - If a performance value (conversion, selectivity, etc.) comes from a cited paper, mark origin as LITERATURE_REFERENCE
+  - Only mark data as ORIGINAL_EXPERIMENT if it is clearly from this paper's own experiments
+  - When in doubt, mark as UNKNOWN_ORIGIN and include the source text snippet
+
+  ### Cross-Chunk Awareness
+  - The text you receive may be only a portion of the full paper
+  - If information is not found in the current chunk, use status NOT_EXTRACTED (not NOT_REPORTED)
+  - NOT_REPORTED means you are confident the paper does not contain this info
+  - NOT_EXTRACTED means the info might exist in other parts of the paper
+
+  ### Source Text Quoting
+  - For each extracted value, include a brief quote from the source text
+  - This enables downstream verification and SourceAnchor generation
+
+# ============================================================
+# Dimension-specific prompt templates
+# ============================================================
+
+dimensions:
+
+  catalyst_design:
+    system_prompt: |
+      You are a scientific data extraction specialist in catalysis research.
+      Your task is to extract catalyst design and preparation information from paper text.
+      {common_instructions}
+
+    user_template: |
+      Extract catalyst design and preparation information from the following paper section.
+
+      **Document context**: {document_context}
+      **Section**: {section_title}
+
+      **Text to extract from**:
+      ---
+      {chunk_content}
+      ---
+
+      Return ONLY valid JSON with this structure:
+      {{
+        "catalyst_system": {{
+          "value": "full catalyst system description (e.g., 'Cu/BN-NS with 1.0 wt% Cu loading on hexagonal BN nanosheets')",
+          "status": "REPORTED|NOT_REPORTED|NOT_EXTRACTED|UNRESOLVED|NOT_APPLICABLE",
+          "origin": "ORIGINAL_EXPERIMENT|LITERATURE_REFERENCE|...",
+          "source_quote": "exact text snippet supporting this extraction"
+        }},
+        "catalyst_type": {{
+          "value": "type classification (e.g., 'supported metal nanoparticle catalyst')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "active_component": {{
+          "value": "active catalytic component with loading (e.g., 'Cu nanoparticles, 1.0 wt%')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "support": {{
+          "value": "support material with morphology (e.g., 'hexagonal boron nitride nanosheets (BN-NS)')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "synthesis_method": {{
+          "value": "specific synthesis method (e.g., 'wetness impregnation')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "synthesis_conditions": {{
+          "value": "temperature, time, atmosphere, precursors (e.g., 'calcination at 500°C for 4h in air, Cu(NO3)2 precursor')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "reaction_type": {{
+          "value": "target reaction (e.g., 'oxidative dehydrogenation of propane (ODHP)')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "design_rationale": {{
+          "value": "why this catalyst was designed this way",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }}
+      }}
+
+    expected_fields:
+      - catalyst_system
+      - catalyst_type
+      - active_component
+      - support
+      - synthesis_method
+      - synthesis_conditions
+      - reaction_type
+      - design_rationale
+
+  characterization:
+    system_prompt: |
+      You are a scientific data extraction specialist in catalysis research.
+      Your task is to extract characterization results with SPECIFIC technique names and numerical findings.
+      {common_instructions}
+
+    user_template: |
+      Extract characterization results from the following paper section.
+
+      **Document context**: {document_context}
+      **Section**: {section_title}
+
+      **Text to extract from**:
+      ---
+      {chunk_content}
+      ---
+
+      Return ONLY valid JSON:
+      {{
+        "techniques_used": [
+          {{
+            "technique_name": "specific technique abbreviation (e.g., 'XRD', 'BET', 'TEM', 'XPS', 'UV-vis', 'UV-vis DRS')",
+            "what_was_measured": "what property was measured (e.g., 'crystal structure', 'surface area', 'particle morphology')",
+            "key_result": "specific numerical result (e.g., 'S_BET = 4.6-13.2 m2/g', 'Cu particle size = 7.4-12.7 nm')",
+            "status": "REPORTED|NOT_REPORTED|NOT_EXTRACTED",
+            "origin": "ORIGINAL_EXPERIMENT|...",
+            "source_quote": "exact text with numbers"
+          }}
+        ],
+        "morphology": {{
+          "value": "specific morphological findings (e.g., 'BN nanosheets with Cu nanoparticles of 7.4-12.7 nm diameter')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "structure": {{
+          "value": "crystallographic/structural findings (e.g., 'hexagonal BN phase confirmed by XRD peaks at 26.6° and 41.7°')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "electronic_properties": {{
+          "value": "electronic structure findings (e.g., 'Cu 2p3/2 binding energy at 932.5 eV indicating Cu0/Cu+')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "optical_properties": {{
+          "value": "optical properties (e.g., 'LSPR absorption peak at 550-600 nm in UV-vis DRS')",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "surface_properties": {{
+          "value": "surface area, pore size, pore volume with numbers",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }}
+      }}
+
+    expected_fields:
+      - techniques_used
+      - morphology
+      - structure
+      - electronic_properties
+      - optical_properties
+      - surface_properties
+
+  performance:
+    system_prompt: |
+      You are a scientific data extraction specialist in catalysis research.
+      Your task is to extract SPECIFIC catalytic performance metrics with numbers, units, and conditions.
+      {common_instructions}
+
+    user_template: |
+      Extract catalytic performance data from the following paper section.
+
+      **Document context**: {document_context}
+      **Section**: {section_title}
+
+      **CRITICAL**: Distinguish this paper's original performance data from literature values cited for comparison.
+      Literature data MUST be marked as LITERATURE_REFERENCE origin.
+
+      **Text to extract from**:
+      ---
+      {chunk_content}
+      ---
+
+      Return ONLY valid JSON:
+      {{
+        "key_metrics": [
+          {{
+            "metric_name": "e.g., 'propane conversion', 'propylene selectivity', 'propylene yield'",
+            "value": "numeric value as string (e.g., '4.1')",
+            "unit": "unit string (e.g., '%')",
+            "conditions": "measurement conditions (e.g., '500°C, photothermal, C3H8:O2=2:1, 20 mL/min')",
+            "catalyst": "which catalyst sample (e.g., 'Cu/BN-NS')",
+            "status": "REPORTED|NOT_REPORTED|NOT_EXTRACTED",
+            "origin": "ORIGINAL_EXPERIMENT|CONTROL_EXPERIMENT|LITERATURE_REFERENCE",
+            "source_quote": "exact text with the number"
+          }}
+        ],
+        "key_claim": {{
+          "value": "main performance claim of this paper",
+          "status": "...",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "..."
+        }},
+        "benchmark_comparison": [
+          {{
+            "this_work_value": "performance of this paper's catalyst (or NOT_EXTRACTED)",
+            "literature_value": "comparison literature value (e.g., '16.8% conversion at 535°C')",
+            "literature_reference": "citation (e.g., 'Wang et al., 2020')",
+            "status": "...",
+            "origin": "LITERATURE_REFERENCE"
+          }}
+        ],
+        "reaction_conditions": {{
+          "temperature_range": "e.g., '400-500°C'",
+          "pressure": "e.g., 'atmospheric'",
+          "gas_composition": "e.g., 'C3H8:O2 = 2:1'",
+          "flow_rate": "e.g., '20 mL/min'",
+          "light_source": "e.g., '300 W Xe lamp'",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "experiment_matrix": [
+          {{
+            "sample_name": "catalyst sample name",
+            "reaction_type": "thermal/photothermal/etc.",
+            "temperature": "value with unit",
+            "conversion": "value with unit",
+            "selectivity": "value with unit",
+            "status": "...",
+            "origin": "...",
+            "source_quote": "..."
+          }}
+        ]
+      }}
+
+    expected_fields:
+      - key_metrics
+      - key_claim
+      - benchmark_comparison
+      - reaction_conditions
+      - experiment_matrix
+
+  mechanism:
+    system_prompt: |
+      You are a scientific data extraction specialist in catalysis research.
+      Your task is to extract reaction mechanism information with specific experimental evidence.
+      {common_instructions}
+
+    user_template: |
+      Extract reaction mechanism information from the following paper section.
+
+      **Document context**: {document_context}
+      **Section**: {section_title}
+
+      **Text to extract from**:
+      ---
+      {chunk_content}
+      ---
+
+      Return ONLY valid JSON:
+      {{
+        "proposed_pathway": {{
+          "value": "specific reaction pathway description",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "rate_determining_step": {{
+          "value": "specific RDS if identified",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "intermediates": [
+          {{
+            "name": "specific intermediate species name",
+            "evidence": "how it was detected/identified",
+            "status": "...",
+            "origin": "...",
+            "source_quote": "..."
+          }}
+        ],
+        "active_sites": {{
+          "value": "description of proposed active sites",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "role_of_light": {{
+          "value": "how light/photothermal effect contributes to mechanism",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "computational_support": {{
+          "value": "DFT or computational evidence",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "experimental_support": [
+          {{
+            "evidence_type": "technique used",
+            "finding": "specific observation",
+            "status": "...",
+            "origin": "...",
+            "source_quote": "..."
+          }}
+        ]
+      }}
+
+    expected_fields:
+      - proposed_pathway
+      - rate_determining_step
+      - intermediates
+      - active_sites
+      - role_of_light
+      - computational_support
+      - experimental_support
+
+  structure_activity:
+    system_prompt: |
+      You are a scientific data extraction specialist in catalysis research.
+      Your task is to extract structure-activity relationships with specific descriptors and data points.
+      {common_instructions}
+
+    user_template: |
+      Extract structure-activity relationship information from the following paper section.
+
+      **Document context**: {document_context}
+      **Section**: {section_title}
+
+      **Text to extract from**:
+      ---
+      {chunk_content}
+      ---
+
+      Return ONLY valid JSON:
+      {{
+        "descriptors": [
+          {{
+            "descriptor_name": "e.g., 'Cu nanoparticle size', 'BET surface area', 'Cu loading'",
+            "descriptor_values": "range of values studied (e.g., '7.4-12.7 nm')",
+            "correlated_property": "what property correlates with this descriptor",
+            "correlation_type": "positive/negative/volcano/none",
+            "status": "...",
+            "origin": "...",
+            "source_quote": "..."
+          }}
+        ],
+        "relationship_summary": {{
+          "value": "overall structure-activity relationship description",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "evidence_strength": {{
+          "value": "strong/moderate/weak",
+          "justification": "why this strength assessment",
+          "status": "...",
+          "origin": "..."
+        }},
+        "data_points_count": {{
+          "value": "number of distinct data points supporting the relationship",
+          "status": "...",
+          "origin": "..."
+        }},
+        "morphology_activity_link": {{
+          "value": "how catalyst morphology relates to activity",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }}
+      }}
+
+    expected_fields:
+      - descriptors
+      - relationship_summary
+      - evidence_strength
+      - data_points_count
+      - morphology_activity_link
+
+  reliability:
+    system_prompt: |
+      You are a scientific data extraction specialist in catalysis research.
+      Your task is to extract stability, durability, and reproducibility data.
+      {common_instructions}
+
+      IMPORTANT: Stability data is often found in Figure captions and late Results sections.
+      Scan ALL text carefully for keywords: "stability", "durability", "time on stream",
+      "cycle", "reusability", "deactivation", "lifetime", "hours", "h".
+
+    user_template: |
+      Extract reliability and stability data from the following paper section.
+
+      **Document context**: {document_context}
+      **Section**: {section_title}
+
+      **CRITICAL**: Stability test data may appear in figure captions (e.g., "Figure 9 shows the stability test...").
+      Do NOT return 0 or "not reported" without carefully scanning ALL text including figure/table captions.
+
+      **Text to extract from**:
+      ---
+      {chunk_content}
+      ---
+
+      Return ONLY valid JSON:
+      {{
+        "time_on_stream": {{
+          "value": "numeric duration value (e.g., '8')",
+          "unit": "time unit (e.g., 'h', 'hours')",
+          "conditions": "test conditions (temperature, feed gas, etc.)",
+          "performance_change": "how performance changed during test (e.g., 'stable conversion ~3.1%')",
+          "status": "REPORTED|NOT_REPORTED|NOT_EXTRACTED",
+          "origin": "ORIGINAL_EXPERIMENT|...",
+          "source_quote": "exact text mentioning the duration"
+        }},
+        "cycle_count": {{
+          "value": "number of reuse cycles tested",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "mass_transfer_verification": {{
+          "value": "whether mass transfer limitations were checked",
+          "method": "verification method if any",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "reproducibility": {{
+          "value": "reproducibility evidence",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "deactivation_mechanism": {{
+          "value": "observed or proposed deactivation mechanism",
+          "evidence": "supporting evidence",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }},
+        "stability_summary": {{
+          "value": "overall stability assessment",
+          "status": "...",
+          "origin": "...",
+          "source_quote": "..."
+        }}
+      }}
+
+    expected_fields:
+      - time_on_stream
+      - cycle_count
+      - mass_transfer_verification
+      - reproducibility
+      - deactivation_mechanism
+      - stability_summary
+
+# ============================================================
+# Extraction control parameters
+# ============================================================
+
+extraction_config:
+  max_content_chars_per_chunk: 8000
+  max_retries: 2
+  temperature: 0.1
+  max_tokens: 4096
+  response_format: json_object
+
+  # How to handle fields not found in a chunk
+  missing_data_policy:
+    single_chunk_mode: "NOT_EXTRACTED"
+    multi_chunk_mode: "merge_across_chunks"
+    merge_strategy: "prefer_reported"
+
+  # Validation rules
+  validation:
+    numeric_fields_must_not_be_zero_for_missing: true
+    array_fields_must_not_be_empty_for_missing: true
+    string_fields_must_not_be_generic_for_missing: true
+    require_source_quote_for_reported: true
+    require_origin_for_all_fields: true

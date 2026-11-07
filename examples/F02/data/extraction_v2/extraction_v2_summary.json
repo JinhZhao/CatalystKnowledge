@@ -1,0 +1,18 @@
+{
+  "document_id": "F02",
+  "extraction_version": "v2",
+  "extraction_mode": "adaptive",
+  "prompt_version": "2.0.0",
+  "dimensions_total": 6,
+  "dimensions_success": 6,
+  "dimensions_failed": 0,
+  "total_chunks_processed": 6,
+  "total_llm_calls": 6,
+  "content_stats": {
+    "total_chars": 36432,
+    "total_sections": 18,
+    "total_elements": 79,
+    "figures_and_tables": 11
+  },
+  "timestamp": "2026-11-07T11:18:18.686429"
+}

@@ -1,0 +1,338 @@
+{
+  "total_chars": 36432,
+  "total_elements": 79,
+  "total_sections": 18,
+  "sections": [
+    {
+      "section_id": "s00_open_access",
+      "title": "OPEN ACCESS",
+      "level": 1,
+      "page_range": [
+        0,
+        0
+      ],
+      "char_count": 1181,
+      "char_offset_range": [
+        0,
+        1182
+      ]
+    },
+    {
+      "section_id": "s01_photothermal_oxidative_dehydrogenation_o",
+      "title": "Photothermal oxidative dehydrogenation of propane to propylene over Cu/BN catalysts",
+      "level": 1,
+      "page_range": [
+        0,
+        0
+      ],
+      "char_count": 1532,
+      "char_offset_range": [
+        1183,
+        2715
+      ]
+    },
+    {
+      "section_id": "s02_1_introduction",
+      "title": "1 Introduction",
+      "level": 1,
+      "page_range": [
+        0,
+        1
+      ],
+      "char_count": 5484,
+      "char_offset_range": [
+        2716,
+        8202
+      ]
+    },
+    {
+      "section_id": "s03_2_experimental_section",
+      "title": "2 Experimental section",
+      "level": 1,
+      "page_range": [
+        1,
+        1
+      ],
+      "char_count": 23,
+      "char_offset_range": [
+        8203,
+        8226
+      ]
+    },
+    {
+      "section_id": "s04_2_1_catalyst_preparation",
+      "title": "2.1 Catalyst preparation",
+      "level": 1,
+      "page_range": [
+        1,
+        1
+      ],
+      "char_count": 706,
+      "char_offset_range": [
+        8227,
+        8933
+      ]
+    },
+    {
+      "section_id": "s05_2_2_catalyst_characterization",
+      "title": "2.2 Catalyst characterization",
+      "level": 1,
+      "page_range": [
+        1,
+        1
+      ],
+      "char_count": 855,
+      "char_offset_range": [
+        8934,
+        9789
+      ]
+    },
+    {
+      "section_id": "s06_2_3_catalyst_evaluation",
+      "title": "2.3 Catalyst evaluation",
+      "level": 1,
+      "page_range": [
+        1,
+        2
+      ],
+      "char_count": 2745,
+      "char_offset_range": [
+        9790,
+        12536
+      ]
+    },
+    {
+      "section_id": "s07_3_results_and_discussion",
+      "title": "3 Results and discussion",
+      "level": 1,
+      "page_range": [
+        2,
+        2
+      ],
+      "char_count": 25,
+      "char_offset_range": [
+        12537,
+        12562
+      ]
+    },
+    {
+      "section_id": "s08_3_1_physicochemical_properties_of_bn_sup",
+      "title": "3.1 Physicochemical properties of BN supports and Cu/BN catalysts",
+      "level": 1,
+      "page_range": [
+        2,
+        3
+      ],
+      "char_count": 4887,
+      "char_offset_range": [
+        12563,
+        17451
+      ]
+    },
+    {
+      "section_id": "s09_3_2_optical_properties_of_bn_supports_an",
+      "title": "3.2 Optical properties of BN supports and Cu/BN catalysts",
+      "level": 1,
+      "page_range": [
+        3,
+        4
+      ],
+      "char_count": 1077,
+      "char_offset_range": [
+        17452,
+        18529
+      ]
+    },
+    {
+      "section_id": "s10_3_3_photo_thermal_catalytic_odhp_perform",
+      "title": "3.3 (Photo)thermal catalytic ODHP performances of Cu/BN catalysts",
+      "level": 1,
+      "page_range": [
+        4,
+        7
+      ],
+      "char_count": 4735,
+      "char_offset_range": [
+        18530,
+        23268
+      ]
+    },
+    {
+      "section_id": "s11_4_conclusion",
+      "title": "4 Conclusion",
+      "level": 1,
+      "page_range": [
+        7,
+        7
+      ],
+      "char_count": 1170,
+      "char_offset_range": [
+        23269,
+        24439
+      ]
+    },
+    {
+      "section_id": "s12_data_availability_statement",
+      "title": "Data availability statement",
+      "level": 1,
+      "page_range": [
+        7,
+        7
+      ],
+      "char_count": 195,
+      "char_offset_range": [
+        24440,
+        24635
+      ]
+    },
+    {
+      "section_id": "s13_author_contributions",
+      "title": "Author contributions",
+      "level": 1,
+      "page_range": [
+        7,
+        7
+      ],
+      "char_count": 174,
+      "char_offset_range": [
+        24636,
+        24810
+      ]
+    },
+    {
+      "section_id": "s14_funding",
+      "title": "Funding",
+      "level": 1,
+      "page_range": [
+        7,
+        7
+      ],
+      "char_count": 473,
+      "char_offset_range": [
+        24811,
+        25284
+      ]
+    },
+    {
+      "section_id": "s15_conflict_of_interest",
+      "title": "Conflict of interest",
+      "level": 1,
+      "page_range": [
+        7,
+        7
+      ],
+      "char_count": 195,
+      "char_offset_range": [
+        25285,
+        25480
+      ]
+    },
+    {
+      "section_id": "s16_publisher_s_note",
+      "title": "Publisher’s note",
+      "level": 1,
+      "page_range": [
+        7,
+        7
+      ],
+      "char_count": 365,
+      "char_offset_range": [
+        25481,
+        25846
+      ]
+    },
+    {
+      "section_id": "s17_references",
+      "title": "References",
+      "level": 1,
+      "page_range": [
+        7,
+        8
+      ],
+      "char_count": 10593,
+      "char_offset_range": [
+        25847,
+        36440
+      ]
+    }
+  ],
+  "figures_and_tables": [
+    {
+      "index": 30,
+      "type": "image",
+      "page_idx": 2,
+      "caption": "FIGURE 1 XRD patterns of BN supports and Cu/BN catalysts. ",
+      "char_offset": 10656
+    },
+    {
+      "index": 41,
+      "type": "image",
+      "page_idx": 3,
+      "caption": "FIGURE 2 (A) Adsorption-desorption isotherms and (B) pore size distributions of BN supports and Cu/BN catalysts. ",
+      "char_offset": 16922
+    },
+    {
+      "index": 42,
+      "type": "table",
+      "page_idx": 3,
+      "caption": "TABLE 1 Specific surface area (SBET), average pore size, and pore volume of BN supports and Cu/BN catalysts extracted from N2 adsorption-desorption characterizations, as well as the sizes of Cu on Cu/",
+      "char_offset": 17036
+    },
+    {
+      "index": 47,
+      "type": "image",
+      "page_idx": 4,
+      "caption": "TEM images of (A) BN-NS, (D) BN-NF and (G) BN-NP, and the elemental distributions of B and N over BN-NS: (B) and (C); BN-NF: (E) and (F); and BNNP: (H) and (I). ",
+      "char_offset": 18368
+    },
+    {
+      "index": 51,
+      "type": "image",
+      "page_idx": 5,
+      "caption": "FIGURE 4 TEM images of (A) Cu/BN-NS, (E) Cu/BN-NF, and (I) Cu/BN-NP, and the elemental distributions of B, N and Cu over Cu/BN-NS: (B), (C), and (D); Cu/ BN-NF: (F), (G) and (H); and Cu/BN-NP (J), (K)",
+      "char_offset": 20426
+    },
+    {
+      "index": 52,
+      "type": "image",
+      "page_idx": 5,
+      "caption": "[Image: images/ee32916d88d8e79d4040d018ee859edb8f0be35b02eb1a8da122577c1b8d2923.jpg]",
+      "char_offset": 20638
+    },
+    {
+      "index": 53,
+      "type": "image",
+      "page_idx": 6,
+      "caption": "FIGURE 6 UV-vis spectra of BN supports and Cu/BN catalysts. ",
+      "char_offset": 20723
+    },
+    {
+      "index": 54,
+      "type": "image",
+      "page_idx": 6,
+      "caption": "FIGURE 7 Catalytic activities of Cu/BN catalysts in traditional thermaldriven catalytic system and photothermal catalytic ODHP system. Reaction conditions: 0.10 g catalyst, pre-reduced at 500°C for 2 ",
+      "char_offset": 20784
+    },
+    {
+      "index": 55,
+      "type": "image",
+      "page_idx": 6,
+      "caption": "FIGURE 8 Catalytic selectivities of Cu/BN-NS in traditional thermal-driven catalytic system and photothermal catalytic ODHP system. Reaction conditions: 0.10 g catalyst, pre-reduced at 500°C for 2 h, ",
+      "char_offset": 21133
+    },
+    {
+      "index": 56,
+      "type": "image",
+      "page_idx": 6,
+      "caption": "FIGURE 9 Stability test of Cu/BN-NS in photothermal catalytic ODHP system. Reaction conditions: 0.10 g catalyst, pre-reduced at 500°C for 2 h, propane: oxygen = 2: 1, total flowrate 20.0 mL min−1, rea",
+      "char_offset": 21479
+    },
+    {
+      "index": 61,
+      "type": "table",
+      "page_idx": 7,
+      "caption": "TABLE 2 Comparison table of thermal and photothermal catalysts for ODHP reactions. ",
+      "char_offset": 23184
+    }
+  ]
+}

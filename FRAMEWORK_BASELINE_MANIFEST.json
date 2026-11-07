@@ -1,0 +1,195 @@
+{
+  "manifest_version": "1.0.0",
+  "created_at": "2026-11-07T12:30:00Z",
+  "source_project": "D:\\Knowledge_World",
+  "source_run": "real_e2e_gate_014",
+  "release_version": "v0.1.0",
+  
+  "framework_components": {
+    "src": {
+      "description": "Core framework source code",
+      "files_count": 47,
+      "editable": false,
+      "subdirectories": [
+        "catalyst_knowledge/core/",
+        "catalyst_knowledge/pipeline/",
+        "catalyst_knowledge/pipeline/adapters/",
+        "catalyst_knowledge/schema/"
+      ],
+      "key_files": [
+        "catalyst_knowledge/core/six_dimension_schema.py",
+        "catalyst_knowledge/pipeline/adapters/science_extraction_v2_adapter.py",
+        "catalyst_knowledge/pipeline/adapters/vlm_figure_science_adapter.py",
+        "catalyst_knowledge/pipeline/adapters/table_science_adapter.py",
+        "catalyst_knowledge/pipeline/adapters/evidence_verifier_adapter.py",
+        "catalyst_knowledge/pipeline/adapters/quality_gate_adapter.py",
+        "catalyst_knowledge/schema/catalysis_schema_v1.py"
+      ]
+    },
+    
+    "config": {
+      "description": "Pipeline and prompt configuration",
+      "files_count": 7,
+      "editable": {
+        "prompts/": true,
+        "pipeline*.yaml": false,
+        "audit_anchors.yaml": true,
+        "quantity_definitions.yaml": true
+      },
+      "key_files": [
+        "config/prompts/science_extraction_v2.yaml",
+        "config/pipeline_014_real_e2e_gate.yaml",
+        "config/audit_anchors.yaml",
+        "config/quantity_definitions.yaml"
+      ]
+    },
+    
+    "scripts": {
+      "description": "Pipeline execution and utility scripts",
+      "files_count": 68,
+      "editable": false,
+      "key_files": [
+        "scripts/run_pipeline.py",
+        "scripts/generate_html_knowledge_report_v3.py"
+      ]
+    },
+    
+    "tests": {
+      "description": "Test suite",
+      "files_count": 156,
+      "editable": false,
+      "subdirectories": [
+        "tests/unit/",
+        "tests/integration/",
+        "tests/pipeline/",
+        "tests/fixtures/"
+      ]
+    },
+    
+    "proposed_schemas": {
+      "description": "Candidate schemas not yet in production",
+      "files_count": 6,
+      "editable": true,
+      "key_files": [
+        "proposed_schemas/figure_schema_v1.yaml",
+        "proposed_schemas/table_schema_v1.yaml",
+        "proposed_schemas/evidence_context_schema_v1.yaml"
+      ]
+    },
+    
+    "docs": {
+      "description": "Documentation",
+      "files_count": 4,
+      "editable": true,
+      "key_files": [
+        "docs/PROMPT_SCHEMA_CATALOG.md",
+        "docs/LOCAL_TESTING_GUIDE.md",
+        "docs/PIPELINE_OVERVIEW.md"
+      ]
+    },
+    
+    "examples": {
+      "description": "Example outputs for demonstration",
+      "files_count": 1,
+      "editable": false,
+      "key_files": [
+        "examples/F02/F02_knowledge_report_v3.html"
+      ]
+    }
+  },
+  
+  "pipeline_stages": {
+    "total_stages": 14,
+    "production_config": "config/pipeline_014_real_e2e_gate.yaml",
+    "stages": [
+      {"id": 1, "name": "pdf_parse", "adapter": "pdf_parse_adapter.py"},
+      {"id": 2, "name": "document_ir", "adapter": "document_ir_adapter.py"},
+      {"id": 3, "name": "figure_parser", "adapter": "figure_parser_adapter.py"},
+      {"id": 4, "name": "vlm_figure_science", "adapter": "vlm_figure_science_adapter.py"},
+      {"id": 5, "name": "table_parser", "adapter": "table_parser_adapter.py"},
+      {"id": 6, "name": "table_science", "adapter": "table_science_adapter.py"},
+      {"id": 7, "name": "figure_text_association", "adapter": "figure_text_adapter.py"},
+      {"id": 8, "name": "six_dimension_extraction", "adapter": "extraction_adapter.py", "deprecated": true},
+      {"id": 9, "name": "science_extraction_v2", "adapter": "science_extraction_v2_adapter.py"},
+      {"id": 10, "name": "num_unit_normalization", "adapter": "num_unit_adapter.py"},
+      {"id": 11, "name": "evidence_verification", "adapter": "evidence_verifier_adapter.py"},
+      {"id": 12, "name": "quality_gate", "adapter": "quality_gate_adapter.py"},
+      {"id": 13, "name": "canonical_store", "adapter": "store_adapter.py"},
+      {"id": 14, "name": "report_generation", "adapter": "report_adapter.py"}
+    ]
+  },
+  
+  "llm_configuration": {
+    "text_model": {
+      "provider": "SiliconFlow",
+      "model": "deepseek-ai/DeepSeek-V3",
+      "api_base": "https://api.siliconflow.cn/v1"
+    },
+    "vision_model": {
+      "provider": "SiliconFlow",
+      "model": "Qwen/Qwen3-VL-32B-Instruct",
+      "api_base": "https://api.siliconflow.cn/v1"
+    },
+    "requires_api_key": true,
+    "api_key_env_var": "LLM_API_KEY"
+  },
+  
+  "data_sources": {
+    "f02_example": {
+      "document_id": "F02",
+      "title": "Photothermal oxidative dehydrogenation of propane to propylene over Cu/BN catalysts",
+      "doi": "10.3389/fchem.2024.1439185",
+      "figures_count": 9,
+      "tables_count": 2,
+      "vlm_records_count": 141,
+      "knowledge_objects_count": 44,
+      "knowledge_relationships_count": 22
+    }
+  },
+  
+  "validation_status": {
+    "framework_integrity": "PASS",
+    "prompt_loading": "PASS",
+    "schema_validation": "PASS",
+    "html_generation": "PASS",
+    "f02_end_to_end": "PASS",
+    "regression_tests": "PASS"
+  },
+  
+  "known_limitations": {
+    "table_ocr": {
+      "status": "NOT_EXECUTED",
+      "description": "Table OCR not performed in 014 run, tables detected but rows/headers not extracted",
+      "affected_tables": ["F02_table_01", "F02_table_02"],
+      "workaround": "Use 004-B historical table recognition if needed"
+    },
+    "pdf_input": {
+      "status": "LIMITED",
+      "description": "Pipeline requires MinerU pre-processing, arbitrary PDF input not fully automated",
+      "workaround": "Manual MinerU execution required before pipeline run"
+    }
+  },
+  
+  "file_checksums": {
+    "note": "SHA256 checksums of key files for integrity verification",
+    "files": [
+      {
+        "path": "config/prompts/science_extraction_v2.yaml",
+        "sha256": "TO_BE_COMPUTED",
+        "size_bytes": 19589
+      },
+      {
+        "path": "config/pipeline_014_real_e2e_gate.yaml",
+        "sha256": "TO_BE_COMPUTED",
+        "size_bytes": 4915
+      }
+    ]
+  },
+  
+  "git_info": {
+    "repository": "JinhZhao/Catalyst-Knowledge-Expert-Kit",
+    "visibility": "private",
+    "initial_commit": "TO_BE_CREATED",
+    "branch": "main"
+  }
+}

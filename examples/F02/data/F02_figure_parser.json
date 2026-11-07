@@ -1,0 +1,909 @@
+{
+  "parser_id": "FigureParser",
+  "parser_version": "1.0.0",
+  "document_id": "F02",
+  "namespace": "F02",
+  "mineru_auto_dir": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto",
+  "content_list_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\main_content_list.json",
+  "figure_count": 9,
+  "figures_processed": 9,
+  "figures_failed": 0,
+  "overall_status": "PASS",
+  "figures": [
+    {
+      "figure_id": "F02_fig_01",
+      "document_id": "F02",
+      "namespace": "F02",
+      "figure_number": 1,
+      "figure_label": "Figure 1",
+      "caption": "FIGURE 1 XRD patterns of BN supports and Cu/BN catalysts.",
+      "caption_raw": [
+        "FIGURE 1 XRD patterns of BN supports and Cu/BN catalysts. "
+      ],
+      "page_idx": 2,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\256c11dcad10d002fb4db8e67fa6627978ebf2f97b5004fb4345a81db91aeb25.jpg",
+      "image_sha256": "8968e1f92dbfea3f42ffcc38917cd8c89cc535e50c5c29609ea0413c59791829",
+      "image_size_bytes": 86376,
+      "bbox": [
+        65,
+        86,
+        273,
+        257
+      ],
+      "page_size": [
+        595.2760009765625,
+        841.8900146484375
+      ],
+      "panels": [],
+      "has_panels": false,
+      "body_references": [
+        {
+          "element_id": "F02_p2_e32",
+          "page_idx": 2,
+          "raw_text_snippet": "facets of metallic Cu, respectively (Figure 1) (Jiang et al., 2015; Gawande et al., 2016) It demonstrated that Cu was successfully loaded onto the supports. Nonetheless, no obvious diffraction peak at",
+          "match_span": [
+            37,
+            45
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e37",
+          "page_idx": 2,
+          "raw_text_snippet": "The crystalline structures of different BN supports and the as-prepared Cu/BN catalysts were characterized by XRD as displayed in Figure 1. The characteristic peaks could be seen at 26.8°, 41.7°, 43.8",
+          "match_span": [
+            130,
+            138
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "document_id": "F02",
+        "namespace": "F02",
+        "element_type": "FIGURE",
+        "page_idx": 2,
+        "page_number": 3,
+        "bbox": {
+          "x0": 65,
+          "y0": 86,
+          "x1": 273,
+          "y1": 257,
+          "coordinate_system": "pt_from_top_left"
+        },
+        "page_size": {
+          "width": 595.2760009765625,
+          "height": 841.8900146484375
+        },
+        "image_file": {
+          "path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\256c11dcad10d002fb4db8e67fa6627978ebf2f97b5004fb4345a81db91aeb25.jpg",
+          "filename": "256c11dcad10d002fb4db8e67fa6627978ebf2f97b5004fb4345a81db91aeb25.jpg",
+          "sha256": "8968e1f92dbfea3f42ffcc38917cd8c89cc535e50c5c29609ea0413c59791829"
+        },
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p2_e30",
+      "panel_detection_method": "CAPTION_DERIVED",
+      "visual_analysis_status": "NOT_EXECUTED",
+      "visual_analysis_note": "Visual content analysis requires vision model credentials",
+      "extraction_status": "PASS"
+    },
+    {
+      "figure_id": "F02_fig_02",
+      "document_id": "F02",
+      "namespace": "F02",
+      "figure_number": 2,
+      "figure_label": "Figure 2",
+      "caption": "FIGURE 2 (A) Adsorption-desorption isotherms and (B) pore size distributions of BN supports and Cu/BN catalysts.",
+      "caption_raw": [
+        "FIGURE 2 (A) Adsorption-desorption isotherms and (B) pore size distributions of BN supports and Cu/BN catalysts. "
+      ],
+      "page_idx": 3,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\730014756d15dbf98aa2f00718b493ba14354624d23621b37b5f696ccd536a9f.jpg",
+      "image_sha256": "aa0ad6917f0df42698fea0fac31f3d29cd2a4b255f089704536705a157276ac4",
+      "image_size_bytes": 160014,
+      "bbox": [
+        114,
+        91,
+        478,
+        296
+      ],
+      "page_size": [
+        595.2760009765625,
+        841.8900146484375
+      ],
+      "panels": [
+        {
+          "panel_label": "(A)",
+          "description": "Adsorption-desorption isotherms and"
+        },
+        {
+          "panel_label": "(B)",
+          "description": "pore size distributions of BN supports and Cu/BN catalysts."
+        }
+      ],
+      "has_panels": true,
+      "body_references": [
+        {
+          "element_id": "F02_p2_e33",
+          "page_idx": 2,
+          "raw_text_snippet": "The specific surface areas and pore structures of BN and Cu/ BN catalysts were characterized by N2 adsorption-desorption characterizations. The adsorption-desorption isotherms and the pore size distri",
+          "match_span": [
+            615,
+            624
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e33",
+          "page_idx": 2,
+          "raw_text_snippet": "The specific surface areas and pore structures of BN and Cu/ BN catalysts were characterized by N2 adsorption-desorption characterizations. The adsorption-desorption isotherms and the pore size distri",
+          "match_span": [
+            712,
+            721
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "document_id": "F02",
+        "namespace": "F02",
+        "element_type": "FIGURE",
+        "page_idx": 3,
+        "page_number": 4,
+        "bbox": {
+          "x0": 114,
+          "y0": 91,
+          "x1": 478,
+          "y1": 296,
+          "coordinate_system": "pt_from_top_left"
+        },
+        "page_size": {
+          "width": 595.2760009765625,
+          "height": 841.8900146484375
+        },
+        "image_file": {
+          "path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\730014756d15dbf98aa2f00718b493ba14354624d23621b37b5f696ccd536a9f.jpg",
+          "filename": "730014756d15dbf98aa2f00718b493ba14354624d23621b37b5f696ccd536a9f.jpg",
+          "sha256": "aa0ad6917f0df42698fea0fac31f3d29cd2a4b255f089704536705a157276ac4"
+        },
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p3_e41",
+      "panel_detection_method": "CAPTION_DERIVED",
+      "visual_analysis_status": "NOT_EXECUTED",
+      "visual_analysis_note": "Visual content analysis requires vision model credentials",
+      "extraction_status": "PASS"
+    },
+    {
+      "figure_id": "F02_fig_03",
+      "document_id": "F02",
+      "namespace": "F02",
+      "figure_number": 3,
+      "figure_label": "Figure 3",
+      "caption": "TEM images of (A) BN-NS, (D) BN-NF and (G) BN-NP, and the elemental distributions of B and N over BN-NS: (B) and (C); BN-NF: (E) and (F); and BNNP: (H) and (I).",
+      "caption_raw": [
+        "TEM images of (A) BN-NS, (D) BN-NF and (G) BN-NP, and the elemental distributions of B and N over BN-NS: (B) and (C); BN-NF: (E) and (F); and BNNP: (H) and (I). "
+      ],
+      "page_idx": 4,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\7d40ffcf631ea3459cfe058c1337a752e408f4bedc89138d4a16a19cfb628751.jpg",
+      "image_sha256": "f287988e8b6f93c977d47a6f970c1ef3e1b01d33c4117262ceb44eae3a7f50df",
+      "image_size_bytes": 569290,
+      "bbox": [
+        86,
+        87,
+        507,
+        530
+      ],
+      "page_size": [
+        595.2760009765625,
+        841.8900146484375
+      ],
+      "panels": [
+        {
+          "panel_label": "(A)",
+          "description": "BN-NS"
+        },
+        {
+          "panel_label": "(D)",
+          "description": "BN-NF and"
+        },
+        {
+          "panel_label": "(G)",
+          "description": "BN-NP, and the elemental distributions of B and N over BN-NS:"
+        },
+        {
+          "panel_label": "(B)",
+          "description": "and"
+        },
+        {
+          "panel_label": "(C)",
+          "description": "; BN-NF:"
+        },
+        {
+          "panel_label": "(E)",
+          "description": "and"
+        },
+        {
+          "panel_label": "(F)",
+          "description": "; and BNNP:"
+        },
+        {
+          "panel_label": "(H)",
+          "description": "and"
+        },
+        {
+          "panel_label": "(I)",
+          "description": "."
+        }
+      ],
+      "has_panels": true,
+      "body_references": [
+        {
+          "element_id": "F02_p2_e38",
+          "page_idx": 2,
+          "raw_text_snippet": "The morphologies and elemental distributions of BN-NS, BN-NF, and BN-NP supports were observed via transmission electron microscope (TEM) and energy dispersive spectrometer (EDS) as displayed in Figur",
+          "match_span": [
+            195,
+            203
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e38",
+          "page_idx": 2,
+          "raw_text_snippet": "The morphologies and elemental distributions of BN-NS, BN-NF, and BN-NP supports were observed via transmission electron microscope (TEM) and energy dispersive spectrometer (EDS) as displayed in Figur",
+          "match_span": [
+            299,
+            308
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e38",
+          "page_idx": 2,
+          "raw_text_snippet": "The morphologies and elemental distributions of BN-NS, BN-NF, and BN-NP supports were observed via transmission electron microscope (TEM) and energy dispersive spectrometer (EDS) as displayed in Figur",
+          "match_span": [
+            371,
+            380
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e38",
+          "page_idx": 2,
+          "raw_text_snippet": "The morphologies and elemental distributions of BN-NS, BN-NF, and BN-NP supports were observed via transmission electron microscope (TEM) and energy dispersive spectrometer (EDS) as displayed in Figur",
+          "match_span": [
+            475,
+            484
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "document_id": "F02",
+        "namespace": "F02",
+        "element_type": "FIGURE",
+        "page_idx": 4,
+        "page_number": 5,
+        "bbox": {
+          "x0": 86,
+          "y0": 87,
+          "x1": 507,
+          "y1": 530,
+          "coordinate_system": "pt_from_top_left"
+        },
+        "page_size": {
+          "width": 595.2760009765625,
+          "height": 841.8900146484375
+        },
+        "image_file": {
+          "path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\7d40ffcf631ea3459cfe058c1337a752e408f4bedc89138d4a16a19cfb628751.jpg",
+          "filename": "7d40ffcf631ea3459cfe058c1337a752e408f4bedc89138d4a16a19cfb628751.jpg",
+          "sha256": "f287988e8b6f93c977d47a6f970c1ef3e1b01d33c4117262ceb44eae3a7f50df"
+        },
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p4_e47",
+      "panel_detection_method": "CAPTION_DERIVED",
+      "visual_analysis_status": "NOT_EXECUTED",
+      "visual_analysis_note": "Visual content analysis requires vision model credentials",
+      "extraction_status": "PASS"
+    },
+    {
+      "figure_id": "F02_fig_04",
+      "document_id": "F02",
+      "namespace": "F02",
+      "figure_number": 4,
+      "figure_label": "Figure 4",
+      "caption": "FIGURE 4 TEM images of (A) Cu/BN-NS, (E) Cu/BN-NF, and (I) Cu/BN-NP, and the elemental distributions of B, N and Cu over Cu/BN-NS: (B), (C), and (D); Cu/ BN-NF: (F), (G) and (H); and Cu/BN-NP (J), (K), and (L).",
+      "caption_raw": [
+        "FIGURE 4 TEM images of (A) Cu/BN-NS, (E) Cu/BN-NF, and (I) Cu/BN-NP, and the elemental distributions of B, N and Cu over Cu/BN-NS: (B), (C), and (D); Cu/ BN-NF: (F), (G) and (H); and Cu/BN-NP (J), (K), and (L). "
+      ],
+      "page_idx": 5,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\8d824414570aaa0fa4c4a58dc81d0dcf5ec21d14a26264e36d8eb8772a0a3205.jpg",
+      "image_sha256": "656f986b73f3a91f33cb828eafb2a117352889668d4e16cf9affd386b443b910",
+      "image_size_bytes": 652946,
+      "bbox": [
+        85,
+        91,
+        509,
+        423
+      ],
+      "page_size": [
+        595.2760009765625,
+        841.8900146484375
+      ],
+      "panels": [
+        {
+          "panel_label": "(A)",
+          "description": "Cu/BN-NS"
+        },
+        {
+          "panel_label": "(E)",
+          "description": "Cu/BN-NF, and"
+        },
+        {
+          "panel_label": "(I)",
+          "description": "Cu/BN-NP, and the elemental distributions of B, N and Cu over Cu/BN-NS:"
+        },
+        {
+          "panel_label": "(B)",
+          "description": ""
+        },
+        {
+          "panel_label": "(C)",
+          "description": ", and"
+        },
+        {
+          "panel_label": "(D)",
+          "description": "; Cu/ BN-NF:"
+        },
+        {
+          "panel_label": "(F)",
+          "description": ""
+        },
+        {
+          "panel_label": "(G)",
+          "description": "and"
+        },
+        {
+          "panel_label": "(H)",
+          "description": "; and Cu/BN-NP"
+        },
+        {
+          "panel_label": "(J)",
+          "description": ""
+        },
+        {
+          "panel_label": "(K)",
+          "description": ", and"
+        },
+        {
+          "panel_label": "(L)",
+          "description": "."
+        }
+      ],
+      "has_panels": true,
+      "body_references": [
+        {
+          "element_id": "F02_p2_e39",
+          "page_idx": 2,
+          "raw_text_snippet": "The morphologies of Cu/BN catalysts were further characterized via TEM, with their images and elemental distributions of Cu, B, and N shown in Figure 4. Obviously, the morphologies of BN on Cu/BN cata",
+          "match_span": [
+            143,
+            151
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "document_id": "F02",
+        "namespace": "F02",
+        "element_type": "FIGURE",
+        "page_idx": 5,
+        "page_number": 6,
+        "bbox": {
+          "x0": 85,
+          "y0": 91,
+          "x1": 509,
+          "y1": 423,
+          "coordinate_system": "pt_from_top_left"
+        },
+        "page_size": {
+          "width": 595.2760009765625,
+          "height": 841.8900146484375
+        },
+        "image_file": {
+          "path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\8d824414570aaa0fa4c4a58dc81d0dcf5ec21d14a26264e36d8eb8772a0a3205.jpg",
+          "filename": "8d824414570aaa0fa4c4a58dc81d0dcf5ec21d14a26264e36d8eb8772a0a3205.jpg",
+          "sha256": "656f986b73f3a91f33cb828eafb2a117352889668d4e16cf9affd386b443b910"
+        },
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p5_e51",
+      "panel_detection_method": "CAPTION_DERIVED",
+      "visual_analysis_status": "NOT_EXECUTED",
+      "visual_analysis_note": "Visual content analysis requires vision model credentials",
+      "extraction_status": "PASS"
+    },
+    {
+      "figure_id": "F02_fig_05",
+      "document_id": "F02",
+      "namespace": "F02",
+      "figure_number": 5,
+      "figure_label": "Figure 5",
+      "caption": "",
+      "caption_raw": [],
+      "page_idx": 5,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\ee32916d88d8e79d4040d018ee859edb8f0be35b02eb1a8da122577c1b8d2923.jpg",
+      "image_sha256": "60013dff181dcd9ec9508b367d40c9483ad8135078fd44bb17882a51daf17d1d",
+      "image_size_bytes": 158246,
+      "bbox": [
+        87,
+        509,
+        510,
+        698
+      ],
+      "page_size": [
+        595.2760009765625,
+        841.8900146484375
+      ],
+      "panels": [],
+      "has_panels": false,
+      "body_references": [
+        {
+          "element_id": "F02_p2_e40",
+          "page_idx": 2,
+          "raw_text_snippet": "The elemental valence states of B and N were characterized via XPS. All three BN supports showed the standard deconvolution peaks of BN. The binding energies of B were located at 190.2 eV and 192.6 eV",
+          "match_span": [
+            202,
+            211
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e40",
+          "page_idx": 2,
+          "raw_text_snippet": "The elemental valence states of B and N were characterized via XPS. All three BN supports showed the standard deconvolution peaks of BN. The binding energies of B were located at 190.2 eV and 192.6 eV",
+          "match_span": [
+            358,
+            367
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e40",
+          "page_idx": 2,
+          "raw_text_snippet": "The elemental valence states of B and N were characterized via XPS. All three BN supports showed the standard deconvolution peaks of BN. The binding energies of B were located at 190.2 eV and 192.6 eV",
+          "match_span": [
+            639,
+            647
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e40",
+          "page_idx": 2,
+          "raw_text_snippet": "The elemental valence states of B and N were characterized via XPS. All three BN supports showed the standard deconvolution peaks of BN. The binding energies of B were located at 190.2 eV and 192.6 eV",
+          "match_span": [
+            1060,
+            1069
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p2_e40",
+          "page_idx": 2,
+          "raw_text_snippet": "The elemental valence states of B and N were characterized via XPS. All three BN supports showed the standard deconvolution peaks of BN. The binding energies of B were located at 190.2 eV and 192.6 eV",
+          "match_span": [
+            1187,
+            1196
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p3_e44",
+          "page_idx": 3,
+          "raw_text_snippet": "BN catalysts (Figure 5C), which belong to Cu 2p3/2 and Cu 2p1/2 (Liang et al., 2020; Liang et al., 2022). It further confirmed the successful loading of Cu onto BN supports.",
+          "match_span": [
+            14,
+            23
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "document_id": "F02",
+        "namespace": "F02",
+        "element_type": "FIGURE",
+        "page_idx": 5,
+        "page_number": 6,
+        "bbox": {
+          "x0": 87,
+          "y0": 509,
+          "x1": 510,
+          "y1": 698,
+          "coordinate_system": "pt_from_top_left"
+        },
+        "page_size": {
+          "width": 595.2760009765625,
+          "height": 841.8900146484375
+        },
+        "image_file": {
+          "path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\ee32916d88d8e79d4040d018ee859edb8f0be35b02eb1a8da122577c1b8d2923.jpg",
+          "filename": "ee32916d88d8e79d4040d018ee859edb8f0be35b02eb1a8da122577c1b8d2923.jpg",
+          "sha256": "60013dff181dcd9ec9508b367d40c9483ad8135078fd44bb17882a51daf17d1d"
+        },
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p5_e52",
+      "panel_detection_method": "CAPTION_DERIVED",
+      "visual_analysis_status": "NOT_EXECUTED",
+      "visual_analysis_note": "Visual content analysis requires vision model credentials",
+      "extraction_status": "PASS"
+    },
+    {
+      "figure_id": "F02_fig_06",
+      "document_id": "F02",
+      "namespace": "F02",
+      "figure_number": 6,
+      "figure_label": "Figure 6",
+      "caption": "FIGURE 6 UV-vis spectra of BN supports and Cu/BN catalysts.",
+      "caption_raw": [
+        "FIGURE 6 UV-vis spectra of BN supports and Cu/BN catalysts. "
+      ],
+      "page_idx": 6,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\54bb93a510448c48f3a56d011ea4865b1e15f55463c6abe7442cf371a4aa4292.jpg",
+      "image_sha256": "08721e1fe790112cd1632eadb62ef8d1a9852602891eedca667202b20aa08a94",
+      "image_size_bytes": 88186,
+      "bbox": [
+        64,
+        82,
+        276,
+        246
+      ],
+      "page_size": [
+        595.2760009765625,
+        841.8900146484375
+      ],
+      "panels": [],
+      "has_panels": false,
+      "body_references": [
+        {
+          "element_id": "F02_p3_e46",
+          "page_idx": 3,
+          "raw_text_snippet": "The light-harvesting capacities of BN supports and Cu/BN catalysts were characterized by UV-vis spectroscopy as shown in Figure 6. The light absorption edge of three pristine BN supports was mainly lo",
+          "match_span": [
+            121,
+            129
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p3_e46",
+          "page_idx": 3,
+          "raw_text_snippet": "The light-harvesting capacities of BN supports and Cu/BN catalysts were characterized by UV-vis spectroscopy as shown in Figure 6. The light absorption edge of three pristine BN supports was mainly lo",
+          "match_span": [
+            263,
+            271
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p3_e46",
+          "page_idx": 3,
+          "raw_text_snippet": "The light-harvesting capacities of BN supports and Cu/BN catalysts were characterized by UV-vis spectroscopy as shown in Figure 6. The light absorption edge of three pristine BN supports was mainly lo",
+          "match_span": [
+            419,
+            427
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "document_id": "F02",
+        "namespace": "F02",
+        "element_type": "FIGURE",
+        "page_idx": 6,
+        "page_number": 7,
+        "bbox": {
+          "x0": 64,
+          "y0": 82,
+          "x1": 276,
+          "y1": 246,
+          "coordinate_system": "pt_from_top_left"
+        },
+        "page_size": {
+          "width": 595.2760009765625,
+          "height": 841.8900146484375
+        },
+        "image_file": {
+          "path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\54bb93a510448c48f3a56d011ea4865b1e15f55463c6abe7442cf371a4aa4292.jpg",
+          "filename": "54bb93a510448c48f3a56d011ea4865b1e15f55463c6abe7442cf371a4aa4292.jpg",
+          "sha256": "08721e1fe790112cd1632eadb62ef8d1a9852602891eedca667202b20aa08a94"
+        },
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p6_e53",
+      "panel_detection_method": "CAPTION_DERIVED",
+      "visual_analysis_status": "NOT_EXECUTED",
+      "visual_analysis_note": "Visual content analysis requires vision model credentials",
+      "extraction_status": "PASS"
+    },
+    {
+      "figure_id": "F02_fig_07",
+      "document_id": "F02",
+      "namespace": "F02",
+      "figure_number": 7,
+      "figure_label": "Figure 7",
+      "caption": "FIGURE 7 Catalytic activities of Cu/BN catalysts in traditional thermaldriven catalytic system and photothermal catalytic ODHP system. Reaction conditions: 0.10 g catalyst, pre-reduced at 500°C for 2 h, propane: oxygen = 2: 1, total flowrate 20.0 mL min−1, reaction temperature 400–500°C, with and without a 300 W Xe lamp irradiation (λ > 420 nm).",
+      "caption_raw": [
+        "FIGURE 7 Catalytic activities of Cu/BN catalysts in traditional thermaldriven catalytic system and photothermal catalytic ODHP system. Reaction conditions: 0.10 g catalyst, pre-reduced at 500°C for 2 h, propane: oxygen = 2: 1, total flowrate 20.0 mL min−1, reaction temperature 400–500°C, with and without a 300 W Xe lamp irradiation (λ > 420 nm). "
+      ],
+      "page_idx": 6,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\e35c3dd3cf635128bf2123f21563e0e6a4f56a47062a96f2f946dec082320fb0.jpg",
+      "image_sha256": "1b712236e0d97fe2396cd54c71d2b56573cfc2a98dbb76308e03d20420558881",
+      "image_size_bytes": 78318,
+      "bbox": [
+        65,
+        316,
+        273,
+        484
+      ],
+      "page_size": [
+        595.2760009765625,
+        841.8900146484375
+      ],
+      "panels": [],
+      "has_panels": false,
+      "body_references": [
+        {
+          "element_id": "F02_p4_e49",
+          "page_idx": 4,
+          "raw_text_snippet": "Once confirming the successful synthesis of Cu/BN catalysts and the fundamental properties involving mesoporous structures, electron coupling, and enhanced light absorption abilities for improving cat",
+          "match_span": [
+            453,
+            461
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p4_e49",
+          "page_idx": 4,
+          "raw_text_snippet": "Once confirming the successful synthesis of Cu/BN catalysts and the fundamental properties involving mesoporous structures, electron coupling, and enhanced light absorption abilities for improving cat",
+          "match_span": [
+            1360,
+            1368
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        },
+        {
+          "element_id": "F02_p4_e49",
+          "page_idx": 4,
+          "raw_text_snippet": "Once confirming the successful synthesis of Cu/BN catalysts and the fundamental properties involving mesoporous structures, electron coupling, and enhanced light absorption abilities for improving cat",
+          "match_span": [
+            1580,
+            1588
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "document_id": "F02",
+        "namespace": "F02",
+        "element_type": "FIGURE",
+        "page_idx": 6,
+        "page_number": 7,
+        "bbox": {
+          "x0": 65,
+          "y0": 316,
+          "x1": 273,
+          "y1": 484,
+          "coordinate_system": "pt_from_top_left"
+        },
+        "page_size": {
+          "width": 595.2760009765625,
+          "height": 841.8900146484375
+        },
+        "image_file": {
+          "path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\e35c3dd3cf635128bf2123f21563e0e6a4f56a47062a96f2f946dec082320fb0.jpg",
+          "filename": "e35c3dd3cf635128bf2123f21563e0e6a4f56a47062a96f2f946dec082320fb0.jpg",
+          "sha256": "1b712236e0d97fe2396cd54c71d2b56573cfc2a98dbb76308e03d20420558881"
+        },
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p6_e54",
+      "panel_detection_method": "CAPTION_DERIVED",
+      "visual_analysis_status": "NOT_EXECUTED",
+      "visual_analysis_note": "Visual content analysis requires vision model credentials",
+      "extraction_status": "PASS"
+    },
+    {
+      "figure_id": "F02_fig_08",
+      "document_id": "F02",
+      "namespace": "F02",
+      "figure_number": 8,
+      "figure_label": "Figure 8",
+      "caption": "FIGURE 8 Catalytic selectivities of Cu/BN-NS in traditional thermal-driven catalytic system and photothermal catalytic ODHP system. Reaction conditions: 0.10 g catalyst, pre-reduced at 500°C for 2 h, propane: oxygen = 2: 1, total flowrate 20.0 mL min−1, reaction temperature 400–500°C, with and without a 300 W Xe lamp irradiation (λ > 420 nm).",
+      "caption_raw": [
+        "FIGURE 8 Catalytic selectivities of Cu/BN-NS in traditional thermal-driven catalytic system and photothermal catalytic ODHP system. Reaction conditions: 0.10 g catalyst, pre-reduced at 500°C for 2 h, propane: oxygen = 2: 1, total flowrate 20.0 mL min−1, reaction temperature 400–500°C, with and without a 300 W Xe lamp irradiation (λ > 420 nm). "
+      ],
+      "page_idx": 6,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\da1d39cff8019f714d7b8fb6cfc98642c529b32b408bfc91cda8d3d94a56ca36.jpg",
+      "image_sha256": "6ce20c6cdf0799bc7142b6d53d7cb253b09038aaf485bd4a99cfa9d7f84f0d34",
+      "image_size_bytes": 99237,
+      "bbox": [
+        324,
+        90,
+        526,
+        250
+      ],
+      "page_size": [
+        595.2760009765625,
+        841.8900146484375
+      ],
+      "panels": [],
+      "has_panels": false,
+      "body_references": [
+        {
+          "element_id": "F02_p6_e58",
+          "page_idx": 6,
+          "raw_text_snippet": "The product selectivity of Cu/BN-NS in thermal and photothermal ODHP processes was evaluated as shown in Figure 8. Obviously, in addition to the desired product propylene, a series of by-products incl",
+          "match_span": [
+            105,
+            113
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "document_id": "F02",
+        "namespace": "F02",
+        "element_type": "FIGURE",
+        "page_idx": 6,
+        "page_number": 7,
+        "bbox": {
+          "x0": 324,
+          "y0": 90,
+          "x1": 526,
+          "y1": 250,
+          "coordinate_system": "pt_from_top_left"
+        },
+        "page_size": {
+          "width": 595.2760009765625,
+          "height": 841.8900146484375
+        },
+        "image_file": {
+          "path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\da1d39cff8019f714d7b8fb6cfc98642c529b32b408bfc91cda8d3d94a56ca36.jpg",
+          "filename": "da1d39cff8019f714d7b8fb6cfc98642c529b32b408bfc91cda8d3d94a56ca36.jpg",
+          "sha256": "6ce20c6cdf0799bc7142b6d53d7cb253b09038aaf485bd4a99cfa9d7f84f0d34"
+        },
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p6_e55",
+      "panel_detection_method": "CAPTION_DERIVED",
+      "visual_analysis_status": "NOT_EXECUTED",
+      "visual_analysis_note": "Visual content analysis requires vision model credentials",
+      "extraction_status": "PASS"
+    },
+    {
+      "figure_id": "F02_fig_09",
+      "document_id": "F02",
+      "namespace": "F02",
+      "figure_number": 9,
+      "figure_label": "Figure 9",
+      "caption": "FIGURE 9 Stability test of Cu/BN-NS in photothermal catalytic ODHP system. Reaction conditions: 0.10 g catalyst, pre-reduced at 500°C for 2 h, propane: oxygen = 2: 1, total flowrate 20.0 mL min−1, reaction temperature 500°C with a 300 W Xe lamp irradiation (λ > 420 nm).",
+      "caption_raw": [
+        "FIGURE 9 Stability test of Cu/BN-NS in photothermal catalytic ODHP system. Reaction conditions: 0.10 g catalyst, pre-reduced at 500°C for 2 h, propane: oxygen = 2: 1, total flowrate 20.0 mL min−1, reaction temperature 500°C with a 300 W Xe lamp irradiation (λ > 420 nm). "
+      ],
+      "page_idx": 6,
+      "image_path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\1c22cee18b32caebd250f7136883ca4e5cd354c193d6c7e44f9d71b215c57390.jpg",
+      "image_sha256": "fc9df09952b83250ba142ff0cf89c609c3d7aea2fc1f8e49997c1536078f3404",
+      "image_size_bytes": 73828,
+      "bbox": [
+        319,
+        359,
+        528,
+        532
+      ],
+      "page_size": [
+        595.2760009765625,
+        841.8900146484375
+      ],
+      "panels": [],
+      "has_panels": false,
+      "body_references": [
+        {
+          "element_id": "F02_p6_e60",
+          "page_idx": 6,
+          "raw_text_snippet": "Regarding the best catalytic performance of Cu/BN-NS in photothermal ODHP at 500°C, its stability test was conducted under the same conditions. The results in Figure 9 revealed that propane conversion",
+          "match_span": [
+            159,
+            167
+          ],
+          "panel": "",
+          "confidence": 0.9,
+          "association_type": "explicit_reference"
+        }
+      ],
+      "source_anchor": {
+        "document_id": "F02",
+        "namespace": "F02",
+        "element_type": "FIGURE",
+        "page_idx": 6,
+        "page_number": 7,
+        "bbox": {
+          "x0": 319,
+          "y0": 359,
+          "x1": 528,
+          "y1": 532,
+          "coordinate_system": "pt_from_top_left"
+        },
+        "page_size": {
+          "width": 595.2760009765625,
+          "height": 841.8900146484375
+        },
+        "image_file": {
+          "path": "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto\\images\\1c22cee18b32caebd250f7136883ca4e5cd354c193d6c7e44f9d71b215c57390.jpg",
+          "filename": "1c22cee18b32caebd250f7136883ca4e5cd354c193d6c7e44f9d71b215c57390.jpg",
+          "sha256": "fc9df09952b83250ba142ff0cf89c609c3d7aea2fc1f8e49997c1536078f3404"
+        },
+        "anchor_version": "1.0.0"
+      },
+      "document_ir_element_id": "F02_p6_e56",
+      "panel_detection_method": "CAPTION_DERIVED",
+      "visual_analysis_status": "NOT_EXECUTED",
+      "visual_analysis_note": "Visual content analysis requires vision model credentials",
+      "extraction_status": "PASS"
+    }
+  ],
+  "visual_analysis_summary": {
+    "status": "NOT_EXECUTED",
+    "note": "Vision model credentials not configured"
+  }
+}

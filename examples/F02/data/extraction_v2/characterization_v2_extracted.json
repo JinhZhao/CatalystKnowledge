@@ -1,0 +1,119 @@
+{
+  "dimension": "characterization",
+  "fields": {
+    "techniques_used": {
+      "field_name": "techniques_used",
+      "value": [
+        {
+          "technique_name": "XRD",
+          "what_was_measured": "crystal structure",
+          "key_result": "Hexagonal BN phase confirmed by peaks at 26.8°, 41.7°, 43.8°, 49.9°, 54.9°, 75.8°, and 82.1°; Cu peaks at 43.3° and 50.2° for (111) and (200) facets",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The characteristic peaks could be seen at 26.8°, 41.7°, 43.8°, 49.9°, 54.9°, 75.8°, and 82.1°, which could be assigned to the hexagonal phase of BN... another two diffraction peaks at 43.3° and 50.2° appeared over Cu/BN-NS and Cu/BN-NF, which could be attributed to the (111) and (200) facets of metallic Cu"
+        },
+        {
+          "technique_name": "BET",
+          "what_was_measured": "specific surface area",
+          "key_result": "S_BET = 4.6-13.2 m2/g for BN supports",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The specific surface areas of BN-NS, BN-NF, and BN-NP were 4.6–13.2 m2 g−1"
+        },
+        {
+          "technique_name": "TEM",
+          "what_was_measured": "particle morphology and size",
+          "key_result": "Cu particle sizes: 12.7 nm (Cu/BN-NS), 9.7 nm (Cu/BN-NF), 7.4 nm (Cu/BN-NP)",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The average sizes of Cu nanoparticles on the three catalysts were analyzed, and they were 12.7, 9.7, and 7.4 nm on Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP, respectively"
+        },
+        {
+          "technique_name": "XPS",
+          "what_was_measured": "elemental valence states",
+          "key_result": "B 1s at 190.2 eV (B-N), 192.6 eV (B-O-N); N 1s at 398.1 eV (B-N), 400.2 eV (B-O-N); Cu 2p3/2 at 932.8 eV",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "The binding energies of B were located at 190.2 eV and 192.6 eV... The binding energies of N were centered at 398.1 eV and 400.2 eV... the peaks at 932.8 eV and 952.5 eV could be observed over the Cu 2p spectra"
+        },
+        {
+          "technique_name": "UV-vis DRS",
+          "what_was_measured": "light absorption properties",
+          "key_result": "LSPR absorption peak at 550-600 nm for Cu/BN catalysts",
+          "status": "REPORTED",
+          "origin": "ORIGINAL_EXPERIMENT",
+          "source_quote": "Obvious absorption peaks of Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP in the range of 550–600 nm could be observed, which could be attributed to the localized surface plasmon resonance (LSPR) effect of Cu-NPs"
+        }
+      ],
+      "status": "NOT_EXTRACTED",
+      "origin": "UNKNOWN_ORIGIN",
+      "notes": "Array with 5 items, 0 REPORTED"
+    },
+    "morphology": {
+      "field_name": "morphology",
+      "value": "BN nanosheets (500-1000 nm), nanofibers (100-300 nm diameter), nanoparticles (~500 nm); Cu nanoparticles (7.4-12.7 nm) deposited on BN",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "BN-NS had nanosheet morphologies with sizes varying in the range of 500–1,000 nm... BN-NF had nanofiber structures with 100–300 nm of diameter... BN-NP were of nanoparticle morphologies with an average particle size of around 500 nm... small dark spots were observed over the TEM images of the three Cu/BN catalysts... the dark spots were Cu-NPs"
+    },
+    "structure": {
+      "field_name": "structure",
+      "value": "Hexagonal BN phase confirmed; Cu nanoparticles with (111) and (200) facets observed",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The characteristic peaks could be seen at 26.8°, 41.7°, 43.8°, 49.9°, 54.9°, 75.8°, and 82.1°, which could be assigned to the hexagonal phase of BN... another two diffraction peaks at 43.3° and 50.2° appeared over Cu/BN-NS and Cu/BN-NF, which could be attributed to the (111) and (200) facets of metallic Cu"
+    },
+    "electronic_properties": {
+      "field_name": "electronic_properties",
+      "value": "Electron coupling between Cu-NPs and BN-NF observed via XPS peak shifts",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "Over the Cu/BN-NF catalyst, compared to the support BN-NF, the intensity of the peak attributed to B at 190.2 eV was shortened and the peak at 192.6 eV was sharpened... whereas the peak of N centered at 398.1 eV was bigger and the peak at 400.2 eV was smaller over Cu/BN-NF catalyst. It indicated the electron coupling between Cu-NPs and BN-NF"
+    },
+    "optical_properties": {
+      "field_name": "optical_properties",
+      "value": "BN absorbs <400 nm; Cu/BN shows LSPR absorption at 550-600 nm extending to NIR",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "The light absorption edge of three pristine BN supports was mainly located at UV light range with a wavelength shorter than 400 nm... After the loading of Cu, the light absorption capacities of Cu/BN catalysts were extended to visible light and even near-infrared light regions... Obvious absorption peaks of Cu/BN-NS, Cu/BN-NF, and Cu/BN-NP in the range of 550–600 nm could be observed"
+    },
+    "surface_properties": {
+      "field_name": "surface_properties",
+      "value": "Pore sizes mainly 2-10 nm and 20-100 nm; III-type adsorption isotherms",
+      "status": "REPORTED",
+      "origin": "ORIGINAL_EXPERIMENT",
+      "source_quote": "Their pore sizes were mainly distributed in the range of 2–10 and 20–100 nm... all three BN supports adsorption-desorption isotherms exhibited the properties of III-type of adsorption-desorption isotherms"
+    }
+  },
+  "validation_warnings": [],
+  "chunk_id": "characterization_full",
+  "chunk_sections": [
+    "s00_open_access",
+    "s01_photothermal_oxidative_dehydrogenation_o",
+    "s02_1_introduction",
+    "s03_2_experimental_section",
+    "s04_2_1_catalyst_preparation",
+    "s05_2_2_catalyst_characterization",
+    "s06_2_3_catalyst_evaluation",
+    "s07_3_results_and_discussion",
+    "s08_3_1_physicochemical_properties_of_bn_sup",
+    "s09_3_2_optical_properties_of_bn_supports_an",
+    "s10_3_3_photo_thermal_catalytic_odhp_perform",
+    "s11_4_conclusion",
+    "s12_data_availability_statement",
+    "s16_publisher_s_note"
+  ],
+  "chunk_char_range": [
+    0,
+    25846
+  ],
+  "chunk_page_range": [
+    0,
+    7
+  ],
+  "merge_notes": "Single chunk, no merge needed",
+  "chunk_count": 1,
+  "source_chunks": [
+    "characterization_full"
+  ]
+}

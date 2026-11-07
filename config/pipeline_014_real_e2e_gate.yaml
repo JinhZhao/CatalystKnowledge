@@ -1,0 +1,150 @@
+# Pipeline configuration for real LLM E2E run (014-GATE).
+#
+# IMPORTANT: This config requires PI authorization before execution.
+# It will make real paid LLM API calls to SiliconFlow.
+#
+# 014-SiliconFlow Unified Configuration (014-MODEL-CONFIRM):
+#   - ALL LLM calls (text + vision) go through SiliconFlow API
+#   - Text model (science_extraction_v2, evidence_verification): deepseek-ai/DeepSeek-V3
+#   - Vision model (vlm_figure_science): Qwen/Qwen3-VL-32B-Instruct
+#   - No DICP ChemAgent fallback
+#   - No mixed provider
+#   - Model IDs verified available on SiliconFlow 2026-11-07
+#
+# F02 Input:
+#   - Using existing MinerU output from F02_regression
+#   - This is a MinerU→HTML real LLM run, NOT PDF re-parse
+#   - 9 figures, 12 tables already extracted by MinerU
+#
+# Changes from 012 test config:
+#   - evidence_verification.enabled: true (was false)
+#   - vlm_figure_science.enabled: true (was false)
+#   - vlm_figure_science.model_id: "Qwen/Qwen3-VL-32B-Instruct" (PI-approved 014-MODEL-CONFIRM)
+#   - six_dimension_extraction.enabled: false (V1 deprecated)
+#   - All cache skip_if_output_exists: true (reuse prior deterministic stages)
+#
+# Usage (AFTER PI authorization):
+#   set LLM_API_KEY=<your-siliconflow-key>
+#   set LLM_API_BASE=https://api.siliconflow.cn/v1
+#   set LLM_MODEL=deepseek-ai/DeepSeek-V3
+#   python scripts/run_pipeline.py --doc F02 \
+#       --config config/pipeline_014_real_e2e_gate.yaml
+
+pipeline:
+  name: "catalyst-knowledge-pipeline"
+  version: "014-real-e2e-gate"
+  schema_version: "1.0.0"
+  prompt_version: "1.0.0"
+
+paths:
+  project_root: "D:\\Knowledge_World"
+  data_root: "D:\\Knowledge_World\\data\\test_corpus"
+  runs_root: "D:\\Knowledge_World\\runs"
+  manifest: "D:\\Knowledge_World\\data\\test_corpus\\unified_test_manifest.json"
+  papers_dir: "D:\\Knowledge_World\\data\\test_corpus\\papers"
+  mineru_output: "D:\\Knowledge_World\\data\\test_corpus\\mineru_output"
+  mineru_input_f02: "D:\\Knowledge_World\\data\\test_corpus\\mineru_output\\F02_regression\\main\\auto"  # Fixed path for F02
+  canonical_store: "D:\\Knowledge_World\\runs\\real_e2e_gate_014\\canonical_store"
+  reports_dir: "D:\\Knowledge_World\\runs\\real_e2e_gate_014\\reports"
+  pipeline_runs: "D:\\Knowledge_World\\runs\\real_e2e_gate_014"
+  quantity_definitions: "D:\\Knowledge_World\\config\\quantity_definitions.yaml"
+  audit_anchors: "D:\\Knowledge_World\\config\\audit_anchors.yaml"
+  prompts_dir: "D:\\Knowledge_World\\prompts"
+
+llm:
+  api_key_env: "LLM_API_KEY"
+  api_base_env: "LLM_API_BASE"
+  model_env: "LLM_MODEL"
+  default_model: "deepseek-ai/DeepSeek-V3"
+  default_api_base: "https://api.siliconflow.cn/v1"
+  temperature: 0.1
+  max_tokens: 4096
+  timeout_seconds: 300
+  max_retries: 2
+  model_context_limit: 64000
+  system_prompt_reserve_tokens: 1000
+  output_reserve_tokens: 4096
+
+stages:
+  pdf_parse:
+    enabled: true
+    skip_if_output_exists: true  # Reuse from 012
+    timeout_seconds: 600
+
+  document_ir:
+    enabled: true
+    skip_if_output_exists: true  # Reuse from 012
+    timeout_seconds: 120
+
+  figure_parser:
+    enabled: true
+    skip_if_output_exists: true  # Reuse from 012
+    timeout_seconds: 300
+
+  vlm_figure_science:
+    enabled: true  # ENABLED for real LLM run
+    skip_if_output_exists: true  # Reuse completed VLM output (136 records, 1348.8s)
+    timeout_seconds: 2000  # Increased from 1500s: 9 figures need ~1800s total
+    model_id: "Qwen/Qwen3-VL-32B-Instruct"  # SiliconFlow vision model (PI-approved 014-MODEL-CONFIRM)
+
+  table_parser:
+    enabled: true
+    skip_if_output_exists: true  # Reuse from 012
+    timeout_seconds: 300
+
+  table_science:
+    enabled: true
+    skip_if_output_exists: true  # Reuse from 012
+    timeout_seconds: 300
+
+  figure_text_association:
+    enabled: true
+    skip_if_output_exists: true  # Reuse from 012
+    timeout_seconds: 60
+
+  six_dimension_extraction:
+    enabled: false  # V1 deprecated
+    timeout_seconds: 300
+
+  science_extraction_v2:
+    enabled: true  # Real LLM extraction
+    skip_if_output_exists: false  # Force re-run with real LLM
+    timeout_seconds: 600
+    adapter_version: "v2"
+    extraction_mode: "adaptive"
+    doc_type: "paper"
+    max_chunk_chars: 8000
+    overlap_paragraphs: 1
+
+  num_unit_normalization:
+    enabled: true
+    skip_if_output_exists: false  # Re-run after new extraction
+    timeout_seconds: 60
+
+  evidence_verification:
+    enabled: true  # ENABLED for real LLM run
+    skip_if_output_exists: false
+    timeout_seconds: 300
+
+  quality_gate:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 30
+
+  canonical_store:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 30
+
+  report_generation:
+    enabled: true
+    skip_if_output_exists: false
+    timeout_seconds: 120
+
+execution:
+  stop_on_failure: true
+  dry_run: false
+  resume: false
+  log_level: "INFO"
+  idempotent: false
+  manifest: "D:\\Knowledge_World\\runs\\real_e2e_gate_014"

@@ -1,0 +1,125 @@
+{
+  "_comment": "Sample patent extraction fixture for Schema V1 testing",
+  "_source": "Synthetic test data based on typical catalysis patent structure",
+  "_note": "Patent claims and examples are stored separately; claims do not imply experimental verification",
+
+  "document": {
+    "document_id": "test_patent_001",
+    "patent_number": "US20240000001A1",
+    "patent_family": "US20240000001",
+    "title": "Catalytic Process for Preparing Adipic Aldehyde",
+    "authors": ["Inventor A", "Inventor B"],
+    "publication_year": 2024,
+    "document_type": "patent",
+    "application_date": "2023-06-15T00:00:00",
+    "publication_date": "2024-01-18T00:00:00"
+  },
+
+  "patent_claims": [
+    {
+      "claim_id": "claim_001",
+      "patent_document_id": "test_patent_001",
+      "claim_number": 1,
+      "claim_type": "independent",
+      "text": "A process for preparing adipic aldehyde comprising contacting 1,3-butadiene with CO and H2 in the presence of a rhodium catalyst and a phosphite ligand...",
+      "covers_examples": true,
+      "scope_note": "Covers all phosphite ligands within general formula I"
+    },
+    {
+      "claim_id": "claim_002",
+      "patent_document_id": "test_patent_001",
+      "claim_number": 2,
+      "claim_type": "dependent",
+      "text": "The process of claim 1, wherein the phosphite ligand is L11...",
+      "covers_examples": true,
+      "scope_note": "Depends on claim 1"
+    }
+  ],
+
+  "patent_examples": [
+    {
+      "example_id": "example_001",
+      "patent_document_id": "test_patent_001",
+      "example_number": "Example 1",
+      "example_type": "example",
+      "experiment": {
+        "reaction": {
+          "reaction_type": "hydroformylation",
+          "substrates": [{"name": "1,3-Butadiene", "role": "substrate"}],
+          "catalyst": {
+            "composition_description": "Rh/L11 (0.01 mmol)",
+            "active_component": {"name": "Rh", "role": "catalyst"}
+          }
+        },
+        "temperature": {
+          "raw_value": "80 deg C",
+          "normalized_value": 80.0,
+          "normalized_unit": "degC",
+          "status": "REPORTED"
+        },
+        "procedure": "In a 100 mL autoclave, 1,3-butadiene (10 mL) was added..."
+      },
+      "results": [
+        {
+          "observation_id": "pat_obs_001",
+          "experiment_id": "example_001",
+          "metric_name": "conversion",
+          "value": {
+            "raw_value": "98%",
+            "normalized_value": 0.98,
+            "normalized_unit": "fraction",
+            "status": "REPORTED"
+          }
+        },
+        {
+          "observation_id": "pat_obs_002",
+          "experiment_id": "example_001",
+          "metric_name": "selectivity_AA",
+          "value": {
+            "raw_value": "62%",
+            "normalized_value": 0.62,
+            "normalized_unit": "fraction",
+            "status": "REPORTED"
+          }
+        }
+      ]
+    },
+    {
+      "example_id": "comp_example_001",
+      "patent_document_id": "test_patent_001",
+      "example_number": "Comparative Example 1",
+      "example_type": "comparative_example",
+      "experiment": {
+        "reaction": {
+          "reaction_type": "hydroformylation",
+          "catalyst": {
+            "composition_description": "Rh only (no ligand)",
+            "active_component": {"name": "Rh", "role": "catalyst"}
+          }
+        }
+      },
+      "results": [
+        {
+          "observation_id": "pat_obs_003",
+          "experiment_id": "comp_example_001",
+          "metric_name": "selectivity_AA",
+          "value": {
+            "raw_value": "35%",
+            "normalized_value": 0.35,
+            "normalized_unit": "fraction",
+            "status": "REPORTED"
+          },
+          "notes": "Comparative: no ligand, lower selectivity"
+        }
+      ]
+    }
+  ],
+
+  "schema_metadata": {
+    "schema_name": "Catalysis Schema V1",
+    "schema_version": "1.0.0",
+    "extraction_timestamp": "2026-11-03T10:00:00",
+    "extractor_name": "test_fixture",
+    "extractor_version": "1.0.0"
+  }
+}
